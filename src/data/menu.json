@@ -1,0 +1,38 @@
+{
+  "items": [
+    {
+      "title": "File",
+      "options": [
+        {
+          "name": "Load image",
+          "id": "load-img"
+        },
+        {
+          "name": "Save image",
+          "id": "save-img"
+        },
+        {
+          "name": "Load image",
+          "id": "load-img"
+        }
+      ]
+    },
+    {
+      "title": "File2",
+      "options": [
+        {
+          "name": "Load image",
+          "id": "load-img"
+        },
+        {
+          "name": "Load image",
+          "id": "load-img"
+        },
+        {
+          "name": "Load image",
+          "id": "load-img"
+        }
+      ]
+    }
+  ]
+}
