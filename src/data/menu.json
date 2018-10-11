@@ -5,15 +5,15 @@
       "options": [
         {
           "name": "Load image",
-          "id": "load-img"
+          "id": "load-img1"
         },
         {
           "name": "Save image",
-          "id": "save-img"
+          "id": "save-img1"
         },
         {
-          "name": "Load image",
-          "id": "load-img"
+          "name": "Download image",
+          "id": "download-img1"
         }
       ]
     },
@@ -22,15 +22,15 @@
       "options": [
         {
           "name": "Load image",
-          "id": "load-img"
+          "id": "load-img2"
         },
         {
-          "name": "Load image",
-          "id": "load-img"
+          "name": "Save image",
+          "id": "save-img2"
         },
         {
-          "name": "Load image",
-          "id": "load-img"
+          "name": "Download image",
+          "id": "download-img2"
         }
       ]
     }
