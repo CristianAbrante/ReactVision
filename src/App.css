@@ -1,14 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:100,700');
 
-:root {
-    --color-primary: #eceff1;
-    --color-primary-light: white;
-    --color-primary-dark: #babdbe;
-    --color-secondary: #b71c1c;
-    --color-secondary-light: #f05545;
-    --color-secondary-dark: #7f0000;
-}
-
 body {
   background: var(--color-primary);
 }
