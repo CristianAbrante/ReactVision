@@ -37,14 +37,15 @@ class App extends Component {
     return (
         <MuiThemeProvider theme={theme}>
           <Paper className={gridContainerClass + " App"}>
-            <div className={gridItemClass + " item-title title"}>
+            <div className={gridItemClass + " menubar"}>
+            <div className={gridItemClass + " title"}>
               <a href="https://github.com/CristianAbrante/ReactVision">
-                React <span>Vision</span>
+              React <span>Vision</span>
               </a>
             </div>
-            <div className={gridItemClass + " item-menu"}>
               <MainMenu items={MenuData.items}></MainMenu>
             </div>
+
             <div className={gridItemClass + " item-workspace"}>
               <ImageWorkspace/>
             </div>

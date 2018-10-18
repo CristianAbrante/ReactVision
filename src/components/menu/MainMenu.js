@@ -8,7 +8,7 @@ class MainMenu extends Component {
   render() {
     const items = this.props.items;
     return (
-      <nav>
+      <nav class="main-navigator">
         <Toolbar>
           {items.map(item => (
             <MainMenuItem
