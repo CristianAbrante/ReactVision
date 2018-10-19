@@ -24,6 +24,10 @@ class MainMenuItem extends Component {
     this.setState({ open: false });
   };
 
+  handleAction = event => {
+    console.log(event);
+  };
+
   render() {
     const { open } = this.state;
     const { options, title } = this.props;
@@ -57,7 +61,7 @@ class MainMenuItem extends Component {
                       <MenuItem
                         key={option.id}
                         id={option.id}
-                        onClick={this.handleClose}
+                        onClick={this.handleAction}
                       >
                         {option.name}
                       </MenuItem>

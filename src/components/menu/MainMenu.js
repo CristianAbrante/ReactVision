@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import MainMenuItem from "./MainMenuItem";
 import Paper from "@material-ui/core/Paper";
-import Toolbar from '@material-ui/core/Toolbar'
+import Toolbar from "@material-ui/core/Toolbar";
+
+const pStyle = {
+  padding: 0
+};
 
 class MainMenu extends Component {
   state = { open: false };
