@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Raleway:100,700');
 
 body {
   background: var(--color-primary);
@@ -11,35 +10,6 @@ body {
   width: 95%;
 }
 
-.title {
-    border-bottom: 2px solid var(--color-primary);
-    font-family: 'Raleway', sans-serif;
-    font-weight: 100;
-    text-transform: uppercase;
-    padding: 10px;
-}
-
-.title span {
-    font-weight: 700;
-}
-
-.title a {
-    color: black;
-    text-decoration: none;
-}
-
-.footer {
-    border-top: 1px solid var(--color-primary);
-    padding: 10px;
-    color: var(--color-secondary);
-}
-
-.footer a {
-    text-decoration: none;
-    color: var(--color-secondary);
-}
-
-
 /*
 * Grid specification
 */
@@ -49,27 +19,24 @@ body {
     grid-template-columns: 3fr 1fr;
     grid-template-rows: repeat(20, 1fr);
     grid-gap: 10px;
+    padding:  0 10px;
 }
 
 .grid-item {
-    /*background: aquamarine;*/
-}
-
-.item-title {
-    grid-column: 1 / span 2;
-    align-self: center;
+    height: 100%;
 }
 
 .item-menu {
-    grid-row: 2 / span 2;
+    align-self: end;
+    grid-row: 1 / span 2;
 }
 
 .item-workspace {
-    grid-row: 4 / span 16;
+    grid-row: 3 / span 17;
 }
 
 .item-info {
-    grid-row: 2 / span 9;
+    grid-row: 1 / span 10;
 }
 
 .item-action {
@@ -78,6 +45,5 @@ body {
 
 .item-footer {
     grid-column: 1 / span 2;
-    align-self: center;
 }
 

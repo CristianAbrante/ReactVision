@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
+import Paper from '@material-ui/core/Paper'
 
 class Info extends Component {
   render() {
     return(
-        <div className={this.props.className}>
+        <Paper
+          style={{height: "100%"}}>
           This is going to be the info menu
-        </div>
+        </Paper>
     )
   }
 }

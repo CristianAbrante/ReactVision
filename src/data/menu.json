@@ -10,27 +10,6 @@
         {
           "name": "Save image",
           "id": "save-img1"
-        },
-        {
-          "name": "Download image",
-          "id": "download-img1"
-        }
-      ]
-    },
-    {
-      "title": "File2",
-      "options": [
-        {
-          "name": "Load image",
-          "id": "load-img2"
-        },
-        {
-          "name": "Save image",
-          "id": "save-img2"
-        },
-        {
-          "name": "Download image",
-          "id": "download-img2"
         }
       ]
     }
