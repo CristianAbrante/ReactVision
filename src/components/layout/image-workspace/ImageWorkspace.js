@@ -13,12 +13,21 @@ class ImageWorkspace extends Component {
     value: 0,
     size: 0
   };
-
   size = 0;
+  canvasRef;
 
   handleChange = (event, value) => {
     this.setState({value})
   };
+
+  constructor(props) {
+    super(props);
+    this.canvasRef = React.createRef();
+  }
+
+  componentDidMount() {
+    this.props.controller.setCanvas(this.canvasRef.current);
+  }
 
   render() {
     const { classes } = this.props;
@@ -29,9 +38,11 @@ class ImageWorkspace extends Component {
             style={{height: "100%"}}
             ref={this.container}
             className="action-workspace">
-          <ImageTabs />
+          <ImageTabs
+              controller={this.props.controller}
+          />
           <canvas
-              ref="canvas">
+              ref={this.canvasRef}>
             Your browser do not support canvas
           </canvas>
         </Paper>

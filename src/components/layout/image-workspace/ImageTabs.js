@@ -24,6 +24,8 @@ class ImageTabs extends React.Component {
   render() {
     const { classes } = this.props;
     const { value } = this.state;
+    const controller = this.props.controller;
+    console.log(controller);
 
     return (
         <div className={classes.root}>
@@ -34,13 +36,11 @@ class ImageTabs extends React.Component {
                 scrollable
                 scrollButtons="auto"
             >
-              <Tab label="Item One" />
-              <Tab label="Item Two" />
-              <Tab label="Item Three" />
-              <Tab label="Item Four" />
-              <Tab label="Item Five" />
-              <Tab label="Item Six" />
-              <Tab label="Item Seven" />
+              {
+                controller.getImageTitles().map(
+                    title => <Tab label={title}></Tab>
+                )
+              }
             </Tabs>
           </AppBar>
         </div>
