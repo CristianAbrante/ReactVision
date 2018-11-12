@@ -28,8 +28,6 @@ class ImageController {
   }
 
   setCanvas = canvas => {
-    console.log('setting canvas');
-    console.log(canvas);
     this.canvas = canvas;
   }
 

@@ -20,7 +20,6 @@ class ImageTabs extends React.Component {
   render() {
     const { classes } = this.props;
     const controller = this.props.controller;
-    console.log(controller);
 
     return (
         <div className={classes.root}>

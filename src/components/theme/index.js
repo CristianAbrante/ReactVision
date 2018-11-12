@@ -16,6 +16,9 @@ const theme = createMuiTheme(
           contrastText: "#ffffff",
         }
       },
+      typography: {
+        useNextVariants: true,
+      }
     }
 );
 

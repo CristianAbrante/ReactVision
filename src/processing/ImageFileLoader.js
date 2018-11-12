@@ -8,7 +8,6 @@ class ImageFileLoader {
   }
 
   load(inputNode, callback) {
-    console.log("trying");
     if (!inputNode.files) {
       throw new Error("browser do not support image loading");
     } else {

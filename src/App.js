@@ -26,7 +26,6 @@ class App extends Component {
   }
 
   updateController = () => {
-    console.log(this);
     this.setState({controller: this.state.controller});
   }
 

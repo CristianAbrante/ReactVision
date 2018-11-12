@@ -43,7 +43,6 @@ class LoadImageAction extends Component {
   }
 
   render() {
-    const {open} = this.state;
     return (
       <div>
         <Typography variant="overline" style={{padding: "4px 0"}}>

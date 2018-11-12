@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import {withStyle} from '@material-ui/core/styles'
 import './logo.css'
 
 class Logo extends Component {
