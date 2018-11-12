@@ -2,14 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e39ac767-7063-4fd6-b3f8-59407fc4d59b" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/layout/error/ErrorHandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/actions/Action.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/actions/Action.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/actions/Action.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/layout/image-workspace/ImageTabs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/image-workspace/ImageTabs.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/layout/image-workspace/ImageWorkspace.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/image-workspace/ImageWorkspace.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/menu/MainMenuItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/menu/MainMenuItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/processing/ImageController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/processing/ImageController.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -69,15 +64,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MainMenu.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/layout/menu/MainMenu.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="11" column="15" selection-start-line="11" selection-start-column="15" selection-end-line="11" selection-end-column="15" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -93,17 +79,17 @@
       <file leaf-file-name="ImageController.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/processing/ImageController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="20" selection-start-line="20" selection-end-line="20" />
+            <state relative-caret-position="696">
+              <caret line="50" column="51" selection-start-line="50" selection-start-column="51" selection-end-line="50" selection-end-column="51" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ImageWorkspace.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ImageWorkspace.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/layout/image-workspace/ImageWorkspace.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="222">
-              <caret line="24" column="39" selection-start-line="24" selection-start-column="39" selection-end-line="24" selection-end-column="39" />
+            <state relative-caret-position="150">
+              <caret line="10" column="40" selection-start-line="10" selection-start-column="40" selection-end-line="10" selection-end-column="40" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -111,11 +97,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ImageTabs.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ImageTabs.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/layout/image-workspace/ImageTabs.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="16" column="13" lean-forward="true" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+            <state relative-caret-position="96">
+              <caret line="16" column="53" selection-start-line="16" selection-start-column="53" selection-end-line="16" selection-end-column="53" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -176,10 +162,10 @@
         <option value="$PROJECT_DIR$/src/components/layout/actions/LoadImageAction.js" />
         <option value="$PROJECT_DIR$/src/components/layout/error/ErrorHandler.js" />
         <option value="$PROJECT_DIR$/src/components/layout/menu/MainMenuItem.js" />
-        <option value="$PROJECT_DIR$/src/components/layout/image-workspace/ImageTabs.js" />
         <option value="$PROJECT_DIR$/src/App.js" />
-        <option value="$PROJECT_DIR$/src/processing/ImageController.js" />
         <option value="$PROJECT_DIR$/src/components/layout/image-workspace/ImageWorkspace.js" />
+        <option value="$PROJECT_DIR$/src/processing/ImageController.js" />
+        <option value="$PROJECT_DIR$/src/components/layout/image-workspace/ImageTabs.js" />
       </list>
     </option>
   </component>
@@ -349,12 +335,12 @@
       <workItem from="1539536470089" duration="47000" />
       <workItem from="1539536588016" duration="8591000" />
       <workItem from="1541936815493" duration="36747000" />
-      <workItem from="1542019645174" duration="1214000" />
+      <workItem from="1542019645174" duration="2226000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="53940000" />
+    <option name="totallyTimeSpent" value="54952000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
@@ -652,16 +638,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/layout/image-workspace/ImageTabs.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="16" column="13" lean-forward="true" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/layout/menu/MainMenu.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
@@ -681,17 +657,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/processing/ImageController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="20" selection-start-line="20" selection-end-line="20" />
+        <state relative-caret-position="696">
+          <caret line="50" column="51" selection-start-line="50" selection-start-column="51" selection-end-line="50" selection-end-column="51" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/layout/image-workspace/ImageWorkspace.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="24" column="39" selection-start-line="24" selection-start-column="39" selection-end-line="24" selection-end-column="39" />
+        <state relative-caret-position="150">
+          <caret line="10" column="40" selection-start-line="10" selection-start-column="40" selection-end-line="10" selection-end-column="40" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/layout/image-workspace/ImageTabs.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="16" column="53" selection-start-line="16" selection-start-column="53" selection-end-line="16" selection-end-column="53" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>

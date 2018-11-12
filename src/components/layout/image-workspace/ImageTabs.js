@@ -13,25 +13,23 @@ const styles = theme => ({
 });
 
 class ImageTabs extends React.Component {
-  state = {
-    value: 0,
-  };
-
   handleChange = (event, value) => {
-    this.setState({ value });
+    this.props.controller.updateSelectedImage(value);
   };
 
   render() {
     const { classes } = this.props;
-    const { value } = this.state;
     const controller = this.props.controller;
     console.log(controller);
 
     return (
         <div className={classes.root}>
-          <AppBar style={{width: "71vw"}} position="static" color="default">
+          <AppBar
+              style={{width: "71vw"}}
+              position="static"
+              color="default">
             <Tabs
-                value={value}
+                value={this.props.controller.getSelectedImageIndex()}
                 onChange={this.handleChange}
                 scrollable
                 scrollButtons="auto"

@@ -9,16 +9,7 @@ import ImageTabs from './ImageTabs'
  * @param props
  */
 class ImageWorkspace extends Component {
-  state = {
-    value: 0,
-    size: 0
-  };
-  size = 0;
   canvasRef;
-
-  handleChange = (event, value) => {
-    this.setState({value})
-  };
 
   constructor(props) {
     super(props);
@@ -30,13 +21,9 @@ class ImageWorkspace extends Component {
   }
 
   render() {
-    const { classes } = this.props;
-    const { value } = this.state;
-
     return(
         <Paper
             style={{height: "100%"}}
-            ref={this.container}
             className="action-workspace">
           <ImageTabs
               controller={this.props.controller}

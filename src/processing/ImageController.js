@@ -2,6 +2,7 @@ class ImageController {
   images;
   canvas;
   updateMethod;
+  selected;
 
   constructor(updateMethod) {
     this.images = []
@@ -10,12 +11,8 @@ class ImageController {
 
   add = (image) => {
     this.images.push(image);
-
-    this.canvas.width = image.width;
-    this.canvas.height = image.height;
-    let ctx = this.canvas.getContext('2d');
-    ctx.drawImage(image, 0, 0);
-
+    this.selected = this.images.length - 1;
+    this.updateImageCanvas();
     this.updateMethod();
   }
 
@@ -34,6 +31,28 @@ class ImageController {
     console.log('setting canvas');
     console.log(canvas);
     this.canvas = canvas;
+  }
+
+  updateSelectedImage(index) {
+    this.selected = index;
+    this.updateImageCanvas();
+    this.updateMethod();
+  }
+
+  updateImageCanvas() {
+    let imageToDisplay = this.images[this.selected];
+    this.canvas.width = imageToDisplay.width;
+    this.canvas.height = imageToDisplay.height;
+    let ctx = this.canvas.getContext('2d');
+    ctx.drawImage(imageToDisplay, 0, 0);
+  }
+
+  getSelectedImage() {
+    return this.images[this.getSelectedImageIndex()];
+  }
+
+  getSelectedImageIndex() {
+    return this.selected;
   }
 }
 
