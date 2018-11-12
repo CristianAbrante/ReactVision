@@ -1,6 +1,22 @@
 import React, {Component} from 'react';
 import Paper from '@material-ui/core/Paper'
 import ImageTabs from './ImageTabs'
+import theme from '../../theme/'
+
+const workspaceStyle = {
+  background: theme.palette.primary.main,
+  height: "100%",
+  width: "71vw"
+}
+
+const canvasContainerStyle = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "95%",
+  overflow: "auto",
+}
+
 
 /**
  * Component used to render the main workspace
@@ -23,15 +39,18 @@ class ImageWorkspace extends Component {
   render() {
     return(
         <Paper
-            style={{height: "100%"}}
+            style={workspaceStyle}
             className="action-workspace">
           <ImageTabs
               controller={this.props.controller}
           />
-          <canvas
-              ref={this.canvasRef}>
-            Your browser do not support canvas
-          </canvas>
+          <div style={canvasContainerStyle}>
+            <canvas
+                ref={this.canvasRef}
+            >
+              Your browser do not support canvas
+            </canvas>
+          </div>
         </Paper>
     )
   }
