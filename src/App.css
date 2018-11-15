@@ -29,6 +29,7 @@ body {
 .item-menu {
     align-self: end;
     grid-row: 1 / span 2;
+    z-index: 1;
 }
 
 .item-workspace {
@@ -46,4 +47,3 @@ body {
 .item-footer {
     grid-column: 1 / span 2;
 }
-
