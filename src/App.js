@@ -8,7 +8,7 @@ import ImageWorkspace from "./components/layout/image-workspace/ImageWorkspace"
 import Footer from "./components/layout/footer/"
 import Theme from "./components/theme"
 
-import ImageController from './processing/ImageController';
+import ImageController from './processor/controller/ImageController';
 
 import Paper from '@material-ui/core/Paper';
 import { MuiThemeProvider} from '@material-ui/core/styles';
@@ -17,7 +17,7 @@ class App extends Component {
   state = {
     controller: undefined,
     currentAction: undefined,
-  }
+  };
 
   constructor(props) {
     super(props);
