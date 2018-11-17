@@ -26,6 +26,10 @@ class MainMenuItem extends Component {
     this.props.updateAction(optionId);
   };
 
+  handleOutClose = () => {
+    this.setState({ open: false });
+  }
+
   render() {
     const { options, title } = this.props;
     const { open } = this.state;
@@ -48,7 +52,7 @@ class MainMenuItem extends Component {
                     id="menu-list-grow"
                     style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}>
                   <Paper>
-                    <ClickAwayListener onClickAway={this.handleClose}>
+                    <ClickAwayListener onClickAway={this.handleOutClose}>
                       <MenuList>
                         {
                           options.map(option => (
