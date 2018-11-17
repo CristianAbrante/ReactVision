@@ -5,11 +5,7 @@
       "options": [
         {
           "name": "Load image",
-          "id": "load-img1"
-        },
-        {
-          "name": "Save image",
-          "id": "save-img1"
+          "id": "load_img"
         }
       ]
     }

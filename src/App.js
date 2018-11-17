@@ -13,11 +13,10 @@ import ImageController from './processing/ImageController';
 import Paper from '@material-ui/core/Paper';
 import { MuiThemeProvider} from '@material-ui/core/styles';
 
-//let controller = new ImageController();
-
 class App extends Component {
   state = {
-    controller: undefined
+    controller: undefined,
+    currentAction: undefined,
   }
 
   constructor(props) {
@@ -27,7 +26,11 @@ class App extends Component {
 
   updateController = () => {
     this.setState({controller: this.state.controller});
-  }
+  };
+
+  updateCurrentAction = action => {
+    this.setState({currentAction: action});
+  };
 
   render() {
     const gridContainerClass = "grid-container";
@@ -37,7 +40,9 @@ class App extends Component {
       <MuiThemeProvider theme={Theme}>
         <Paper className={gridContainerClass + " App"}>
           <div className={gridItemClass + " item-menu"}>
-            <MainMenu items={MenuData.items} />
+            <MainMenu
+                items={MenuData.items}
+                updateAction={this.updateCurrentAction}/>
           </div>
           <div className={gridItemClass + " item-workspace"}>
             <ImageWorkspace controller={this.state.controller}/>
@@ -46,7 +51,9 @@ class App extends Component {
             <Info />
           </div>
           <div className={gridItemClass + " item-action"}>
-            <Action controller={this.state.controller}/>
+            <Action
+                controller={this.state.controller}
+                currentAction={this.state.currentAction}/>
           </div>
           <div className={gridItemClass + " item-footer"}>
             <Footer />

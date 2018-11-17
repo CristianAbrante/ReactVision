@@ -5,7 +5,6 @@ import Paper from "@material-ui/core/Paper";
 import Toolbar from '@material-ui/core/Toolbar'
 
 class MainMenu extends Component {
-  state = { open: false };
   render() {
     const items = this.props.items;
     return(
@@ -17,7 +16,7 @@ class MainMenu extends Component {
                     key={item.title}
                     title={item.title}
                     options={item.options}
-                />
+                    updateAction={this.props.updateAction}/>
             ))}
           </Toolbar>
         </Paper>
