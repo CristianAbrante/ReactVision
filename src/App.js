@@ -48,7 +48,8 @@ class App extends Component {
             <ImageWorkspace controller={this.state.controller}/>
           </div>
           <div className={gridItemClass + " item-info"}>
-            <Info />
+            <Info
+                controller={this.state.controller}/>
           </div>
           <div className={gridItemClass + " item-action"}>
             <Action

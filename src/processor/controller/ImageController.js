@@ -1,16 +1,21 @@
+import Histogram from '../image/Histogram';
+
 class ImageController {
   images;
+  histograms;
   canvas;
   updateMethod;
   selected;
 
   constructor(updateMethod) {
     this.images = [];
+    this.histograms = [];
     this.updateMethod = updateMethod;
   }
 
   add = (image) => {
     this.images.push(image);
+    this.histograms.push(new Histogram(image));
     this.selected = this.numberOfImages() - 1;
     this.updateImageCanvas();
     this.updateMethod();
@@ -28,27 +33,31 @@ class ImageController {
     this.canvas = canvas;
   };
 
-  updateSelectedImage(index) {
+  updateSelectedImage = index => {
     this.selected = index;
     this.updateImageCanvas();
     this.updateMethod();
-  }
+  };
 
-  updateImageCanvas() {
+  updateImageCanvas = () => {
     let imageToDisplay = this.getSelectedImage();
     this.canvas.width = imageToDisplay.width;
     this.canvas.height = imageToDisplay.height;
     let ctx = this.canvas.getContext('2d');
     ctx.putImageData(imageToDisplay.getImageData(), 0, 0);
-  }
+  };
 
-  getSelectedImage() {
+  getSelectedImage = () => {
     return this.images[this.getSelectedImageIndex()];
-  }
+  };
 
-  getSelectedImageIndex() {
+  getCurrentHistogram = () => {
+    return this.histograms[this.getSelectedImageIndex()];
+  };
+
+  getSelectedImageIndex = () => {
     return this.selected;
-  }
+  };
 
   static imageIsValid(image) {
     if (image === undefined) {
