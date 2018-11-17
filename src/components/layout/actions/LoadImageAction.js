@@ -30,7 +30,6 @@ class LoadImageAction extends Component {
     try {
       loader.load(this.inputElem.current, () => {
         let image = loader.getReadFile();
-        console.log(image.getImageData());
         controller.add(image);
       });
     }

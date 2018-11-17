@@ -15,7 +15,6 @@ class ImageFileLoader {
   }
 
   setImage = data => {
-    console.log(data);
     let shape = data.shape;
     // test if it is a GIF image.
     let width = shape.length === 3 ? shape[0] : shape[1];

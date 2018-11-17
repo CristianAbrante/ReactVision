@@ -35,7 +35,9 @@ class ImageTabs extends React.Component {
             >
               {
                 controller.getImageTitles().map(
-                    title => <Tab label={title}></Tab>
+                    title => <Tab
+                        label={title}
+                        key={title} />
                 )
               }
             </Tabs>
