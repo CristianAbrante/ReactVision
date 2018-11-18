@@ -6,6 +6,10 @@
         {
           "name": "Load image",
           "id": "load_img"
+        },
+        {
+          "name": "Save image",
+          "id": "save_img"
         }
       ]
     }
