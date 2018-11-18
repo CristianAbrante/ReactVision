@@ -2,14 +2,14 @@ import React, {Component} from 'react';
 import Button from '@material-ui/core/es/Button/Button';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/es/Divider/Divider';
-import Loader from '../../../processing/ImageFileLoader'
+import Loader from '../../../processor/IO/ImageFileLoader'
 import ErrorHandler from '../error/ErrorHandler'
 
 class LoadImageAction extends Component {
   state = {
     error: false,
     errorMsg: "error"
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -18,11 +18,11 @@ class LoadImageAction extends Component {
 
   handleError = (msg) => {
     this.setState({error: true, errorMsg: msg})
-  }
+  };
 
   closeError = (msg) => {
     this.setState({error: false})
-  }
+  };
 
   handleChange = e => {
     let loader = new Loader();
@@ -36,16 +36,18 @@ class LoadImageAction extends Component {
     catch (e) {
       this.handleError(e.message);
     }
-  }
+  };
 
   openFileDialog = () => {
     this.inputElem.current.click();
-  }
+  };
 
   render() {
     return (
       <div>
-        <Typography variant="overline" style={{padding: "4px 0"}}>
+        <Typography
+            variant="overline"
+            style={{padding: "4px 0"}}>
           Load Image
         </Typography>
         <Divider />
