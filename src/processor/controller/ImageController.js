@@ -33,6 +33,10 @@ class ImageController {
     this.canvas = canvas;
   };
 
+  getCanvas = () => {
+    return this.canvas;
+  }
+
   updateSelectedImage = index => {
     this.selected = index;
     this.updateImageCanvas();

@@ -8,7 +8,6 @@ class SaveImageAction extends Component {
 
   constructor(props) {
     super(props);
-    this.inputElem = this.props.controller.getSelectedImage().src;
   }
 
   render() {
@@ -18,7 +17,7 @@ class SaveImageAction extends Component {
           Save image
         </Typography>
         <Divider />
-        <Button label="Save file" href={this.props.controller.getSelectedImage().src} download>
+        <Button label="Save file" href={this.props.controller.getCanvas().toDataURL("image/jpeg")} download>
           Download
         </Button>
       </div>
