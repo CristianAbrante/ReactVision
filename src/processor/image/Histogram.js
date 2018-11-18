@@ -13,6 +13,18 @@ class Histogram {
   accumulativeBlueValues;
   accumulativeBrightnessValues;
 
+  numberOfPixels;
+  minValue;
+  maxValue;
+  redMean;
+  greenMean;
+  blueMean;
+  redStdVar;
+  greenStdVar;
+  blueStdVar;
+  brightnessMean;
+  brightnessStdVar;
+
   constructor(image) {
     this.setImage(image);
   }
@@ -20,9 +32,34 @@ class Histogram {
   setImage = image => {
     this.image = image;
     this.setHistogramValues();
+    this.setAccumulativeHistogram();
+    this.setMean();
+    this.setStdVar();
+    this.setMinMax();
+  };
+
+  getRedCount = value => {
+    return this.redValues[value];
+  };
+
+  getGreenCount = value => {
+    return this.greenValues[value];
+  };
+
+  getBlueCount = value => {
+    return this.blueValues[value];
+  };
+
+  getBrightnessCount = value => {
+    return this.brightnessValues[value];
+  };
+
+  getNumberOfPixels = () => {
+    return this.numberOfPixels;
   };
 
   setHistogramValues = () => {
+    this.numberOfPixels = 0;
     this.redValues = Array.apply(null, Array(NUMBER_OF_PIXELS)).map(() => {return 0});
     this.greenValues = Array.apply(null, Array(NUMBER_OF_PIXELS)).map(() => {return 0});
     this.blueValues = Array.apply(null, Array(NUMBER_OF_PIXELS)).map(() => {return 0});
@@ -30,6 +67,7 @@ class Histogram {
 
     for (let i = 0; i < this.image.width; i++) {
       for (let j = 0; j < this.image.height; j++) {
+        this.numberOfPixels += 1;
         let rValue = this.image.getRedComponent(i, j);
         this.redValues[rValue] += 1;
         let gValue = this.image.getGreenComponent(i, j);
@@ -40,9 +78,8 @@ class Histogram {
         this.brightnessValues[brightValue] += 1;
       }
     }
-    this.setAccumulativeHistogram();
   };
-  
+
   setAccumulativeHistogram = () => {
     this.accumulativeRedValues = [this.redValues[0]];
     this.accumulativeGreenValues = [this.greenValues[0]];
@@ -59,6 +96,71 @@ class Histogram {
       prevValue = this.accumulativeBrightnessValues[i - 1];
       this.accumulativeBrightnessValues.push(prevValue + this.brightnessValues[i]);
     }
+  };
+
+  setMean = () => {
+    this.redMean = 0;
+    this.greenMean = 0;
+    this.blueMean = 0;
+    this.brightnessMean = 0;
+    for (let i = 0; i < NUMBER_OF_PIXELS; i++) {
+      this.redMean += this.getRedCount(i) * i;
+      this.greenMean += this.getGreenCount(i) * i;
+      this.blueMean += this.getBlueCount(i) * i;
+      this.brightnessMean += this.getBrightnessCount(i) * i;
+    }
+    this.redMean /= this.getNumberOfPixels();
+    this.greenMean /= this.getNumberOfPixels();
+    this.blueMean /= this.getNumberOfPixels();
+    this.brightnessMean /= this.getNumberOfPixels();
+  };
+
+  setStdVar = () => {
+    this.redStdVar = 0;
+    this.greenStdVar = 0;
+    this.blueStdVar = 0;
+    this.brightnessStdVar = 0;
+    for (let i = 0; i < NUMBER_OF_PIXELS; i++) {
+      this.redStdVar += this.getRedCount(i) * Math.pow(i - this.redMean, 2);
+      this.greenStdVar += this.getGreenCount(i) * Math.pow(i - this.greenMean, 2);
+      this.blueStdVar += this.getBlueCount(i) * Math.pow(i - this.blueMean, 2);
+      this.brightnessStdVar += this.getBrightnessCount(i) * Math.pow(i - this.brightnessMean, 2);
+    }
+    this.redStdVar = Math.sqrt(this.redStdVar / this.getNumberOfPixels());
+    this.greenStdVar = Math.sqrt(this.greenStdVar / this.getNumberOfPixels());
+    this.blueStdVar = Math.sqrt(this.blueStdVar / this.getNumberOfPixels());
+    this.brightnessStdVar = Math.sqrt(this.brightnessStdVar / this.getNumberOfPixels());
+  };
+
+  setMinMax = () => {
+    let minSelected = false;
+    this.minValue = 0;
+    this.maxValue = 0;
+    for (let i = 0; i < NUMBER_OF_PIXELS; i++) {
+      if (this.getBrightnessCount(i) !== 0) {
+        if (!minSelected) {
+          this.minValue = i;
+          minSelected = true;
+        }
+        this.maxValue = i;
+      }
+    }
+  };
+
+  getMean = () => {
+    return this.brightnessMean;
+  };
+
+  getStdVar = () => {
+    return this.brightnessStdVar;
+  };
+
+  getMax = () => {
+    return this.maxValue;
+  };
+
+  getMin = () => {
+    return this.minValue;
   };
   
   getData = array => {
