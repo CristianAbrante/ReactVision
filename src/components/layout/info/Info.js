@@ -3,6 +3,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import HistogramInfo from './histogram/HistogramInfo';
 import Histogram from './histogram/Histogram';
+import ImageInfo from './histogram/ImageInfo';
 
 class Info extends Component {
   state = {
@@ -44,8 +45,7 @@ class Info extends Component {
   };
 
   render() {
-    const {red, green, blue} = this.state;
-
+    let histogram = this.props.controller.getCurrentHistogram();
     return(
         <Paper
           style={{height: "100%"}}>
@@ -55,6 +55,8 @@ class Info extends Component {
               onColorOptions={this.handleColorsVisualization}
               onBrightnessOption={this.handleBrightnessVisualization}/>
           {this.renderHistogram()}
+          <ImageInfo
+              histogram={histogram}/>
         </Paper>
     )
   }
