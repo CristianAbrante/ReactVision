@@ -27,31 +27,6 @@ class ImageController {
     return titles;
   }
 
-  setCanvas = canvas => {
-    this.canvas = canvas;
-  }
-
-  updateSelectedImage(index) {
-    this.selected = index;
-    this.updateImageCanvas();
-    this.updateMethod();
-  }
-
-  updateImageCanvas() {
-    let imageToDisplay = this.images[this.selected];
-    this.canvas.width = imageToDisplay.width;
-    this.canvas.height = imageToDisplay.height;
-    let ctx = this.canvas.getContext('2d');
-    ctx.drawImage(imageToDisplay, 0, 0);
-  }
-
-  getSelectedImage() {
-    return this.images[this.getSelectedImageIndex()];
-  }
-
-  getSelectedImageIndex() {
-    return this.selected;
-  }
-}
+  setCanv
 
 export default ImageController;
