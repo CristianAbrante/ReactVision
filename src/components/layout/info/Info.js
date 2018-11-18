@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import HistogramInfo from './histogram/HistogramInfo';
 import Histogram from './histogram/Histogram';
 import ImageInfo from './histogram/ImageInfo';
+import theme from '../../theme/';
 
 class Info extends Component {
   state = {
@@ -17,7 +18,13 @@ class Info extends Component {
   renderHistogram = () => {
     let histogram = this.props.controller.getCurrentHistogram();
     if (histogram === undefined) {
-      return <Typography>Open an image</Typography>
+      return (
+          <div
+              style={{height: "200px", background: theme.palette.primary.main, margin: "10px 10px 40px"}}>
+
+          </div>
+      )
+      //return <Typography>Open an image</Typography>
     } else {
       return (
           <div style={{padding: "20px"}}>
