@@ -8,8 +8,9 @@ class Info extends Component {
   state = {
     accumulative: false,
     red: true,
-    green: false,
-    blue: false
+    green: true,
+    blue: true,
+    disableColors: false
   };
 
   renderHistogram = () => {
@@ -20,7 +21,8 @@ class Info extends Component {
       return (
           <div style={{padding: "20px"}}>
             <Histogram
-                accumulative={this.state.accumulative}
+                accumulative = {this.state.accumulative}
+                brightness = {this.state.disableColors}
                 red = {this.state.red}
                 green = {this.state.green}
                 blue = {this.state.blue}
@@ -29,14 +31,16 @@ class Info extends Component {
     }
   };
 
-  handleHistogramVisualization = () =>{
+  handleBrightnessVisualization = () => {
+    this.setState({disableColors: !this.state.disableColors});
+  };
+
+  handleHistogramVisualization = () => {
     this.setState({accumulative: !this.state.accumulative});
   };
 
   handleColorsVisualization = component => event => {
-    //let componentValue = this.state[component];
     this.setState({[component]: event.target.checked});
-    console.log(this.state);
   };
 
   render() {
@@ -48,7 +52,8 @@ class Info extends Component {
           <HistogramInfo
               options={this.state}
               onHistogramOption={this.handleHistogramVisualization}
-              onColorOptions={this.handleColorsVisualization} />
+              onColorOptions={this.handleColorsVisualization}
+              onBrightnessOption={this.handleBrightnessVisualization}/>
           {this.renderHistogram()}
         </Paper>
     )

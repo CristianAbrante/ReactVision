@@ -9,7 +9,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 class HistogramInfo extends Component {
   render() {
-    const {accumulative, red, green, blue} = this.props.options;
+    const {accumulative, red, green, blue, disableColors} = this.props.options;
     return(
         <FormControl>
           <FormLabel>Histogram Options</FormLabel>
@@ -25,10 +25,21 @@ class HistogramInfo extends Component {
                 label="accumulative"/>
             <FormControlLabel
                 control={
+                  <Switch
+                      checked={disableColors}
+                      value="brightness"
+                      onChange ={this.props.onBrightnessOption}/>
+                }
+                label="brightness"/>
+          </FormGroup>
+          <FormGroup row style={{margin: "auto"}}>
+            <FormControlLabel
+                control={
                   <Checkbox
                       checked={red}
                       value="red"
-                      onChange ={this.props.onColorOptions('red')}/>
+                      onChange ={this.props.onColorOptions('red')}
+                      disabled={disableColors}/>
                 }
                 label="red"/>
             <FormControlLabel
@@ -36,7 +47,8 @@ class HistogramInfo extends Component {
                   <Checkbox
                       checked={green}
                       value="green"
-                      onChange ={this.props.onColorOptions('green')}/>
+                      onChange ={this.props.onColorOptions('green')}
+                      disabled={disableColors}/>
                 }
                 label="green"/>
             <FormControlLabel
@@ -44,7 +56,8 @@ class HistogramInfo extends Component {
                   <Checkbox
                       checked={blue}
                       value="blue"
-                      onChange ={this.props.onColorOptions('blue')}/>
+                      onChange ={this.props.onColorOptions('blue')}
+                      disabled={disableColors}/>
                 }
                 label="blue"/>
           </FormGroup>

@@ -95,6 +95,22 @@ class ProcessImage {
     this.setColor(i, j, 3, alpha);
   }
 
+  /**
+   * Performs NTSC conversion
+   * of the components to calculate
+   * brightness.
+   *
+   * @param i
+   * @param j
+   * @returns {number}
+   */
+  getBrightness(i, j) {
+    let r = this.getRedComponent(i, j);
+    let g = this.getGreenComponent(i, j);
+    let b = this.getBlueComponent(i, j);
+    return Math.round(0.299 * r + 0.587 * g + 0.114 * b);
+  }
+
   getRGBComponents(i, j) {
     return [
       this.getRedComponent(i, j),

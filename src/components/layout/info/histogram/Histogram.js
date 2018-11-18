@@ -10,31 +10,71 @@ import {
 const colors = {
   red: "#d32f2f",
   green: "#43a047",
-  blue: "#1976d2"
+  blue: "#1976d2",
+  grey: "#bdbdbd"
 };
 
 class HistogramGraph extends Component {
-  getSeriesToDisplay = () => {
-    let displayRed = this.props.red;
-    let displayGreen = this.props.green;
-    let displayBlue = this.props.blue;
+  getRedSeries = () => {
+    if (this.props.brightness) {
+      return null;
+    }
     let accumulative = this.props.accumulative;
-
-    return (
-        <div>
-          {this.getRedSeries(accumulative)}
-        </div>
-    );
+    let displayRed = this.props.red;
+    if (displayRed) {
+      let rData = this.props.currentHistogram.getRedData(accumulative);
+      return this.getDataSeries(rData, colors.red);
+    } else {
+      return null;
+    }
   };
 
-  getRedSeries = accumulative => {
-    let rData = this.props.currentHistogram.getRedData(accumulative);
+  getGreenSeries = () => {
+    if (this.props.brightness) {
+      return null;
+    }
+    let accumulative = this.props.accumulative;
+    let displayGreen = this.props.green;
+    if (displayGreen) {
+      let gData = this.props.currentHistogram.getGreenData(accumulative);
+      return this.getDataSeries(gData, colors.green);
+    } else {
+      return null;
+    }
+  };
+
+  getBlueSeries = () => {
+    if (this.props.brightness) {
+      return null;
+    }
+    let accumulative = this.props.accumulative;
+    let displayBlue = this.props.blue;
+    if (displayBlue) {
+      let bData = this.props.currentHistogram.getBlueData(accumulative);
+      return this.getDataSeries(bData, colors.blue);
+    } else {
+      return null;
+    }
+  };
+
+  getBrightnessSeries = () => {
+    if (this.props.brightness) {
+      let accumulative = this.props.accumulative;
+      let data = this.props.currentHistogram.getBrightnessData(accumulative);
+      console.log(data);
+      return this.getDataSeries(data, colors.grey);
+    } else {
+      return null;
+    }
+  };
+
+  getDataSeries = (data, color) => {
     return(
         <AreaSeries
             curve="curve-natural"
-            color={colors.red}
+            color={color}
             opacity="0.2"
-            data={rData} />
+            data={data} />
     );
   };
 
@@ -49,7 +89,10 @@ class HistogramGraph extends Component {
             <VerticalGridLines />
             <HorizontalGridLines />
             <XAxis hideLine tickValues={[0, 50, 100, 150, 200, 250]}/>
-            {this.getSeriesToDisplay()}
+            {this.getRedSeries()}
+            {this.getGreenSeries()}
+            {this.getBlueSeries()}
+            {this.getBrightnessSeries()}
           </FlexibleWidthXYPlot>
         </div>
     );
