@@ -6,7 +6,7 @@ class ProcessImage {
   height;
 
   constructor(title, data, width, height) {
-    this.title = title;
+    this.title = title.replace(/\..+/i, "");
     this.width = width;
     this.height = height;
     this.setImageData(data);
