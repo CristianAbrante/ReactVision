@@ -25,6 +25,8 @@ class Histogram {
   brightnessMean;
   brightnessStdVar;
 
+  brightnessEntropy;
+
   constructor(image) {
     this.setImage(image);
   }
@@ -36,6 +38,7 @@ class Histogram {
     this.setMean();
     this.setStdVar();
     this.setMinMax();
+    this.setEntropy();
   };
 
   getRedCount = value => {
@@ -56,6 +59,10 @@ class Histogram {
 
   getNumberOfPixels = () => {
     return this.numberOfPixels;
+  };
+
+  getBrightnessProbability = level => {
+    return this.getBrightnessCount(level) / this.getNumberOfPixels();
   };
 
   setHistogramValues = () => {
@@ -147,6 +154,29 @@ class Histogram {
     }
   };
 
+  setEntropy = () => {
+    this.brightnessEntropy = 0;
+    for (let i = 0; i < NUMBER_OF_PIXELS; i++) {
+      let p = this.getBrightnessProbability(i);
+      if (p !== 0) {
+        this.brightnessEntropy += p * Math.log2(p);
+      }
+    }
+    this.brightnessEntropy = -this.brightnessEntropy;
+  };
+
+  getFormat = () => {
+    return this.image.format;
+  };
+
+  getWidth = () => {
+    return this.image.width;
+  };
+
+  getHeight = () => {
+    return this.image.height;
+  };
+
   getMean = () => {
     return this.brightnessMean;
   };
@@ -162,7 +192,11 @@ class Histogram {
   getMin = () => {
     return this.minValue;
   };
-  
+
+  getEntropy = () => {
+    return this.brightnessEntropy;
+  };
+
   getData = array => {
     let data = [];
     for (let i = 0; i < array.length; i++) {

@@ -83,7 +83,7 @@ class HistogramGraph extends Component {
         <div>
           <FlexibleWidthXYPlot
               onMouseLeave={this._onMouseLeave}
-              height={200}
+              height={180}
               margin={{left: 10, right: 10, top: 10, bottom: 40}}
               stackBy="y">
             <VerticalGridLines />

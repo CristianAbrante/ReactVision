@@ -4,9 +4,11 @@ class ProcessImage {
   data;
   width;
   height;
+  format;
 
   constructor(title, data, width, height) {
     this.title = title.replace(/\..+/i, "");
+    this.format = title.split('.').pop();
     this.width = width;
     this.height = height;
     this.setImageData(data);

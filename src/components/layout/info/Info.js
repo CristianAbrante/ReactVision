@@ -6,6 +6,13 @@ import Histogram from './histogram/Histogram';
 import ImageInfo from './histogram/ImageInfo';
 import theme from '../../theme/';
 
+const containerStyle = {
+  display: "flex",
+  flexDirection: "column",
+  height: "100%",
+  alignContent: "stretch"
+};
+
 class Info extends Component {
   state = {
     accumulative: false,
@@ -20,7 +27,7 @@ class Info extends Component {
     if (histogram === undefined) {
       return (
           <div
-              style={{height: "200px", background: theme.palette.primary.main, margin: "10px 10px 40px"}}>
+              style={{height: "180px", background: theme.palette.primary.main, margin: "10px 10px 30px"}}>
 
           </div>
       )
