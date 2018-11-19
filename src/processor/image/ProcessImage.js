@@ -25,14 +25,22 @@ class ProcessImage {
   };
 
   indexesAreInRange(i, j) {
-    return (i >= 0 && i < this.height)
-        && (j >= 0 && j < this.width);
+    return (i >= 0 && i < this.width)
+        && (j >= 0 && j < this.height);
   }
 
   colorIsInRange(color) {
     return (color >= 0 && color <= 255);
   }
 
+  /**
+   * Returns the color index in
+   * the data array.
+   *
+   * @param i column of the pixel
+   * @param j row of the pixel.
+   * @returns {*} start index of the pixel.
+   */
   getColorIndex(i, j) {
     if (this.indexesAreInRange(i, j)) {
       return j * (this.width * 4) + i * 4;

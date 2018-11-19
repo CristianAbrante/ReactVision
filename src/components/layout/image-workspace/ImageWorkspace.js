@@ -45,9 +45,11 @@ class ImageWorkspace extends Component {
 
   canvasMovement = (event) => {
     this.setState({x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY});
-    console.log(event.nativeEvent.offsetX);
-    console.log(event.nativeEvent.offsetY);
   };
+
+  mouseLeaved = event => {
+    this.setState({x: -1, y: -1});
+  }
 
   render() {
     return(
@@ -58,7 +60,8 @@ class ImageWorkspace extends Component {
           <div style={canvasContainerStyle}>
             <canvas
                 ref={this.canvasRef}
-                onMouseMove={this.canvasMovement}>
+                onMouseMove={this.canvasMovement}
+                onMouseLeave={this.mouseLeaved}>
               Your browser do not support canvas
             </canvas>
           </div>
