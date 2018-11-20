@@ -37,36 +37,30 @@ class App extends Component {
     const gridItemClass = "grid-item";
 
     return (
-        <MuiThemeProvider theme={theme}>
-          <Paper className={gridContainerClass + " App"}>
-            <div className={gridItemClass + " menubar"}>
-            <div className={gridItemClass + " title"}>
-              <a href="https://github.com/CristianAbrante/ReactVision">
-              React <span>Vision</span>
-              </a>
-            </div>
-              <MainMenu items={MenuData.items}></MainMenu>
-            </div>
-
-            <div className={gridItemClass + " item-workspace"}>
-              <ImageWorkspace/>
-            </div>
-            <div className={gridItemClass + " item-info"}>
-              <Info/>
-            </div>
-            <div className={gridItemClass + " item-action"}>
-              <Action/>
-            </div>
-            <div className={gridItemClass + " item-footer footer"}>
-              <Typography>
-                <span>By </span>
-                <a href="https://github.com/CristianAbrante">Cristian Abrante</a>
-                <span> & </span>
-                <a href="https://github.com/AlberTJ97">Alberto González</a>
-              </Typography>
-            </div>
-          </Paper>
-        </MuiThemeProvider>
+      <MuiThemeProvider theme={Theme}>
+        <Paper className={gridContainerClass + " App"}>
+          <div className={gridItemClass + " item-menu"}>
+            <MainMenu
+                items={MenuData.items}
+                updateAction={this.updateCurrentAction}/>
+          </div>
+          <div className={gridItemClass + " item-workspace"}>
+            <ImageWorkspace controller={this.state.controller}/>
+          </div>
+          <div className={gridItemClass + " item-info"}>
+            <Info
+                controller={this.state.controller}/>
+          </div>
+          <div className={gridItemClass + " item-action"}>
+            <Action
+                controller={this.state.controller}
+                currentAction={this.state.currentAction}/>
+          </div>
+          <div className={gridItemClass + " item-footer"}>
+            <Footer />
+          </div>
+        </Paper>
+      </MuiThemeProvider>
     )
   }
 }
