@@ -1,149 +1,286 @@
-
+/**
+ * Process image class represents
+ * an image fully editable. It contains
+ * the pixel values for each position
+ * of the image.
+ *
+ * Uses R,G,B,A representation
+ * of each pixel.
+ */
 class ProcessImage {
-  title;
-  data;
-  width;
-  height;
-  format;
+  static MIN_PIXEL_VALUE = 0;
+  static MAX_PIXEL_VALUE = 255;
+  static colorComponent = {
+    r: 0,
+    g: 1,
+    b: 2,
+    a: 3,
+  };
 
+  title;
+  format;
+  data;
+
+  /**
+   * Constructor of the class
+   * takes the title, data and
+   * width and height of the
+   * image.
+   *
+   * @param title of the image containing format.
+   * @param data of the pixels.
+   * @param width of the image.
+   * @param height of the image.
+   */
   constructor(title, data, width, height) {
     this.title = title.replace(/\..+/i, "");
     this.format = title.split('.').pop();
-    this.width = width;
-    this.height = height;
-    this.setImageData(data);
+    this.setImageData(data, width, height);
   }
 
-  setImageData = data => {
-    this.data = new ImageData(new Uint8ClampedArray(data), this.width, this.height);
+  getTitle = () => {
+    return this.title;
+  };
+
+  getFormat = () => {
+    return this.format;
+  };
+
+  setImageData = (data, width, height) => {
+    this.data = new ImageData(new Uint8ClampedArray(data), width, height);
   };
 
   getImageData = () => {
     return this.data;
   };
 
-  getTitle = () => {
-    return this.title;
+  getWidth = () => {
+    return this.getImageData().width;
   };
 
-  indexesAreInRange(i, j) {
-    return (i >= 0 && i < this.width)
-        && (j >= 0 && j < this.height);
-  }
+  getHeight = () => {
+    return this.getImageData().height;
+  };
 
-  colorIsInRange(color) {
-    return (color >= 0 && color <= 255);
-  }
+  getNumberOfPixels = () => {
+    return this.getWidth() * this.getHeight();
+  };
+
+  /**
+   * Return true if a pair of indexes
+   * are in the range of the image.
+   *
+   * @param x horizontal index.
+   * @param y vertical index.
+   * @returns {boolean} true if indexes
+   *          are in range and false otherwise.
+   */
+  indexesAreInRange = (x, y) => {
+    return (x >= 0 && x < this.getWidth())
+        && (y >= 0 && y < this.getHeight());
+  };
+
+  /**
+   * Return true if color value
+   * is in the range [Min, Max]-
+   *
+   * In most cases this range
+   * corresponds to [0, 255].
+   *
+   * @param color
+   * @returns {boolean}
+   */
+  static colorIsInRange = (color) => {
+    return (color >= ProcessImage.MIN_PIXEL_VALUE)
+        && (color <= ProcessImage.MAX_PIXEL_VALUE);
+  };
 
   /**
    * Returns the color index in
    * the data array.
    *
-   * @param i column of the pixel
-   * @param j row of the pixel.
+   * @param x column of the pixel
+   * @param y row of the pixel.
    * @returns {*} start index of the pixel.
    */
-  getColorIndex(i, j) {
-    if (this.indexesAreInRange(i, j)) {
-      return j * (this.width * 4) + i * 4;
+  getColorIndex = (x, y) => {
+    if (this.indexesAreInRange(x, y)) {
+      return y * (this.getWidth() * 4) + x * 4;
     } else {
       return undefined;
     }
-  }
-
-  getColor(i, j, component) {
-    const index = this.getColorIndex(i, j) + component;
-    if (index !== undefined) {
-      return this.data.data[index];
-    } else {
-      throw new Error('indexes are not in range');
-    }
-  }
-
-  setColor(i, j, component, color) {
-    if (this.colorIsInRange(color)) {
-      const index = this.getColorIndex(i, j) + component;
-      if (index !== undefined) {
-        this.data.data[index] = color;
-      } else {
-        throw new Error('indexes are not in range');
-      }
-    } else {
-      throw new Error('color is not in range: ' + color);
-    }
-  }
-
-  getRedComponent(i, j) {
-    return this.getColor(i, j, 0);
-  }
-
-  setRedComponent(i, j, red) {
-    this.setColor(i, j, 0, red);
-  }
-
-  getGreenComponent(i, j) {
-    return this.getColor(i, j, 1);
-  }
-
-  setGreenComponent(i, j, green) {
-    this.setColor(i, j, 1, green);
-  }
-
-  getBlueComponent(i, j) {
-    return this.getColor(i, j, 2);
-  }
-
-  setBlueComponent(i, j, blue) {
-    this.setColor(i, j, 2, blue);
-  }
-
-  getAlphaComponent(i, j) {
-    return this.getColor(i, j, 3);
-  }
-
-  setAlphaComponent(i, j, alpha) {
-    this.setColor(i, j, 3, alpha);
-  }
+  };
 
   /**
-   * Performs NTSC conversion
+   * Return the component situated
+   * at a specified position of the
+   * array.
+   *
+   * @param position
+   * @returns {*}
+   */
+  getComponent = position => {
+    return this.data.data[position];
+  };
+
+  /**
+   * Sets the data situated at
+   * a specified position.
+   *
+   * @param position to set the color.
+   * @param color that we want to set.
+   */
+  setComponent = (position, color) => {
+    this.data.data = color;
+  };
+
+  /**
+   * Returns the color corresponding
+   * to the component.
+   *
+   * @param x column of the color
+   * @param y row of the column.
+   * @param component r,g,b,a string.
+   * @returns {*} color component.
+   */
+  getColor = (x, y, component) => {
+    const numericComponent = ProcessImage.colorComponent[component];
+    if (numericComponent === undefined)
+      throw new Error('unknown component: ' + component);
+
+    const index = this.getColorIndex(x, y);
+    if (index === undefined)
+      throw new Error('indexes are not in range.');
+
+    return this.getComponent(index + numericComponent);
+  };
+
+  /**
+   * Set the color of the component.
+   *
+   * @param x
+   * @param y
+   * @param component
+   * @param color
+   */
+  setColor = (x, y, component, color) => {
+    if (!ProcessImage.colorIsInRange(color))
+      throw new Error('color is not in range.');
+
+    const numericComponent = ProcessImage.colorComponent[component];
+    if (numericComponent === undefined)
+      throw new Error('unknown component: ' + component);
+
+    const index = this.getColorIndex(x, y);
+    if (index === undefined)
+      throw new Error('indexes are not in range.');
+
+    this.setComponent(index + numericComponent, color);
+  };
+
+  getRedComponent = (x, y) => {
+    return this.getColor(x, y, 'r');
+  };
+
+  setRedComponent = (x, y, red) => {
+    this.setColor(x, y, 'r', red);
+  };
+
+  getGreenComponent = (x, y) => {
+    return this.getColor(x, y, 'g');
+  };
+
+  setGreenComponent = (x, y, green) => {
+    this.setColor(x, y, 'g', green);
+  };
+
+  getBlueComponent = (x, y) => {
+    return this.getColor(x, y, 'b');
+  };
+
+  setBlueComponent = (x, y, blue) => {
+    this.setColor(x, y, 'b', blue);
+  };
+
+  getAlphaComponent = (x, y) => {
+    return this.getColor(x, y, 'a');
+  };
+
+  setAlphaComponent = (x, y, alpha) => {
+    this.setColor(x, y, 'a', alpha);
+  };
+
+  /**
+   * Performs PAL conversion
    * of the components to calculate
    * brightness.
    *
-   * @param i
-   * @param j
+   * @param x column of the pixel.
+   * @param y row of the pixel.
    * @returns {number}
    */
-  getBrightness(i, j) {
-    let r = this.getRedComponent(i, j);
-    let g = this.getGreenComponent(i, j);
-    let b = this.getBlueComponent(i, j);
-    return Math.round(0.299 * r + 0.587 * g + 0.114 * b);
-  }
+  getBrightness = (x, y) => {
+    const rgb = this.getRGBComponents(x, y);
+    return Math.round(0.222 * rgb.r + 0.707 * rgb.g + 0.071 * rgb.b);
+  };
 
-  getRGBComponents(i, j) {
-    return [
-      this.getRedComponent(i, j),
-      this.getGreenComponent(i, j),
-      this.getBlueComponent(i, j)
-    ]
-  }
+  /**
+   * Converts the specified position
+   * into a greyscale brightness value.
+   *
+   * @param x column of the conversion.
+   * @param y row of the conversion.
+   * @param brightness
+   */
+  setBrightness = (x, y, brightness) => {
+    this.setRGBComponents(x, y, brightness, brightness, brightness);
+  };
 
-  setRGBComponents(i, j, red, green, blue) {
-    this.setRedComponent(i, j, red);
-    this.setGreenComponent(i, j, green);
-    this.setBlueComponent(i, j, blue);
-  }
+  /**
+   * getter for the 3 components of a pixel.
+   *
+   * @param x column of the pixel.
+   * @param y row of the pixel.
+   * @returns {{r: *, g: *, b: *}}
+   *          object with configuration.
+   */
+  getRGBComponents = (x, y) => {
+    return {
+      r: this.getRedComponent(x, y),
+      g: this.getGreenComponent(x, y),
+      b: this.getBlueComponent(x, y)
+    };
+  };
 
-  getRGBAComponents(i, j) {
-    return this.getRGBComponents(i, j)
-        + [this.getAlphaComponent(i, j)];
-  }
+  setRGBComponents = (x, y, red, green, blue) => {
+    this.setRedComponent(x, y, red);
+    this.setGreenComponent(x, y, green);
+    this.setBlueComponent(x, y, blue);
+  };
 
-  setRGBAComponets(i, j, red, green, blue, alpha) {
-    this.setRGBComponents(i, j, red, green, blue);
-    this.setAlphaComponent(i, j, alpha);
-  }
+  /**
+   * Getter for the four components of
+   * a pixel.
+   *
+   * @param x column of the pixel.
+   * @param y row of the pixel.
+   * @returns {{r: *, g: *, b: *, a: *}}
+   * object with configuration.
+   */
+  getRGBAComponents = (x, y) => {
+    const rgb = this.getRGBComponents(x, y);
+    return {
+      r: rgb.r,
+      g: rgb.g,
+      b: rgb.b,
+      a: this.getAlphaComponent(x, y)
+    };
+  };
+
+  setRGBAComponets = (x, y, red, green, blue, alpha) => {
+    this.setRGBComponents(x, y, red, green, blue);
+    this.setAlphaComponent(x, y, alpha);
+  };
 }
 
 export default ProcessImage;
