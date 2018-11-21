@@ -45,8 +45,8 @@ class ImageController {
 
   updateImageCanvas = () => {
     let imageToDisplay = this.getSelectedImage();
-    this.canvas.width = imageToDisplay.width;
-    this.canvas.height = imageToDisplay.height;
+    this.canvas.width = imageToDisplay.getWidth();
+    this.canvas.height = imageToDisplay.getHeight();
     let ctx = this.canvas.getContext('2d');
     ctx.putImageData(imageToDisplay.getImageData(), 0, 0);
   };

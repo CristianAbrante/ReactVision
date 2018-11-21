@@ -14,23 +14,22 @@ const styles = theme => ({
 });
 
 class ImageInfo extends Component {
-
-  getFormat = () => {
+  getImageProperty = property => {
     let histogram = this.props.histogram;
     if (histogram === undefined) {
       return "-";
     } else {
-      return histogram.getFormat();
+      return histogram.getImage()[property]();
     }
   };
 
-  getElement = property => {
+  getHistogramProperty = property => {
     let histogram = this.props.histogram;
     if (histogram === undefined) {
       return "-";
     } else {
-      let value = histogram[property]();
-      console.log(value);
+      // TODO: Implementing for different components.
+      let value = histogram[property]().brightness;
       return value % 1 === 0 ? value : value.toFixed(3);
     }
   };
@@ -41,43 +40,43 @@ class ImageInfo extends Component {
         <div>
           <div className={classes.root}>
             <Chip
-                label={"format: " + this.getFormat()}
+                label={"format: " + this.getImageProperty("getFormat")}
                 color="secondary"
                 className={classes.chip}/>
             <Chip
-                label={"count: " + this.getElement("getNumberOfPixels")}
+                label={"count: " + this.getImageProperty("getNumberOfPixels")}
                 color="secondary"
                 className={classes.chip}/>
             <Chip
-                label={"width: " + this.getElement("getWidth")}
+                label={"width: " + this.getImageProperty("getWidth")}
                 color="secondary"
                 className={classes.chip}/>
             <Chip
-                label={"height: " + this.getElement("getHeight")}
+                label={"height: " + this.getImageProperty("getHeight")}
                 color="secondary"
                 className={classes.chip}/>
           </div>
           <div className={classes.root}>
             <Chip
-                label={"brightness: " + this.getElement("getMean")}
+                label={"brightness: " + this.getHistogramProperty("getMean")}
                 color="primary"
                 className={classes.chip}/>
             <Chip
-                label={"contrast: " + this.getElement("getStdVar")}
+                label={"contrast: " + this.getHistogramProperty("getStdVar")}
                 color="primary"
                 className={classes.chip}/>
             <Chip
-                label={"entropy: " + this.getElement("getEntropy")}
+                label={"entropy: " + this.getHistogramProperty("getEntropy")}
                 color="primary"
                 className={classes.chip}/>
           </div>
           <div className={classes.root}>
             <Chip
-                label={"min: " + this.getElement("getMin")}
+                label={"min: " + this.getHistogramProperty("getMin")}
                 color="secondary"
                 className={classes.chip}/>
             <Chip
-                label={"max: " + this.getElement("getMax")}
+                label={"max: " + this.getHistogramProperty("getMax")}
                 color="secondary"
                 className={classes.chip}/>
           </div>

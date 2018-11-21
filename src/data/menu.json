@@ -12,6 +12,15 @@
           "id": "save_img"
         }
       ]
+    },
+    {
+      "title": "Lineal operations",
+      "options": [
+        {
+          "name": "Lineal picewise adjustment",
+          "id": "lineal_adjustment"
+        }
+      ]
     }
   ]
 }
