@@ -3,8 +3,7 @@ import Paper from '@material-ui/core/Paper'
 import ImageTabs from './ImageTabs'
 import theme from '../../theme/'
 import WorkspaceBar from './WorkspaceBar';
-import ReactCrop from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css';
+import Cropper from './react-cropper';
 
 const workspaceStyle = {
   background: theme.palette.primary.main,
@@ -44,12 +43,11 @@ class ImageWorkspace extends PureComponent  {
 
   constructor(props) {
     super(props);
-    this.canvasRef = React.createRef();
   }
 
-  componentDidMount() {
-    this.props.controller.setCanvas(this.canvasRef.current);
-  }
+  // componentDidMount() {
+  //   this.props.controller.setCanvas(this.canvasRef.current);
+  // }
 
   canvasMovement = (event) => {
     this.setState({x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY});
@@ -107,8 +105,15 @@ class ImageWorkspace extends PureComponent  {
 
 
     const { croppedImageUrl } = this.state;
-
-
+    // <Cropper
+    //   ref={this.canvasRef}
+    //   src={this.state.src}
+    //   crop={this.state.crop}
+    //   onImageLoaded={this.onImageLoaded}
+    //   onComplete={this.onCropComplete}
+    //   onChange={this.onCropChange}
+    // />
+    console.log(typeof this.canvasRef)
     return(
         <Paper
             style={workspaceStyle}>
@@ -116,24 +121,18 @@ class ImageWorkspace extends PureComponent  {
               controller={this.props.controller}/>
           <div style={canvasContainerStyle}>
 
-          {this.state.src && (
-          <ReactCrop
-            src={this.state.src}
-            crop={this.state.crop}
-            onImageLoaded={this.onImageLoaded}
-            onComplete={this.onCropComplete}
-            onChange={this.onCropChange}
-          />
-        )}
-        {croppedImageUrl && <img alt="Crop" src={croppedImageUrl} />}
+
+          <Cropper
+
+                      aspectRatio={16 / 9}
+                      preview=".img-preview"
+                      guides={false}
+                      src={this.state.src}
+                      controller={this.props.controller}
+              />
+        
 
 
-            <canvas
-                ref={this.canvasRef}
-                onMouseMove={this.canvasMovement}
-                onMouseLeave={this.mouseLeaved}>
-              Your browser do not support canvas
-            </canvas>
           </div>
           <WorkspaceBar
               position={this.state}
