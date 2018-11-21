@@ -9,7 +9,7 @@
  */
 class ProcessImage {
   static MIN_PIXEL_VALUE = 0;
-  static MAX_PIXEL_VALUE = 255;
+  static MAX_PIXEL_VALUE = 256;
   static colorComponent = {
     r: 0,
     g: 1,
@@ -92,7 +92,7 @@ class ProcessImage {
    */
   static colorIsInRange = (color) => {
     return (color >= ProcessImage.MIN_PIXEL_VALUE)
-        && (color <= ProcessImage.MAX_PIXEL_VALUE);
+        && (color < ProcessImage.MAX_PIXEL_VALUE);
   };
 
   /**

@@ -156,7 +156,7 @@ class Histogram {
     let components = Object.keys(obj);
     for (let k = 0; k < components.length; k++) {
       obj[components[k]] =
-          Array.apply(null, Array(256)).map(() => {return 0;});
+          Array.apply(null, Array(ProcessImage.MAX_PIXEL_VALUE)).fill(0);
     }
   };
 
