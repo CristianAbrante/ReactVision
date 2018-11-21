@@ -76,8 +76,8 @@ class ProcessImage {
    *          are in range and false otherwise.
    */
   indexesAreInRange = (x, y) => {
-    return (x >= 0 && x < this.getWidth())
-        && (y >= 0 && y < this.getHeight());
+    return (x >= 0 && x <= this.getWidth())
+        && (y >= 0 && y <= this.getHeight());
   };
 
   /**
@@ -144,6 +144,9 @@ class ProcessImage {
    * @returns {*} color component.
    */
   getColor = (x, y, component) => {
+    if (component === 'brightness')
+      return this.getBrightness(x, y);
+
     const numericComponent = ProcessImage.colorComponent[component];
     if (numericComponent === undefined)
       throw new Error('unknown component: ' + component);
@@ -164,6 +167,9 @@ class ProcessImage {
    * @param color
    */
   setColor = (x, y, component, color) => {
+    if (component === 'brightness')
+      this.setBrightness(x, y, color);
+
     if (!ProcessImage.colorIsInRange(color))
       throw new Error('color is not in range.');
 

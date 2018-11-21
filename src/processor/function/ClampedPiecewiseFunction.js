@@ -167,6 +167,4 @@ class ClampedPiecewiseFunction {
     }
     return interpolatedElem;
   };
-
-  getFunctionToApply;
 }

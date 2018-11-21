@@ -1,31 +1,55 @@
-
-const NUMBER_OF_PIXELS = 256;
+import ProcessImage from './ProcessImage';
 
 class Histogram {
   image;
-  redValues;
-  greenValues;
-  blueValues;
-  brightnessValues;
-  
-  accumulativeRedValues;
-  accumulativeGreenValues;
-  accumulativeBlueValues;
-  accumulativeBrightnessValues;
+  count = {
+    r: [],
+    g: [],
+    b: [],
+    brightness: []
+  };
 
-  numberOfPixels;
-  minValue;
-  maxValue;
-  redMean;
-  greenMean;
-  blueMean;
-  redStdVar;
-  greenStdVar;
-  blueStdVar;
-  brightnessMean;
-  brightnessStdVar;
+  accumulative = {
+    r: [],
+    g: [],
+    b: [],
+    brightness: []
+  };
 
-  brightnessEntropy;
+  min = {
+    r: 0,
+    g: 0,
+    b: 0,
+    brightness: 0
+  };
+
+  max = {
+    r: 0,
+    g: 0,
+    b: 0,
+    brightness: 0
+  };
+
+  mean = {
+    r: 0,
+    g: 0,
+    b: 0,
+    brightness: 0
+  };
+
+  stdVar = {
+    r: 0,
+    g: 0,
+    b: 0,
+    brightness: 0
+  };
+
+  entropy = {
+    r: 0,
+    g: 0,
+    b: 0,
+    brightness: 0
+  };
 
   constructor(image) {
     this.setImage(image);
@@ -33,171 +57,94 @@ class Histogram {
 
   setImage = image => {
     this.image = image;
-    this.setHistogramValues();
-    this.setAccumulativeHistogram();
+    this.setCount();
+    this.setAccumulativeCount();
     this.setMean();
     this.setStdVar();
     this.setMinMax();
     this.setEntropy();
   };
 
-  getRedCount = value => {
-    return this.redValues[value];
-  };
-
-  getGreenCount = value => {
-    return this.greenValues[value];
-  };
-
-  getBlueCount = value => {
-    return this.blueValues[value];
-  };
-
-  getBrightnessCount = value => {
-    return this.brightnessValues[value];
-  };
-
-  getNumberOfPixels = () => {
-    return this.numberOfPixels;
-  };
-
-  getBrightnessProbability = level => {
-    return this.getBrightnessCount(level) / this.getNumberOfPixels();
-  };
-
-  setHistogramValues = () => {
-    this.numberOfPixels = 0;
-    this.redValues = Array.apply(null, Array(NUMBER_OF_PIXELS)).map(() => {return 0});
-    this.greenValues = Array.apply(null, Array(NUMBER_OF_PIXELS)).map(() => {return 0});
-    this.blueValues = Array.apply(null, Array(NUMBER_OF_PIXELS)).map(() => {return 0});
-    this.brightnessValues = Array.apply(null, Array(NUMBER_OF_PIXELS)).map(() => {return 0});
-
-    for (let i = 0; i < this.image.width; i++) {
-      for (let j = 0; j < this.image.height; j++) {
-        this.numberOfPixels += 1;
-        let rValue = this.image.getRedComponent(i, j);
-        this.redValues[rValue] += 1;
-        let gValue = this.image.getGreenComponent(i, j);
-        this.greenValues[gValue] += 1;
-        let bValue = this.image.getBlueComponent(i, j);
-        this.blueValues[bValue] += 1;
-        let brightValue = this.image.getBrightness(i, j);
-        this.brightnessValues[brightValue] += 1;
-      }
+  getCount = level => {
+    return {
+      r: this.count.r[level],
+      g: this.count.g[level],
+      b: this.count.b[level],
+      brightness: this.count.brightness[level]
     }
   };
 
-  setAccumulativeHistogram = () => {
-    this.accumulativeRedValues = [this.redValues[0]];
-    this.accumulativeGreenValues = [this.greenValues[0]];
-    this.accumulativeBlueValues = [this.blueValues[0]];
-    this.accumulativeBrightnessValues = [this.brightnessValues[0]];
-
-    for (let i = 1; i < NUMBER_OF_PIXELS; i++) {
-      let prevValue = this.accumulativeRedValues[i - 1];
-      this.accumulativeRedValues.push(prevValue + this.redValues[i]);
-      prevValue = this.accumulativeGreenValues[i - 1];
-      this.accumulativeGreenValues.push(prevValue + this.greenValues[i]);
-      prevValue = this.accumulativeBlueValues[i - 1];
-      this.accumulativeBlueValues.push(prevValue + this.blueValues[i]);
-      prevValue = this.accumulativeBrightnessValues[i - 1];
-      this.accumulativeBrightnessValues.push(prevValue + this.brightnessValues[i]);
+  getAccumulativeCount = level => {
+    return {
+      r: this.accumulative.r[level],
+      g: this.accumulative.g[level],
+      b: this.accumulative.b[level],
+      brightness: this.accumulative.brightness[level]
     }
   };
 
-  setMean = () => {
-    this.redMean = 0;
-    this.greenMean = 0;
-    this.blueMean = 0;
-    this.brightnessMean = 0;
-    for (let i = 0; i < NUMBER_OF_PIXELS; i++) {
-      this.redMean += this.getRedCount(i) * i;
-      this.greenMean += this.getGreenCount(i) * i;
-      this.blueMean += this.getBlueCount(i) * i;
-      this.brightnessMean += this.getBrightnessCount(i) * i;
+  getProbability = level => {
+    return {
+      r: this.getCount(level).r / this.getNumberOfPixels(),
+      g: this.getCount(level).g / this.getNumberOfPixels(),
+      b: this.getCount(level).b / this.getNumberOfPixels(),
+      brightness: this.getCount(level).brightness / this.getNumberOfPixels()
     }
-    this.redMean /= this.getNumberOfPixels();
-    this.greenMean /= this.getNumberOfPixels();
-    this.blueMean /= this.getNumberOfPixels();
-    this.brightnessMean /= this.getNumberOfPixels();
-  };
-
-  setStdVar = () => {
-    this.redStdVar = 0;
-    this.greenStdVar = 0;
-    this.blueStdVar = 0;
-    this.brightnessStdVar = 0;
-    for (let i = 0; i < NUMBER_OF_PIXELS; i++) {
-      this.redStdVar += this.getRedCount(i) * Math.pow(i - this.redMean, 2);
-      this.greenStdVar += this.getGreenCount(i) * Math.pow(i - this.greenMean, 2);
-      this.blueStdVar += this.getBlueCount(i) * Math.pow(i - this.blueMean, 2);
-      this.brightnessStdVar += this.getBrightnessCount(i) * Math.pow(i - this.brightnessMean, 2);
-    }
-    this.redStdVar = Math.sqrt(this.redStdVar / this.getNumberOfPixels());
-    this.greenStdVar = Math.sqrt(this.greenStdVar / this.getNumberOfPixels());
-    this.blueStdVar = Math.sqrt(this.blueStdVar / this.getNumberOfPixels());
-    this.brightnessStdVar = Math.sqrt(this.brightnessStdVar / this.getNumberOfPixels());
-  };
-
-  setMinMax = () => {
-    let minSelected = false;
-    this.minValue = 0;
-    this.maxValue = 0;
-    for (let i = 0; i < NUMBER_OF_PIXELS; i++) {
-      if (this.getBrightnessCount(i) !== 0) {
-        if (!minSelected) {
-          this.minValue = i;
-          minSelected = true;
-        }
-        this.maxValue = i;
-      }
-    }
-  };
-
-  setEntropy = () => {
-    this.brightnessEntropy = 0;
-    for (let i = 0; i < NUMBER_OF_PIXELS; i++) {
-      let p = this.getBrightnessProbability(i);
-      if (p !== 0) {
-        this.brightnessEntropy += p * Math.log2(p);
-      }
-    }
-    this.brightnessEntropy = -this.brightnessEntropy;
-  };
-
-  getFormat = () => {
-    return this.image.format;
-  };
-
-  getWidth = () => {
-    return this.image.width;
-  };
-
-  getHeight = () => {
-    return this.image.height;
   };
 
   getMean = () => {
-    return this.brightnessMean;
+    return this.mean;
   };
 
   getStdVar = () => {
-    return this.brightnessStdVar;
+    return this.stdVar;
   };
 
   getMax = () => {
-    return this.maxValue;
+    return this.max;
   };
 
   getMin = () => {
-    return this.minValue;
+    return this.min;
   };
 
   getEntropy = () => {
-    return this.brightnessEntropy;
+    return this.entropy;
   };
 
-  getData = array => {
+  getImage = () => {
+    return this.image;
+  };
+
+  getImageWidth = () => {
+    return this.getImage().getWidth();
+  };
+
+  getImageHeight = () => {
+    return this.getImage().getHeight();
+  };
+
+  getNumberOfPixels = () => {
+    return this.getImage().getNumberOfPixels();
+  };
+
+  getFormattedCount = component => {
+    return this.formatData(this.count[component]);
+  };
+
+  getFormattedAccumulativeCount = component => {
+    return this.formatData(this.accumulative[component]);
+  };
+
+  getFormattedData = (component, accumulative) => {
+    if (accumulative) {
+      return this.getFormattedAccumulativeCount(component);
+    } else {
+      return this.getFormattedCount(component);
+    }
+  };
+
+  formatData = array => {
     let data = [];
     for (let i = 0; i < array.length; i++) {
       data.push({x: i, y: array[i]});
@@ -205,35 +152,109 @@ class Histogram {
     return data;
   };
 
-  getRedData = accumulative => {
-    if (accumulative) {
-      return this.getData(this.accumulativeRedValues);
-    } else {
-      return this.getData(this.redValues);
+  initializeObject = obj => {
+    let components = Object.keys(obj);
+    for (let k = 0; k < components.length; k++) {
+      obj[components[k]] =
+          Array.apply(null, Array(256)).map(() => {return 0;});
     }
   };
 
-  getGreenData = accumulative => {
-    if (accumulative) {
-      return this.getData(this.accumulativeGreenValues);
-    } else {
-      return this.getData(this.greenValues);
+  setCount = () => {
+    this.initializeObject(this.count);
+    let components = Object.keys(this.count);
+    for (let i = 0; i < this.getImageWidth(); i++) {
+      for (let j = 0; j < this.getImageHeight(); j++) {
+        for (let k = 0; k < components.length; k++) {
+          let component = components[k];
+          let value = this.image.getColor(i, j, component);
+          this.count[component][value] += 1;
+        }
+      }
     }
   };
 
-  getBlueData = accumulative => {
-    if (accumulative) {
-      return this.getData(this.accumulativeBlueValues);
-    } else {
-      return this.getData(this.blueValues);
+  setAccumulativeCount = () => {
+    this.initializeObject(this.accumulative);
+    let components = Object.keys(this.accumulative);
+    for (let k = 0; k < components.length; k++) {
+      let component = components[k];
+      this.accumulative[component][0] = this.getCount(0)[component];
+    }
+    for (let i = 1; i < ProcessImage.MAX_PIXEL_VALUE; i++) {
+      for (let k = 0; k < components.length; k++) {
+        let component = components[k];
+        let prevValue = this.getAccumulativeCount(i - 1)[component];
+        let actualValue = this.getCount(i)[component];
+        this.accumulative[component][i] = prevValue + actualValue;
+      }
     }
   };
 
-  getBrightnessData = accumulative => {
-    if (accumulative) {
-      return this.getData(this.accumulativeBrightnessValues);
-    } else {
-      return this.getData(this.brightnessValues);
+  setMean = () => {
+    let components = Object.keys(this.mean);
+    for (let i = 0; i < ProcessImage.MAX_PIXEL_VALUE; i++) {
+      for (let k = 0; k < components.length; k++) {
+        let component = components[k];
+        this.mean[component] += this.getCount(i)[component] * i;
+      }
+    }
+    for (let k = 0; k < components.length; k++) {
+      let component = components[k];
+      this.mean[component] /= this.getNumberOfPixels();
+    }
+  };
+
+  setStdVar = () => {
+    let components = Object.keys(this.stdVar);
+    for (let i = 0; i < ProcessImage.MAX_PIXEL_VALUE; i++) {
+      for (let k = 0; k < components.length; k++) {
+        let component = components[k];
+        this.stdVar[component] +=
+            this.getCount(i)[component] * Math.pow(i - this.mean[component], 2);
+      }
+    }
+    for (let k = 0; k < components.length; k++) {
+      let component = components[k];
+      this.stdVar[component] =
+          Math.sqrt(this.stdVar[component] / this.getNumberOfPixels());
+    }
+  };
+
+  setMinMax = () => {
+    let components = Object.keys(this.min);
+    let selected = {};
+    for (let k = 0; k < components.length; k++) {
+      selected[components[k]] = false;
+    }
+    for (let i = 0; i < ProcessImage.MAX_PIXEL_VALUE; i++) {
+      for (let k = 0; k < components.length; k++) {
+        let component = components[k];
+        if (this.getCount(i)[component] !== 0) {
+          if (!selected[component]) {
+            this.min[component] = i;
+            selected[component] = true;
+          }
+          this.max[component] = i;
+        }
+      }
+    }
+  };
+
+  setEntropy = () => {
+    let components = Object.keys(this.entropy);
+    for (let i = 0; i < ProcessImage.MAX_PIXEL_VALUE; i++) {
+      for (let k = 0; k < components.length; k++) {
+        let component = components[k];
+        let p = this.getProbability(i)[component];
+        if (p !== 0) {
+          this.entropy[component] += p * Math.log2(p);
+        }
+      }
+    }
+    for (let k = 0; k < components.length; k++) {
+      let component = components[k];
+      this.entropy[component] = -this.entropy[component];
     }
   };
 }
