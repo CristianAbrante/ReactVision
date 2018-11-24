@@ -23,6 +23,10 @@
         {
           "name": "Lineal picewise adjustment",
           "id": "lineal_adjustment"
+        },
+        {
+          "name": "brightness and contrast",
+          "id": "brightness_contrast"
         }
       ]
     }

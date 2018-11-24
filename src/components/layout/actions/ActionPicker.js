@@ -5,6 +5,7 @@ import SaveImage from './SaveImageAction';
 // Lineal point operations.
 import BlackAndWhite from './point/lineal/BlackAndWhite';
 import LinealPicewiseAdjustment from './point/lineal/piecewise-adjustment/LinealPicewiseAdjustment';
+import BrightnessAndContrast from './point/lineal/BrightnessAndContrast';
 
 /**
  * Action picker object determines
@@ -16,7 +17,8 @@ let actionPicker = {
   load_img: controller => {return <LoadImage controller={controller}/>},
   save_img: controller => {return <SaveImage controller={controller}/>},
   black_white: controller => {return <BlackAndWhite controller={controller}/>},
-  lineal_adjustment: controller => {return <LinealPicewiseAdjustment controller={controller}/>}
+  lineal_adjustment: controller => {return <LinealPicewiseAdjustment controller={controller}/>},
+  brightness_contrast: controller => {return <BrightnessAndContrast controller={controller}/>}
 };
 
 export default actionPicker;
