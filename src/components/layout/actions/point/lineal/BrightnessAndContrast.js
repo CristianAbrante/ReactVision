@@ -7,6 +7,8 @@ import Slider from '@material-ui/lab/Slider';
 import TextField from '@material-ui/core/TextField';
 import ProcessImage from '../../../../../processor/image/ProcessImage';
 import Theme from '../../../../theme/'
+import BrightnessAndContrastOperation from '../../../../../processor/operations/point/lineal/BrightnessAndContrast';
+import LookUpTable from '../../../../../processor/operations/point/LookUpTable';
 
 const styles = {
   root: {
@@ -28,6 +30,7 @@ const styles = {
 };
 
 class BrightnessAndContrast extends Component {
+  brightnessAndContrast;
   state = {
     brightnessValue: 0.0,
     contrastValue: 0.0
@@ -36,6 +39,8 @@ class BrightnessAndContrast extends Component {
   constructor(props) {
     super(props);
     let controller = this.props.controller;
+    this.brightnessAndContrast =
+        new BrightnessAndContrastOperation('brightness', 0.0, 0.0);
     let histogram = controller.getCurrentHistogram();
     if (histogram !== undefined) {
       this.state.brightnessValue = histogram.getMean().brightness;
@@ -43,20 +48,36 @@ class BrightnessAndContrast extends Component {
     }
   }
 
+  applyOperation = () => {
+    let {controller} = this.props;
+    if (controller.isAnyImageSelected()) {
+      let {brightnessValue, contrastValue} = this.state;
+      let histogram = controller.getCurrentHistogram();
+      this.brightnessAndContrast.setHistogram(histogram);
+      this.brightnessAndContrast.setNewMean(brightnessValue);
+      this.brightnessAndContrast.setNewStdVar(contrastValue);
+      let lut = new LookUpTable(this.brightnessAndContrast);
+      controller.applyPointOperation(lut, 'brightness');
+    }
+  };
+
   onBrightnessSliderChange = (event, value) => {
     this.setState({brightnessValue: value});
+    this.applyOperation();
   };
 
   onBrightnessTextFieldChange = event => {
     let value = event.target.value;
     if (value < ProcessImage.MAX_PIXEL_VALUE
         && value >= ProcessImage.MIN_PIXEL_VALUE) {
-      this.setState({brightnessValue: event.target.value});
+      this.setState({brightnessValue: Number.parseFloat(event.target.value)});
     }
+    this.applyOperation();
   };
 
   onContrastSliderChange = (event, value) => {
     this.setState({contrastValue: value});
+    this.applyOperation();
   };
 
   onContrastTextFieldChange = event => {
@@ -65,6 +86,7 @@ class BrightnessAndContrast extends Component {
         && value >= ProcessImage.MIN_PIXEL_VALUE) {
       this.setState({contrastValue: event.target.value});
     }
+    this.applyOperation();
   };
 
   render() {
