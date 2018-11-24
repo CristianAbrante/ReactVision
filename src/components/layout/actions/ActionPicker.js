@@ -1,7 +1,10 @@
 import React from 'react';
 import LoadImage from './LoadImageAction';
 import SaveImage from './SaveImageAction';
-import LinealPicewiseAdjustment from './lineal/piecewise-adjustment/LinealPicewiseAdjustment';
+
+// Lineal point operations.
+import BlackAndWhite from './point/lineal/BlackAndWhite';
+import LinealPicewiseAdjustment from './point/lineal/piecewise-adjustment/LinealPicewiseAdjustment';
 
 /**
  * Action picker object determines
@@ -12,6 +15,7 @@ import LinealPicewiseAdjustment from './lineal/piecewise-adjustment/LinealPicewi
 let actionPicker = {
   load_img: controller => {return <LoadImage controller={controller}/>},
   save_img: controller => {return <SaveImage controller={controller}/>},
+  black_white: controller => {return <BlackAndWhite controller={controller}/>},
   lineal_adjustment: controller => {return <LinealPicewiseAdjustment controller={controller}/>}
 };
 

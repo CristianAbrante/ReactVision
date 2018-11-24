@@ -14,8 +14,12 @@
       ]
     },
     {
-      "title": "Lineal operations",
+      "title": "Lineal point operations",
       "options": [
+        {
+          "name": "Black and white",
+          "id": "black_white"
+        },
         {
           "name": "Lineal picewise adjustment",
           "id": "lineal_adjustment"

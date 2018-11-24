@@ -63,6 +63,29 @@ class ImageController {
     return this.selected;
   };
 
+  applyPointOperation(table, component) {
+    let image = this.getSelectedImage();
+    for (let i = 0; i < image.getWidth(); i++) {
+      for (let j = 0; j < image.getHeight(); j++) {
+        let imageColor = image.getColor(i, j, 'brightness');
+        let tableColor = table.getValue(imageColor);
+        image.setColor(i, j, component, tableColor);
+      }
+    }
+    this.updateImageHistogram();
+    this.updateImageCanvas();
+    this.updateMethod();
+  }
+
+  isAnyImageSelected = () => {
+    return this.images.length !== 0;
+  };
+
+  updateImageHistogram = () => {
+    let histogram = this.histograms[this.getSelectedImageIndex()];
+    histogram.setImage(this.getSelectedImage());
+  };
+
   static imageIsValid(image) {
     if (image === undefined) {
       return false;

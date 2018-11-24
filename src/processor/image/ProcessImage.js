@@ -20,6 +20,8 @@ class ProcessImage {
   title;
   format;
   data;
+  width;
+  height;
 
   /**
    * Constructor of the class
@@ -47,19 +49,21 @@ class ProcessImage {
   };
 
   setImageData = (data, width, height) => {
-    this.data = new ImageData(new Uint8ClampedArray(data), width, height);
+    this.data = new Uint8ClampedArray(data);
+    this.width = width;
+    this.height = height;
   };
 
   getImageData = () => {
-    return this.data;
+    return new ImageData(this.data, this.width, this.height);
   };
 
   getWidth = () => {
-    return this.getImageData().width;
+    return this.width;
   };
 
   getHeight = () => {
-    return this.getImageData().height;
+    return this.height;
   };
 
   getNumberOfPixels = () => {
@@ -120,7 +124,7 @@ class ProcessImage {
    * @returns {*}
    */
   getComponent = position => {
-    return this.data.data[position];
+    return this.data[position];
   };
 
   /**
@@ -131,7 +135,7 @@ class ProcessImage {
    * @param color that we want to set.
    */
   setComponent = (position, color) => {
-    this.data.data = color;
+    this.data[position] = color;
   };
 
   /**
@@ -167,11 +171,13 @@ class ProcessImage {
    * @param color
    */
   setColor = (x, y, component, color) => {
-    if (component === 'brightness')
+    if (component === 'brightness') {
       this.setBrightness(x, y, color);
+      return;
+    }
 
     if (!ProcessImage.colorIsInRange(color))
-      throw new Error('color is not in range.');
+      throw new Error('color is not in range: ' + color);
 
     const numericComponent = ProcessImage.colorComponent[component];
     if (numericComponent === undefined)
