@@ -17,7 +17,7 @@ class ImageController {
     this.images.push(image);
     this.histograms.push(new Histogram(image));
     this.selected = this.numberOfImages() - 1;
-    //this.updateImageCanvas();
+    this.updateImageCanvas();
     this.updateMethod();
   };
 

@@ -21,6 +21,15 @@
           "id": "lineal_adjustment"
         }
       ]
+    },
+    {
+      "title": "Options",
+      "options": [
+        {
+          "name": "Cropper",
+          "id": "cropper"
+        }
+      ]
     }
   ]
 }
