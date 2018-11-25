@@ -68,6 +68,9 @@ class ProcessImage {
 
   createNewState = () => {
     let newState = this.getCurrentStateData().slice();
+    while (this.dataHistoryIndex !== this.getNumberOfStates() - 1) {
+      this.dataHistory.pop();
+    }
     this.dataHistory.push(newState);
   };
 
