@@ -1,10 +1,12 @@
-import React, { PureComponent } from "react";
+import React, {Component} from 'react';
 import Paper from '@material-ui/core/Paper'
 import ImageTabs from './ImageTabs'
 import theme from '../../theme/'
 import WorkspaceBar from './WorkspaceBar';
-import ReactCrop from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css';
+import ProcessImage from '../../../processor/image/ProcessImage'
+import RegionSelect from 'react-region-select';
+import objectAssign from 'object-assign';
+import Button from '@material-ui/core/Button';
 
 const workspaceStyle = {
   background: theme.palette.primary.main,
@@ -23,28 +25,30 @@ const canvasContainerStyle = {
   overflow: "auto",
 };
 
+const regionStyle = {
+  background: 'rgba(0, 102, 204, 0.5)'
+};
+
 /**
  * Component used to render the main workspace
  * to work with images. It provides a tab
  * environment.
  * @param props
  */
-class ImageWorkspace extends PureComponent  {
+class ImageWorkspace extends Component {
   canvasRef;
   state = {
     x: -1,
     y: -1,
-    src: "",
-    crop: {
-      x: 10,
-      y: 10,
-      width: 50
-    }
+    regions: [],
   };
 
   constructor(props) {
     super(props);
     this.canvasRef = React.createRef();
+    this.regionRenderer = this.regionRenderer.bind(this);
+		this.updateRegions = this.updateRegions.bind(this);
+    this.props.keyController("Escape", this.handleKeyPress);
   }
 
   componentDidMount() {
@@ -59,81 +63,80 @@ class ImageWorkspace extends PureComponent  {
     this.setState({x: -1, y: -1});
   }
 
-  onImageLoaded = (image, pixelCrop) => {
-    this.imageRef = image;
-  };
+ setCropState = () => {
+    this.state.cropEnabled = !this.state.cropEnabled;
+ }
 
-  onCropChange = crop => {
-    this.setState({ crop });
-  };
+handleCrop = () => {
+    let originalImageData = this.props.controller.getSelectedImage();
 
-  getCroppedImg(image, pixelCrop, fileName) {
-    console.log("getcropeed")
-    console.log(image);
-    console.log(pixelCrop);
-    console.log(fileName);
-    const canvas = document.createElement("canvas");
-    canvas.width = pixelCrop.width;
-    canvas.height = pixelCrop.height;
-    const ctx = canvas.getContext("2d");
+    let fromX = this.state.regions[0].x;
+    let fromY = this.state.regions[0].y;
+    let toX =  originalImageData.getWidth() * (this.state.regions[0].width/100);
+    let toY =  originalImageData.getHeight() * (this.state.regions[0].height/100);
+    let width = toX - fromX;
+    let height = toY -fromY;
 
-    ctx.drawImage(
-      image,
-      pixelCrop.x,
-      pixelCrop.y,
-      pixelCrop.width,
-      pixelCrop.height,
-      0,
-      0,
-      pixelCrop.width,
-      pixelCrop.height
-    );
+    let ctx = this.props.controller.getCanvas().getContext('2d');
+    console.log(ctx.getImageData(fromX, fromY, toX, toY).data)
 
-    return new Promise((resolve, reject) => {
-      canvas.toBlob(blob => {
-        blob.name = fileName;
-        window.URL.revokeObjectURL(this.fileUrl);
-        this.fileUrl = window.URL.createObjectURL(blob);
-        resolve(this.fileUrl);
-      }, "image/jpeg");
-    });
-  }
+    let image = new ProcessImage(originalImageData.getTitle() + " - Copy", ctx.getImageData(fromX, fromY, width, height).data, width, height);
+    this.props.controller.add(image);
+}
+
+ updateRegions (regions) {
+		this.setState({
+			regions: regions
+		});
+	}
+
+	regionRenderer (regionProps) {
+		if (!regionProps.isChanging) {
+			return (
+
+        <div style={{ position: 'absolute', bottom: '-2.5em'}}>
+        <Button variant="contained" color="secondary" onClick={this.handleCrop}>
+        Crop
+      </Button>
+
+      </div>
+			);
+		}
+	}
+
+  handleKeyPress = () => {
+    this.setState({ regions: [] });
+}
 
   render() {
-    if(this.props.controller.numberOfImages() > 0){
-      this.state.src = this.props.controller.canvas.toDataURL();
-      //console.log(this.props.controller.canvas.toDataURL())
-    }
-
-
-    const { croppedImageUrl } = this.state;
-
+    let showCropper = {display: this.props.controller.numberOfImages > 0 ? "none" : "block"}
 
     return(
         <Paper
             style={workspaceStyle}>
           <ImageTabs
               controller={this.props.controller}/>
-          <div style={canvasContainerStyle}>
+          <div style={canvasContainerStyle}
+          >
 
-          {this.state.src && (
-          <ReactCrop
-            src={this.state.src}
-            crop={this.state.crop}
-            onImageLoaded={this.onImageLoaded}
-            onComplete={this.onCropComplete}
-            onChange={this.onCropChange}
-          />
-        )}
-        {croppedImageUrl && <img alt="Crop" src={croppedImageUrl} />}
+          <RegionSelect
+						maxRegions={1}
+						regions={this.state.regions}
+            regionStyle={regionStyle}
+						constraint
+            regionRenderer={this.regionRenderer}
+						onChange={this.updateRegions}
+						style={showCropper}
+					>
 
-
-            <canvas
+          <canvas
                 ref={this.canvasRef}
                 onMouseMove={this.canvasMovement}
                 onMouseLeave={this.mouseLeaved}>
               Your browser do not support canvas
-            </canvas>
+          </canvas>
+          </RegionSelect>
+
           </div>
           <WorkspaceBar
               position={this.state}

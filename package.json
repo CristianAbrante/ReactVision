@@ -9,9 +9,9 @@
     "file-saver": "^2.0.0",
     "get-pixels": "3.3.2",
     "react": "^16.5.2",
-    "react-cropper": "^1.0.1",
     "react-dom": "^16.5.2",
-    "react-image-crop": "^6.0.8",
+    "react-key-handler": "^1.2.0-beta.3",
+    "react-region-select": "^2.3.0",
     "react-scripts": "2.0.4",
     "react-vis": "^1.11.4"
   },

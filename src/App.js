@@ -13,10 +13,14 @@ import ImageController from './processor/controller/ImageController';
 import Paper from '@material-ui/core/Paper';
 import { MuiThemeProvider} from '@material-ui/core/styles';
 
+import KeyHandler, { KEYDOWN } from 'react-key-handler';
+
 class App extends Component {
   state = {
     controller: undefined,
     currentAction: undefined,
+    onKeyPressed: undefined,
+    keyAction: undefined
   };
 
   constructor(props) {
@@ -32,20 +36,31 @@ class App extends Component {
     this.setState({currentAction: action});
   };
 
+  updateKeyController = (key, action) => {
+    this.setState({onKeyPressed: key, keyAction: action});
+  };
+
   render() {
     const gridContainerClass = "grid-container";
     const gridItemClass = "grid-item";
-
     return (
       <MuiThemeProvider theme={Theme}>
         <Paper className={gridContainerClass + " App"}>
+        <KeyHandler
+            keyEventName={KEYDOWN}
+            keyValue={this.state.onKeyPressed}
+            onKeyHandle={this.state.keyAction}
+          />
           <div className={gridItemClass + " item-menu"}>
             <MainMenu
                 items={MenuData.items}
                 updateAction={this.updateCurrentAction}/>
           </div>
           <div className={gridItemClass + " item-workspace"}>
-            <ImageWorkspace controller={this.state.controller}/>
+            <ImageWorkspace
+                controller={this.state.controller}
+                keyController={this.updateKeyController}
+                />
           </div>
           <div className={gridItemClass + " item-info"}>
             <Info

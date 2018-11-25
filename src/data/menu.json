@@ -29,6 +29,15 @@
           "id": "brightness_contrast"
         }
       ]
+    },
+    {
+      "title": "Options",
+      "options": [
+        {
+          "name": "Cropper",
+          "id": "cropper"
+        }
+      ]
     }
   ]
 }
