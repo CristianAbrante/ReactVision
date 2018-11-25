@@ -3,8 +3,10 @@ import Paper from '@material-ui/core/Paper'
 import ImageTabs from './ImageTabs'
 import theme from '../../theme/'
 import WorkspaceBar from './WorkspaceBar';
-import Cropper from 'react-cropper';
-import 'cropperjs/dist/cropper.css'; // see installation section above for versions of NPM older than 3.0.0
+import ProcessImage from '../../../processor/image/ProcessImage'
+import RegionSelect from 'react-region-select';
+import objectAssign from 'object-assign';
+import Button from '@material-ui/core/Button';
 
 const workspaceStyle = {
   background: theme.palette.primary.main,
@@ -23,6 +25,10 @@ const canvasContainerStyle = {
   overflow: "auto",
 };
 
+const regionStyle = {
+  background: 'rgba(0, 102, 204, 0.5)'
+};
+
 /**
  * Component used to render the main workspace
  * to work with images. It provides a tab
@@ -34,13 +40,15 @@ class ImageWorkspace extends Component {
   state = {
     x: -1,
     y: -1,
-    cropEnabled : false,
+    regions: [],
   };
 
   constructor(props) {
     super(props);
     this.canvasRef = React.createRef();
-    this.props.controller.cropper = this.setCropState;
+    this.regionRenderer = this.regionRenderer.bind(this);
+		this.updateRegions = this.updateRegions.bind(this);
+    this.props.keyController("Escape", this.handleKeyPress);
   }
 
   componentDidMount() {
@@ -55,43 +63,80 @@ class ImageWorkspace extends Component {
     this.setState({x: -1, y: -1});
   }
 
-  _crop(){
-   // image in dataUrl
-   console.log(this.refs.cropper.getCroppedCanvas().toDataURL());
- }
-
  setCropState = () => {
     this.state.cropEnabled = !this.state.cropEnabled;
  }
 
+handleCrop = () => {
+    let originalImageData = this.props.controller.getSelectedImage();
+
+    let fromX = this.state.regions[0].x;
+    let fromY = this.state.regions[0].y;
+    let toX =  originalImageData.getWidth() * (this.state.regions[0].width/100);
+    let toY =  originalImageData.getHeight() * (this.state.regions[0].height/100);
+    let width = toX - fromX;
+    let height = toY -fromY;
+
+    let ctx = this.props.controller.getCanvas().getContext('2d');
+    console.log(ctx.getImageData(fromX, fromY, toX, toY).data)
+
+    let image = new ProcessImage(originalImageData.getTitle() + " - Copy", ctx.getImageData(fromX, fromY, width, height).data, width, height);
+    this.props.controller.add(image);
+}
+
+ updateRegions (regions) {
+		this.setState({
+			regions: regions
+		});
+	}
+
+	regionRenderer (regionProps) {
+		if (!regionProps.isChanging) {
+			return (
+
+        <div style={{ position: 'absolute', bottom: '-2.5em'}}>
+        <Button variant="contained" color="secondary" onClick={this.handleCrop}>
+        Crop
+      </Button>
+
+      </div>
+			);
+		}
+	}
+
+  handleKeyPress = () => {
+    this.setState({ regions: [] });
+}
+
   render() {
-    let showCanvas = {display: !this.state.cropEnabled ? "block" : "none"}
-    let showCropper = {display: this.state.cropEnabled ? "block" : "none"}
+    let showCropper = {display: this.props.controller.numberOfImages > 0 ? "none" : "block"}
 
     return(
         <Paper
             style={workspaceStyle}>
           <ImageTabs
               controller={this.props.controller}/>
-          <div style={canvasContainerStyle}>
+          <div style={canvasContainerStyle}
+          >
 
-          {!this.state.cropEnabled && (
+          <RegionSelect
+						maxRegions={1}
+						regions={this.state.regions}
+            regionStyle={regionStyle}
+						constraint
+            regionRenderer={this.regionRenderer}
+						onChange={this.updateRegions}
+						style={showCropper}
+					>
+
           <canvas
-                style={showCanvas}
                 ref={this.canvasRef}
                 onMouseMove={this.canvasMovement}
                 onMouseLeave={this.mouseLeaved}>
               Your browser do not support canvas
           </canvas>
-          )}
-          {this.props.controller.numberOfImages() > 0 && this.state.cropEnabled && (
-            <Cropper
-              ref='cropper'
-              src={this.props.controller.getCanvas().toDataURL()}
-              style={showCropper}
-              guides={false}
-              crop={this._crop.bind(this)} />
-            )}
+          </RegionSelect>
+
           </div>
           <WorkspaceBar
               position={this.state}
