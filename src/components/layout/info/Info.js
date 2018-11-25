@@ -31,16 +31,15 @@ class Info extends Component {
 
           </div>
       )
-      //return <Typography>Open an image</Typography>
     } else {
       return (
           <div style={{padding: "20px"}}>
             <Histogram
                 accumulative = {this.state.accumulative}
                 brightness = {this.state.disableColors}
-                red = {this.state.red}
-                green = {this.state.green}
-                blue = {this.state.blue}
+                r = {this.state.red}
+                g = {this.state.green}
+                b = {this.state.blue}
                 currentHistogram={histogram} />
           </div>);
     }

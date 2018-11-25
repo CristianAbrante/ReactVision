@@ -45,8 +45,8 @@ class ImageController {
 
   updateImageCanvas = () => {
     let imageToDisplay = this.getSelectedImage();
-    this.canvas.width = imageToDisplay.width;
-    this.canvas.height = imageToDisplay.height;
+    this.canvas.width = imageToDisplay.getWidth();
+    this.canvas.height = imageToDisplay.getHeight();
     let ctx = this.canvas.getContext('2d');
     ctx.putImageData(imageToDisplay.getImageData(), 0, 0);
   };
@@ -61,6 +61,29 @@ class ImageController {
 
   getSelectedImageIndex = () => {
     return this.selected;
+  };
+
+  applyPointOperation(table, component) {
+    let image = this.getSelectedImage();
+    for (let i = 0; i < image.getWidth(); i++) {
+      for (let j = 0; j < image.getHeight(); j++) {
+        let imageColor = image.getColor(i, j, 'brightness');
+        let tableColor = table.getValue(imageColor);
+        image.setColor(i, j, component, tableColor);
+      }
+    }
+    this.updateImageHistogram();
+    this.updateImageCanvas();
+    this.updateMethod();
+  }
+
+  isAnyImageSelected = () => {
+    return this.images.length !== 0;
+  };
+
+  updateImageHistogram = () => {
+    let histogram = this.histograms[this.getSelectedImageIndex()];
+    histogram.setImage(this.getSelectedImage());
   };
 
   static imageIsValid(image) {
