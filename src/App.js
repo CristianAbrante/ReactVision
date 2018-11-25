@@ -25,7 +25,7 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state.controller = new ImageController(this.updateController)
+    this.state.controller = new ImageController(this.updateController, this.updateCurrentAction);
   }
 
   updateController = () => {

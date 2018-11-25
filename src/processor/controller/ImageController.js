@@ -5,12 +5,14 @@ class ImageController {
   histograms;
   canvas;
   updateMethod;
+  resetActionMethod;
   selected;
 
-  constructor(updateMethod) {
+  constructor(updateMethod, resetActionMethod) {
     this.images = [];
     this.histograms = [];
     this.updateMethod = updateMethod;
+    this.resetActionMethod = resetActionMethod;
   }
 
   add = (image) => {
@@ -18,6 +20,7 @@ class ImageController {
     this.histograms.push(new Histogram(image));
     this.selected = this.numberOfImages() - 1;
     this.updateImageCanvas();
+    this.resetActionMethod(undefined);
     this.updateMethod();
   };
 
@@ -40,6 +43,7 @@ class ImageController {
   updateSelectedImage = index => {
     this.selected = index;
     this.updateImageCanvas();
+    this.resetActionMethod(undefined);
     this.updateMethod();
   };
 
