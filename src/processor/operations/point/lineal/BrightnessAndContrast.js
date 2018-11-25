@@ -5,24 +5,22 @@ class BrightnessAndContrast {
   newStdVar;
   oldMean;
   oldStdVar;
-  histogram;
-  component;
 
-  constructor(component, newMean, newStdVar) {
-    this.setComponent(component);
+  constructor(oldMean, oldStdVar, newMean, newStdVar) {
+    this.setOldMean(oldMean);
     this.setNewMean(newMean);
+    this.setOldStdVar(newMean);
     this.setNewStdVar(newStdVar);
   }
 
-  setComponent = component => {
-    if (component !== undefined)
-      this.component = component;
+  setOldMean = oldMean => {
+    if (this.valueIsValid(oldMean))
+      this.oldMean = oldMean;
   };
 
-  setHistogram = histogram => {
-    this.histogram = histogram;
-    this.oldMean = this.histogram.getMean()[this.component];
-    this.oldStdVar = this.histogram.getStdVar()[this.component];
+  setOldStdVar = oldStdVar => {
+    if (this.valueIsValid(oldStdVar))
+      this.oldStdVar = oldStdVar;
   };
 
   setNewMean = newMean => {

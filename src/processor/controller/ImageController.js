@@ -63,11 +63,13 @@ class ImageController {
     return this.selected;
   };
 
-  applyPointOperation(table, component) {
+  applyPointOperation(table, component, retrieveDataFromPreviousState) {
     let image = this.getSelectedImage();
     for (let i = 0; i < image.getWidth(); i++) {
       for (let j = 0; j < image.getHeight(); j++) {
-        let imageColor = image.getColor(i, j, 'brightness');
+        image.setPreviousState();
+        let imageColor = image.getColor(i, j, component);
+        image.setNextState();
         let tableColor = table.getValue(imageColor);
         image.setColor(i, j, component, tableColor);
       }

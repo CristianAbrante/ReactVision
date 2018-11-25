@@ -30,6 +30,7 @@ const styles = {
 };
 
 class BrightnessAndContrast extends Component {
+  operationHasBeenApplied = false;
   brightnessAndContrast;
   state = {
     brightnessValue: 0.0,
@@ -40,20 +41,26 @@ class BrightnessAndContrast extends Component {
     super(props);
     let controller = this.props.controller;
     this.brightnessAndContrast =
-        new BrightnessAndContrastOperation('brightness', 0.0, 0.0);
+        new BrightnessAndContrastOperation(0.0, 0.0, 0.0, 0.0);
     let histogram = controller.getCurrentHistogram();
     if (histogram !== undefined) {
       this.state.brightnessValue = histogram.getMean().brightness;
       this.state.contrastValue = histogram.getStdVar().brightness;
+      this.brightnessAndContrast.setOldMean(this.state.brightnessValue);
+      this.brightnessAndContrast.setOldStdVar(this.state.contrastValue);
     }
   }
 
   applyOperation = () => {
     let {controller} = this.props;
     if (controller.isAnyImageSelected()) {
+      if (!this.operationHasBeenApplied) {
+        let image = controller.getSelectedImage();
+        image.createNewState();
+        image.setNextState();
+        this.operationHasBeenApplied = true;
+      }
       let {brightnessValue, contrastValue} = this.state;
-      let histogram = controller.getCurrentHistogram();
-      this.brightnessAndContrast.setHistogram(histogram);
       this.brightnessAndContrast.setNewMean(brightnessValue);
       this.brightnessAndContrast.setNewStdVar(contrastValue);
       let lut = new LookUpTable(this.brightnessAndContrast);

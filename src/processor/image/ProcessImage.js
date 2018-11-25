@@ -19,9 +19,13 @@ class ProcessImage {
 
   title;
   format;
-  data;
   width;
   height;
+
+  dataHistory;
+  dataHistoryIndex;
+  getLastStateHistory;
+  setLastStateHistory;
 
   /**
    * Constructor of the class
@@ -49,13 +53,52 @@ class ProcessImage {
   };
 
   setImageData = (data, width, height) => {
-    this.data = new Uint8ClampedArray(data);
+    this.dataHistory = [];
+    this.dataHistory.push(new Uint8ClampedArray(data));
+    this.dataHistoryIndex = 0;
+    this.getLastStateHistory = false;
+    this.setLastStateHistory = false;
     this.width = width;
     this.height = height;
   };
 
+  getNumberOfStates = () => {
+    return this.dataHistory.length;
+  };
+
+  createNewState = () => {
+    let newState = this.getCurrentStateData().slice();
+    this.dataHistory.push(newState);
+  };
+
+  setInitialState = () => {
+    this.dataHistoryIndex = 0;
+  };
+
+  setPreviousState = () => {
+    if (this.dataHistoryIndex !== 0) {
+      this.dataHistoryIndex -= 1;
+    }
+  };
+
+  setNextState = () => {
+    if (this.dataHistoryIndex !== this.getNumberOfStates() - 1) {
+      this.dataHistoryIndex += 1;
+    }
+  };
+
+  getCurrentStateData = () => {
+    return this.dataHistory[this.dataHistoryIndex];
+  };
+
+  getLastStateData = () => {
+    if (this.dataHistoryIndex !== 0) {
+      return this.dataHistory[this.dataHistoryIndex - 1];
+    }
+  };
+
   getImageData = () => {
-    return new ImageData(this.data, this.width, this.height);
+    return new ImageData(this.getCurrentStateData(), this.width, this.height);
   };
 
   getWidth = () => {
@@ -124,7 +167,12 @@ class ProcessImage {
    * @returns {*}
    */
   getComponent = position => {
-    return this.data[position];
+    //return this.getCurrentStateData()[position];
+    if (this.getLastStateHistory) {
+      return this.getLastStateData()[position];
+    } else {
+      return this.getCurrentStateData()[position];
+    }
   };
 
   /**
@@ -135,7 +183,12 @@ class ProcessImage {
    * @param color that we want to set.
    */
   setComponent = (position, color) => {
-    this.data[position] = color;
+    //this.getCurrentStateData()[position] = color;
+    if (this.setLastStateHistory) {
+      this.getLastStateData()[position] = color;
+    } else {
+      this.getCurrentStateData()[position] = color;
+    }
   };
 
   /**
