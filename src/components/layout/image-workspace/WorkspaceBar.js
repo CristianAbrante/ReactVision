@@ -2,17 +2,20 @@ import React, {Component} from 'react';
 import Paper from '@material-ui/core/Paper';
 import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
+import Icon from '@material-ui/core/Icon';
 
 let containerStyles = {
   padding: "10px",
   display: "flex",
-  justifyContent: "space-between"
+  justifyContent: "space-between",
+  alignItems: "center"
 };
 
 class WorkspaceBar extends Component {
 
   calculateColor = () => {
-    let image = this.props.image;
+    let image = this.props.controller.getSelectedImage();
     let {x, y} = this.props.position;
 
     if (image === undefined || x === -1 || y === -1) {
@@ -25,7 +28,7 @@ class WorkspaceBar extends Component {
   };
 
   calculateColorText = () => {
-    let image = this.props.image;
+    let image = this.props.controller.getSelectedImage();
     let {x, y} = this.props.position;
 
     if (image === undefined || x === -1 || y === -1) {
@@ -38,13 +41,39 @@ class WorkspaceBar extends Component {
   };
 
   calculatePosition = () => {
-    let image = this.props.image;
+    let image = this.props.controller.getSelectedImage();
     let {x, y} = this.props.position;
     if (image === undefined || x === -1 || y === -1) {
       return "x:- y:-";
     } else {
       return "x:" + x + " " + "y:" + y;
     }
+  };
+
+  updateImageState = operation => () => {
+    let {controller} = this.props;
+    let image = controller.getSelectedImage()
+    if (image !== undefined) {
+      switch (operation) {
+        case 'undo': {
+          image.setPreviousState();
+          break;
+        }
+        case 'redo': {
+          image.setNextState();
+          break;
+        }
+        case 'restore': {
+          image.setInitialState();
+          break;
+        }
+      }
+      controller.updateImageHistogram();
+      controller.updateImageCanvas();
+      controller.resetActionMethod(undefined);
+      controller.updateMethod();
+    }
+
   };
 
   render() {
@@ -67,6 +96,21 @@ class WorkspaceBar extends Component {
                 variant="outlined"/>
           </div>
           <div>
+            <IconButton
+                color="secondary"
+                onClick={this.updateImageState('undo')}>
+              <Icon>undo</Icon>
+            </IconButton>
+            <IconButton
+                color="secondary"
+                onClick={this.updateImageState('restore')}>
+              <Icon>compare</Icon>
+            </IconButton>
+            <IconButton
+                color="secondary"
+                onClick={this.updateImageState('redo')}>
+              <Icon>redo</Icon>
+            </IconButton>
           </div>
         </Paper>
     )

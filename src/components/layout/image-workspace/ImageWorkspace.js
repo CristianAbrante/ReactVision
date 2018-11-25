@@ -140,7 +140,7 @@ handleCrop = () => {
           </div>
           <WorkspaceBar
               position={this.state}
-              image={this.props.controller.getSelectedImage()}/>
+              controller={this.props.controller}/>
         </Paper>
     )
   }
