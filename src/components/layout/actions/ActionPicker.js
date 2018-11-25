@@ -4,7 +4,7 @@ import SaveImage from './SaveImageAction';
 
 // Lineal point operations.
 import BlackAndWhite from './point/lineal/BlackAndWhite';
-import LinealPicewiseAdjustment from './point/lineal/piecewise-adjustment/LinealPicewiseAdjustment';
+import LinealPicewiseAdjustment from './point/lineal/LinealPicewiseAdjustment';
 import BrightnessAndContrast from './point/lineal/BrightnessAndContrast';
 
 /**

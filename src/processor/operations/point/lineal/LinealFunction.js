@@ -28,3 +28,5 @@ class ClampedLinealFunction {
     this.b = p1.y - this.a * p1.x;
   };
 }
+
+export default ClampedLinealFunction;
