@@ -70,18 +70,18 @@ class ImageWorkspace extends Component {
 handleCrop = () => {
     let originalImageData = this.props.controller.getSelectedImage();
 
-    let fromX = this.state.regions[0].x;
-    let fromY = this.state.regions[0].y;
+    let fromX = originalImageData.getWidth() * (this.state.regions[0].x/100);
+    let fromY = originalImageData.getHeight() * (this.state.regions[0].y/100);
     let toX =  originalImageData.getWidth() * (this.state.regions[0].width/100);
     let toY =  originalImageData.getHeight() * (this.state.regions[0].height/100);
-    let width = toX - fromX;
-    let height = toY -fromY;
 
     let ctx = this.props.controller.getCanvas().getContext('2d');
-    console.log(ctx.getImageData(fromX, fromY, toX, toY).data)
+    let imageData = new ImageData(ctx.getImageData(fromX, fromY, toX, toY).data, toX, toY);
 
-    let image = new ProcessImage(originalImageData.getTitle() + " - Copy", ctx.getImageData(fromX, fromY, width, height).data, width, height);
+    this.handleKeyPress();
+    let image = new ProcessImage(originalImageData.getTitle() + " - Copy", imageData.data, imageData.width, imageData.height);
     this.props.controller.add(image);
+
 }
 
  updateRegions (regions) {
