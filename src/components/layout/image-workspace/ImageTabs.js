@@ -16,6 +16,7 @@ const styles = theme => ({
 
 class ImageTabs extends React.Component {
   handleChange = (event, value) => {
+    console.log(value)
     this.props.controller.updateSelectedImage(value);
   };
 

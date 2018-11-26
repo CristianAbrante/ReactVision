@@ -51,27 +51,29 @@ class WorkspaceBar extends Component {
   };
 
   updateImageState = operation => () => {
-    let {controller} = this.props;
-    let image = controller.getSelectedImage()
-    if (image !== undefined) {
-      switch (operation) {
-        case 'undo': {
-          image.setPreviousState();
-          break;
+      let {controller} = this.props;
+      let image = controller.getSelectedImage()
+      if (image !== undefined) {
+        switch (operation) {
+          case 'undo': {
+            image.setPreviousState();
+            break;
+          }
+          case 'redo': {
+            image.setNextState();
+            break;
+          }
+          case 'restore': {
+            image.setInitialState();
+            break;
+          }
         }
-        case 'redo': {
-          image.setNextState();
-          break;
-        }
-        case 'restore': {
-          image.setInitialState();
-          break;
-        }
-      }
-      controller.updateImageHistogram();
-      controller.updateImageCanvas();
-      controller.resetActionMethod(undefined);
-      controller.updateMethod();
+
+        controller.updateImageHistogram();
+        controller.updateImageCanvas();
+        controller.resetActionMethod(undefined);
+        controller.updateMethod();
+
     }
 
   };

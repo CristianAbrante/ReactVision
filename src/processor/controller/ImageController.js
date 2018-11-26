@@ -25,12 +25,13 @@ class ImageController {
   };
 
   delete = (index) => {
+    console.log(index)
     if(index > -1) {
-      this.images = this.images.splice(index, 1);
-      this.histograms = this.histograms.splice(index, 1);
+      this.images.splice(index, 1);
+      this.histograms.splice(index, 1);
     }
-    console.log(this.images)
-    console.log(this.histograms)
+
+
     if(index < this.images.length - 1)
       this.selected++;
     console.log(this.selected)
@@ -61,10 +62,16 @@ class ImageController {
 
   updateImageCanvas = () => {
     let imageToDisplay = this.getSelectedImage();
-    this.canvas.width = imageToDisplay.getWidth();
-    this.canvas.height = imageToDisplay.getHeight();
-    let ctx = this.canvas.getContext('2d');
-    ctx.putImageData(imageToDisplay.getImageData(), 0, 0);
+
+    if(imageToDisplay != undefined){
+      this.canvas.width = imageToDisplay.getWidth();
+      this.canvas.height = imageToDisplay.getHeight();
+      let ctx = this.canvas.getContext('2d');
+      ctx.putImageData(imageToDisplay.getImageData(), 0, 0);
+    }else{
+      let context = this.canvas.getContext('2d');
+      context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
   };
 
   getSelectedImage = () => {
