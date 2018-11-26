@@ -4,6 +4,8 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Clear from '@material-ui/icons/Clear';
+import IconButton from '@material-ui/core/IconButton';
 
 const styles = theme => ({
   root: {
@@ -16,6 +18,10 @@ class ImageTabs extends React.Component {
   handleChange = (event, value) => {
     this.props.controller.updateSelectedImage(value);
   };
+
+  handleCloseEvent = () => {
+    this.props.controller.delete(this.props.controller.getSelectedImageIndex());
+  }
 
   render() {
     const { classes } = this.props;
@@ -36,8 +42,16 @@ class ImageTabs extends React.Component {
               {
                 controller.getImageTitles().map(
                     title => <Tab
-                        label={title}
-                        key={title} />
+                        component="div"
+                        key={title}
+                        label={
+                          <div style={{display: "flex", justifyContent: "space-between"}}>
+                          {title}
+                        <IconButton color="secondary" aria-label="Add an alarm" onClick={this.handleCloseEvent}>
+                          <Clear />
+                        </IconButton>
+                        </div>
+                      }/>
                 )
               }
             </Tabs>
