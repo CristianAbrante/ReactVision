@@ -7,6 +7,9 @@ import BlackAndWhite from './point/lineal/BlackAndWhite';
 import LinealPicewiseAdjustment from './point/lineal/LinealPicewiseAdjustment';
 import BrightnessAndContrast from './point/lineal/BrightnessAndContrast';
 
+// Non lineal point operation.
+import HistogramEqualization from './point/non-lineal/HistogramEqualization';
+
 /**
  * Action picker object determines
  * witch action to display in any moment.
@@ -18,7 +21,8 @@ let actionPicker = {
   save_img: controller => {return <SaveImage controller={controller}/>},
   black_white: controller => {return <BlackAndWhite controller={controller}/>},
   lineal_adjustment: controller => {return <LinealPicewiseAdjustment controller={controller}/>},
-  brightness_contrast: controller => {return <BrightnessAndContrast controller={controller}/>}
+  brightness_contrast: controller => {return <BrightnessAndContrast controller={controller}/>},
+  histogram_equalization: controller => {return <HistogramEqualization controller={controller}/>}
 };
 
 export default actionPicker;

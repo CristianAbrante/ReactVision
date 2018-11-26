@@ -29,6 +29,15 @@
           "id": "brightness_contrast"
         }
       ]
+    },
+    {
+      "title": "Non lineal point operations",
+      "options": [
+        {
+          "name": "Histogram equalization",
+          "id": "histogram_equalization"
+        }
+      ]
     }
   ]
 }
