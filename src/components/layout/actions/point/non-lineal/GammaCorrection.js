@@ -4,11 +4,14 @@ import Typography from '@material-ui/core/Typography/Typography';
 import Divider from '@material-ui/core/Divider/Divider';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import ProcessImage from '../../../../../processor/image/ProcessImage';
 import Slider from '@material-ui/lab/Slider/Slider';
 import Theme from '../../../../theme';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField/TextField';
+
+import GammaCorrectionOperation from '../../../../../processor/operations/point/non-lineal/GammaCorrection';
+import LookUpTable from '../../../../../processor/operations/point/LookUpTable';
+
 import {
   HorizontalGridLines, LineSeries,
   VerticalGridLines,
@@ -34,13 +37,30 @@ const styles = {
   }
 };
 
-const MIN_GAMMA = 1.0;
-const MAX_GAMMA = 100.0;
+const MIN_GAMMA = GammaCorrectionOperation.GAMMA_MIN + 1.0;
+const MAX_GAMMA = GammaCorrectionOperation.GAMMA_MAX;
 
 class GammaCorrection extends Component {
+  opperationHasBeenApplied = false;
+
   state = {
     inverted: false,
     gamma: MIN_GAMMA
+  };
+
+  applyOperation = () => {
+    let {controller} = this.props;
+    if (controller.isAnyImageSelected()) {
+      if (!this.operationHasBeenApplied) {
+        let image = controller.getSelectedImage();
+        image.createNewState();
+        image.setNextState();
+        this.operationHasBeenApplied = true;
+      }
+      let gamma = new GammaCorrectionOperation(this.getGammaValue());
+      let lut = new LookUpTable(gamma);
+      controller.applyPointOperation(lut, 'brightness');
+    }
   };
 
   getGammaData = () => {
@@ -56,11 +76,12 @@ class GammaCorrection extends Component {
 
   invertedChecked = event => {
     this.setState({inverted: event.target.checked});
+    this.applyOperation();
   };
 
   getGammaValue = () => {
     if (this.state.inverted) {
-      return 1 / this.state.gamma;
+      return 1.0 / this.state.gamma;
     } else {
       return this.state.gamma;
     }
@@ -68,6 +89,7 @@ class GammaCorrection extends Component {
 
   onGammaChange = (event, value) => {
     this.setState({gamma: value});
+    this.applyOperation();
   };
 
   onGammaTextChange = event => {
@@ -75,6 +97,7 @@ class GammaCorrection extends Component {
     if (value >= MIN_GAMMA && value <= MAX_GAMMA) {
       this.setState({gamma: value});
     }
+    this.applyOperation();
   };
 
   render() {
