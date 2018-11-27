@@ -25,16 +25,22 @@ class ImageController {
   };
 
   delete = (index) => {
-    console.log(index)
     if(index > -1) {
       this.images.splice(index, 1);
       this.histograms.splice(index, 1);
     }
 
-
-    if(index < this.images.length - 1)
+    if(index < this.images.length){
+      console.log("add", this.selected)
       this.selected++;
-    console.log(this.selected)
+    } else {
+      console.log("minus", this.selected)
+      this.selected--;
+    }
+
+    this.updateImageCanvas();
+    this.resetActionMethod(undefined);
+    this.updateMethod();
   }
 
   numberOfImages = () => {
