@@ -46,6 +46,15 @@
           "id": "gamma_correction"
         }
       ]
+    },
+    {
+      "title": "Geometric operations",
+      "options": [
+        {
+          "name": "Vertical transform",
+          "id": "vertical_transform"
+        }
+      ]
     }
   ]
 }

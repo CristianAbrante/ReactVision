@@ -12,6 +12,10 @@ import HistogramEqualization from './point/non-lineal/HistogramEqualization';
 import HistogramSpecification from './point/non-lineal/HistogramSpecification';
 import GammaCorrection from './point/non-lineal/GammaCorrection';
 
+//Geometric operations
+import VerticalTransform from './geometric/VerticalTransform';
+
+
 /**
  * Action picker object determines
  * witch action to display in any moment.
@@ -26,7 +30,8 @@ let actionPicker = {
   brightness_contrast: controller => {return <BrightnessAndContrast controller={controller}/>},
   histogram_equalization: controller => {return <HistogramEqualization controller={controller}/>},
   histogram_specification: controller => {return <HistogramSpecification controller={controller}/>},
-  gamma_correction: controller => {return <GammaCorrection controller={controller}/>}
+  gamma_correction: controller => {return <GammaCorrection controller={controller}/>},
+  vertical_transform: controller => {return <VerticalTransform controller={controller}/>}
 };
 
 export default actionPicker;

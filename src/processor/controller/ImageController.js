@@ -89,7 +89,7 @@ class ImageController {
     return this.selected;
   };
 
-  applyPointOperation(table, component, retrieveDataFromPreviousState) {
+  applyPointOperation(table, component) {
     let image = this.getSelectedImage();
     for (let i = 0; i < image.getWidth(); i++) {
       for (let j = 0; j < image.getHeight(); j++) {
