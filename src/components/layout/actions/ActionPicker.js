@@ -11,6 +11,7 @@ import BrightnessAndContrast from './point/lineal/BrightnessAndContrast';
 import HistogramEqualization from './point/non-lineal/HistogramEqualization';
 import HistogramSpecification from './point/non-lineal/HistogramSpecification';
 import GammaCorrection from './point/non-lineal/GammaCorrection';
+import ImageDifference from './point/non-lineal/ImageDifference';
 
 /**
  * Action picker object determines
@@ -26,7 +27,8 @@ let actionPicker = {
   brightness_contrast: controller => {return <BrightnessAndContrast controller={controller}/>},
   histogram_equalization: controller => {return <HistogramEqualization controller={controller}/>},
   histogram_specification: controller => {return <HistogramSpecification controller={controller}/>},
-  gamma_correction: controller => {return <GammaCorrection controller={controller}/>}
+  gamma_correction: controller => {return <GammaCorrection controller={controller}/>},
+  image_difference: controller => {return <ImageDifference controller={controller}/>}
 };
 
 export default actionPicker;

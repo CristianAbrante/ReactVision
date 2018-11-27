@@ -44,6 +44,10 @@
         {
           "name": "Gamma Correction",
           "id": "gamma_correction"
+        },
+        {
+          "name": "Image difference",
+          "id": "image_difference"
         }
       ]
     }
