@@ -40,6 +40,10 @@
         {
           "name": "Histogram specification",
           "id": "histogram_specification"
+        },
+        {
+          "name": "Gamma Correction",
+          "id": "gamma_correction"
         }
       ]
     }
