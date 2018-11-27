@@ -30,7 +30,7 @@ class ImageTabs extends React.Component {
       if(title.length > TITLE_MAX_LENGHT){
         title = title.slice(TITLE_MAX_LENGHT, title.length).replace(/.{3}$/i, "...")
       }
-      
+
     return title;
   }
 

@@ -11,8 +11,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-import VerticalProcessor from '../../../../processor/image/operations/VerticalFlipProcessor';
-import HorizontalProcessor from '../../../../processor/image/operations/HorizontalFlipProcessor';
+import VerticalProcessor from '../../../../processor/operations/geometric/VerticalFlipProcessor';
+import HorizontalProcessor from '../../../../processor/operations/geometric/HorizontalFlipProcessor';
 
 const styles = theme => ({
   formControl: {
@@ -40,11 +40,11 @@ class ImageFlipper extends Component {
 
     controller.getSelectedImage().createNewState();
     controller.getSelectedImage().setNextState();
-    
+
     if(this.state.flipType === "vertical") {
-      VerticalProcessor.getGeometricChange(controller.getSelectedImage());
+      VerticalProcessor.applyGeometricChange(controller.getSelectedImage());
     } else {
-      HorizontalProcessor.getGeometricChange(controller.getSelectedImage());
+      HorizontalProcessor.applyGeometricChange(controller.getSelectedImage());
     }
 
     controller.updateImageHistogram();
