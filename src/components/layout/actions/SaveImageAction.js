@@ -110,7 +110,7 @@ class SaveImageAction extends Component {
               }
             >
             {
-              extensions.map((extension) => <MenuItem value={extension.format}>{extension.name}</MenuItem>)
+              extensions.map((format) => <MenuItem key={format.extension} value={format.extension}>{format.name}</MenuItem>)
             }
             </Select>
           </FormControl>
