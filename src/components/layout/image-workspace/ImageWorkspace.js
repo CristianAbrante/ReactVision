@@ -85,9 +85,10 @@ handleCrop = () => {
 }
 
  updateRegions (regions) {
-		this.setState({
-			regions: regions
-		});
+   if(this.props.controller.numberOfImages() > 0)
+      this.setState({
+		      regions: regions
+       });
 	}
 
 	regionRenderer (regionProps) {
