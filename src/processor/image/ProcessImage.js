@@ -38,10 +38,14 @@ class ProcessImage {
    * @param width of the image.
    * @param height of the image.
    */
-  constructor(title, data, width, height) {
+  constructor(title, width, height, data) {
     this.title = title.replace(/\..+/i, "");
     this.format = title.split('.').pop();
-    this.setImageData(data, width, height);
+    if (data === undefined) {
+      this.createData(width, height);
+    } else {
+      this.setImageData(data, width, height);
+    }
   }
 
   getTitle = () => {
@@ -50,6 +54,15 @@ class ProcessImage {
 
   getFormat = () => {
     return this.format;
+  };
+
+  createData = (width, height) => {
+    let data = [];
+    let arrayLength = width * height * 4;
+    for (let i = 0; i < arrayLength; i++) {
+      data.push(0);
+    }
+    this.setImageData(data, width, height);
   };
 
   setImageData = (data, width, height) => {

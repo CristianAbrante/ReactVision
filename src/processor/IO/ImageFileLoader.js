@@ -19,7 +19,7 @@ class ImageFileLoader {
     // test if it is a GIF image.
     let width = shape.length === 3 ? shape[0] : shape[1];
     let height = shape.length === 3 ? shape[1] : shape[2];
-    this.image = new ProcessImage(this.fileName, data.data, width, height);
+    this.image = new ProcessImage(this.fileName, width, height, data.data, );
   };
 
   load(inputNode, callback) {
