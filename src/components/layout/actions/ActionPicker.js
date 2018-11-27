@@ -14,6 +14,7 @@ import GammaCorrection from './point/non-lineal/GammaCorrection';
 
 //Geometric operations
 import ImageFlipper from './geometric/ImageFlipper';
+import TransposeImage from './geometric/TransposeImage';
 
 
 /**
@@ -32,6 +33,7 @@ let actionPicker = {
   histogram_specification: controller => {return <HistogramSpecification controller={controller}/>},
   gamma_correction: controller => {return <GammaCorrection controller={controller}/>},
   image_flipper: controller => {return <ImageFlipper controller={controller}/>},
+  image_transpose: controller => {return <TransposeImage controller={controller}/>},
 };
 
 export default actionPicker;

@@ -38,6 +38,9 @@ class ImageFlipper extends Component {
   applyOperation = () => {
     let {controller} = this.props;
 
+    controller.getSelectedImage().createNewState();
+    controller.getSelectedImage().setNextState();
+    
     if(this.state.flipType === "vertical") {
       VerticalProcessor.getGeometricChange(controller.getSelectedImage());
     } else {
