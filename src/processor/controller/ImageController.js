@@ -117,6 +117,15 @@ class ImageController {
     histogram.setImage(this.getSelectedImage());
   };
 
+  getImageIndex = title => {
+    let titles = this.getImageTitles();
+    for (let i = 0; i < titles.length; i++) {
+      if (titles[i] === title)
+        return i;
+    };
+    return undefined;
+  };
+
   static imageIsValid(image) {
     if (image === undefined) {
       return false;

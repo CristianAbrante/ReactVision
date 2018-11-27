@@ -92,6 +92,15 @@ class Histogram {
     }
   };
 
+  getAccumulativeProbability = level => {
+    return {
+      r: this.getAccumulativeCount(level).r / this.getNumberOfPixels(),
+      g: this.getAccumulativeCount(level).g / this.getNumberOfPixels(),
+      b: this.getAccumulativeCount(level).b / this.getNumberOfPixels(),
+      brightness: this.getAccumulativeCount(level).brightness / this.getNumberOfPixels()
+    }
+  };
+
   getMean = () => {
     return this.mean;
   };
