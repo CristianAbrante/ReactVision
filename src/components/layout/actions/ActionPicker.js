@@ -12,6 +12,7 @@ import HistogramEqualization from './point/non-lineal/HistogramEqualization';
 import HistogramSpecification from './point/non-lineal/HistogramSpecification';
 import GammaCorrection from './point/non-lineal/GammaCorrection';
 import ImageDifference from './point/non-lineal/ImageDifference';
+import ChangesDetection from './point/non-lineal/ChangesDetection';
 
 //Geometric operations
 import ImageFlipper from './geometric/ImageFlipper';
@@ -34,6 +35,7 @@ let actionPicker = {
   histogram_specification: controller => {return <HistogramSpecification controller={controller}/>},
   gamma_correction: controller => {return <GammaCorrection controller={controller}/>},
   image_difference: controller => {return <ImageDifference controller={controller}/>},
+  changes_detection: controller => {return <ChangesDetection controller={controller}/>},
   image_flipper: controller => {return <ImageFlipper controller={controller}/>},
   image_transpose: controller => {return <TransposeImage controller={controller}/>},
 };

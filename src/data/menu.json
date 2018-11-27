@@ -48,6 +48,10 @@
         {
           "name": "Image difference",
           "id": "image_difference"
+        },
+        {
+          "name": "Changes detection",
+          "id": "changes_detection"
         }
       ]
     },
