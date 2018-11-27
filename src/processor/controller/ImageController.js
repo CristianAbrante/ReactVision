@@ -66,15 +66,14 @@ class ImageController {
 
   updateImageCanvas = () => {
     let imageToDisplay = this.getSelectedImage();
+    let ctx = this.canvas.getContext('2d');
 
-    if(imageToDisplay != undefined){
+    if(imageToDisplay !== undefined){
       this.canvas.width = imageToDisplay.getWidth();
       this.canvas.height = imageToDisplay.getHeight();
-      let ctx = this.canvas.getContext('2d');
       ctx.putImageData(imageToDisplay.getImageData(), 0, 0);
     }else{
-      let context = this.canvas.getContext('2d');
-      context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
   };
 
