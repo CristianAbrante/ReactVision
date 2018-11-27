@@ -50,6 +50,19 @@
           "id": "image_difference"
         }
       ]
+    },
+    {
+      "title": "Geometric operations",
+      "options": [
+        {
+          "name": "Image flipper",
+          "id": "image_flipper"
+        },
+        {
+          "name": "Transpose image",
+          "id": "image_transpose"
+        }
+      ]
     }
   ]
 }
