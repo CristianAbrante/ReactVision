@@ -1,0 +1,24 @@
+{
+  "formats": [
+    {
+      "name": "RAW",
+      "extension": "raw"
+    },
+    {
+      "name": "TIFF",
+      "extension": "tiff"
+    },
+    {
+      "name": "JPG",
+      "extension": "jpg"
+    },
+    {
+      "name": "PNG",
+      "extension": "png"
+    },
+    {
+      "name": "JPEG",
+      "extension": "jpeg"
+    }
+  ]
+}

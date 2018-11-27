@@ -14,6 +14,8 @@ const styles = theme => ({
   },
 });
 
+const TITLE_MAX_LENGHT = 20;
+
 class ImageTabs extends React.Component {
   handleChange = (event, value) => {
     this.props.controller.updateSelectedImage(value);
@@ -22,6 +24,14 @@ class ImageTabs extends React.Component {
   handleCloseEvent = (event) => {
     this.props.controller.delete(this.props.controller.getSelectedImageIndex());
     event.stopPropagation();
+  }
+
+  reduceTittle = (title) => {
+      if(title.length > TITLE_MAX_LENGHT){
+        title = title.slice(TITLE_MAX_LENGHT, title.length).replace(/.{3}$/i, "...")
+      }
+      
+    return title;
   }
 
   render() {
@@ -46,9 +56,9 @@ class ImageTabs extends React.Component {
                         component="div"
                         key={title}
                         label={
-                          <div style={{display: "flex", justifyContent: "space-between"}}>
-                          {title}
-                        <IconButton color="secondary" aria-label="Add an alarm" onClick={this.handleCloseEvent}>
+                          <div>
+                          {this.reduceTittle(title)}
+                        <IconButton style={{ marginRight: "-20%" }} color="secondary" aria-label="Add an alarm" onClick={this.handleCloseEvent}>
                           <Clear />
                         </IconButton>
                         </div>

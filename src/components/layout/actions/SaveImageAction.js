@@ -11,6 +11,7 @@ import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import ErrorHandler from '../error/ErrorHandler';
+import Extensions from "../../../data/fileExtensions";
 import saveAs from 'file-saver';
 
 const styles = theme => ({
@@ -79,6 +80,7 @@ class SaveImageAction extends Component {
 
   render() {
     const { classes } = this.props;
+    const extensions = Extensions.formats;
 
     return (
       <div>
@@ -107,9 +109,9 @@ class SaveImageAction extends Component {
                 />
               }
             >
-              <MenuItem value="tiff">tiff</MenuItem>
-              <MenuItem value="raw">raw</MenuItem>
-              <MenuItem value="png">png</MenuItem>
+            {
+              extensions.map((format) => <MenuItem key={format.extension} value={format.extension}>{format.name}</MenuItem>)
+            }
             </Select>
           </FormControl>
           </div>
