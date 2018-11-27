@@ -16,7 +16,7 @@ import ChangesDetection from './point/non-lineal/ChangesDetection';
 
 //Geometric operations
 import ImageFlipper from './geometric/ImageFlipper';
-import TransposeImage from './geometric/TransposeImage';
+import TransposedImage from './geometric/TransposedImage';
 
 
 /**
@@ -37,7 +37,7 @@ let actionPicker = {
   image_difference: controller => {return <ImageDifference controller={controller}/>},
   changes_detection: controller => {return <ChangesDetection controller={controller}/>},
   image_flipper: controller => {return <ImageFlipper controller={controller}/>},
-  image_transpose: controller => {return <TransposeImage controller={controller}/>},
+  image_transpose: controller => {return <TransposedImage controller={controller}/>},
 };
 
 export default actionPicker;
