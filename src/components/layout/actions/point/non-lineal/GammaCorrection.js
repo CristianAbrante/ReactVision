@@ -18,6 +18,7 @@ import {
   XAxis,
   XYPlot, YAxis,
 } from 'react-vis/es';
+import Button from '@material-ui/core/Button/Button';
 
 const styles = {
   root: {
@@ -41,7 +42,7 @@ const MIN_GAMMA = GammaCorrectionOperation.GAMMA_MIN + 1.0;
 const MAX_GAMMA = GammaCorrectionOperation.GAMMA_MAX;
 
 class GammaCorrection extends Component {
-  opperationHasBeenApplied = false;
+  operationHasBeenApplied = false;
 
   state = {
     inverted: false,
@@ -57,6 +58,7 @@ class GammaCorrection extends Component {
         image.setNextState();
         this.operationHasBeenApplied = true;
       }
+      console.log(this.getGammaValue());
       let gamma = new GammaCorrectionOperation(this.getGammaValue());
       let lut = new LookUpTable(gamma);
       controller.applyPointOperation(lut, 'brightness');
@@ -76,7 +78,6 @@ class GammaCorrection extends Component {
 
   invertedChecked = event => {
     this.setState({inverted: event.target.checked});
-    this.applyOperation();
   };
 
   getGammaValue = () => {
@@ -89,15 +90,15 @@ class GammaCorrection extends Component {
 
   onGammaChange = (event, value) => {
     this.setState({gamma: value});
-    this.applyOperation();
   };
 
   onGammaTextChange = event => {
     let value = Number.parseFloat(event.target.value);
     if (value >= MIN_GAMMA && value <= MAX_GAMMA) {
+      //console.log("event:" + event.target.value + " " + value);
       this.setState({gamma: value});
+      //console.log("after: " + this.state.gamma);
     }
-    this.applyOperation();
   };
 
   render() {
@@ -156,6 +157,13 @@ class GammaCorrection extends Component {
                 color="secondary"
             />
           </div>
+          <Button
+              style={{margin: "10px"}}
+              variant="extendedFab"
+              color="secondary"
+              onClick={this.applyOperation}>
+            Apply Gamma Correction
+          </Button>
         </div>
     )
   }

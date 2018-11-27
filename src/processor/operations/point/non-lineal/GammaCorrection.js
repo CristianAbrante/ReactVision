@@ -6,7 +6,7 @@ const FUNCTION_MAX = ProcessImage.MAX_PIXEL_VALUE - 1;
 class GammaCorrection {
   gamma;
   static GAMMA_MIN = 0.0;
-  static GAMMA_MAX = 100.0;
+  static GAMMA_MAX = 20.0;
 
   constructor(gamma) {
     this.setGamma(gamma);
@@ -17,7 +17,7 @@ class GammaCorrection {
         && gamma <= GammaCorrection.GAMMA_MAX) {
       this.gamma = gamma;
     }
-  }
+  };
 
   perform = level => {
     if (!this.valueIsValid(level)) {
