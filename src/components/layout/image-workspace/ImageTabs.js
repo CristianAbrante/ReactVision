@@ -15,8 +15,13 @@ const styles = theme => ({
 });
 
 class ImageTabs extends React.Component {
-  handleCloseEvent = () => {
+  handleChange = (event, value) => {
+    this.props.controller.updateSelectedImage(value);
+  };
+
+  handleCloseEvent = (event) => {
     this.props.controller.delete(this.props.controller.getSelectedImageIndex());
+    event.stopPropagation();
   }
 
   render() {

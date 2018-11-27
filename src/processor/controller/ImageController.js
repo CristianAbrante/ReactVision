@@ -31,10 +31,8 @@ class ImageController {
     }
 
     if(index < this.images.length){
-      console.log("add", this.selected)
       this.selected++;
     } else {
-      console.log("minus", this.selected)
       this.selected--;
     }
 
