@@ -42,6 +42,7 @@ import TransposedProcessor from '../../../../processor/operations/geometric/Tran
    render() {
     return(
       <div>
+      <div>
         <Button
             variant="fab"
             color="secondary"
@@ -49,6 +50,7 @@ import TransposedProcessor from '../../../../processor/operations/geometric/Tran
             onClick={this.applyOperation}>
           <AddIcon />
         </Button>
+        </div>
         <ErrorHandler
             open={this.state.error}
             errorMsg={this.state.errorMsg}

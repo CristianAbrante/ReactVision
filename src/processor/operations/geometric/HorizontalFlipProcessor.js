@@ -3,7 +3,7 @@ import ProcessImage from '../../image/ProcessImage';
 class HorizontalTransformProcessor {
 
   static applyGeometricChange = (image) => {
-    let originalImage = new ProcessImage(image.getTitle(), image.getImageData().data, image.getWidth(), image.getHeight());
+    let originalImage = new ProcessImage(image.getTitle(), image.getWidth(), image.getHeight(), image.getImageData().data);
 
     for(let i = 0; i < originalImage.getHeight()-1; i++){
       for(let j = 0; j < originalImage.getWidth()-1; j++){

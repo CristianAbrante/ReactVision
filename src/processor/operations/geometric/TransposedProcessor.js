@@ -2,8 +2,7 @@ import ProcessImage from '../../image/ProcessImage';
 
 class TransposedProcessor {
   static applyGeometricChange = (image) => {
-    console.log(image)
-    let originalImage = new ProcessImage(image.getTitle(), image.getImageData().data, image.getWidth(), image.getHeight());
+    let originalImage = new ProcessImage(image.getTitle(), image.getWidth(), image.getHeight(), image.getImageData().data);
 
     for(let i = 0; i < originalImage.getWidth()-1; i++){
       for(let j = 0; j < originalImage.getHeight()-1; j++){
