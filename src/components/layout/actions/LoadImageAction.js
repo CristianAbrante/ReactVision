@@ -16,6 +16,14 @@ class LoadImageAction extends Component {
     this.inputElem = React.createRef();
   }
 
+  componentDidMount() {
+      this.inputElem.current.click();
+  }
+
+  componentDidUpdate(){
+    this.inputElem.current.click();
+  }
+
   handleError = (msg) => {
     this.setState({error: true, errorMsg: msg})
   };
@@ -45,17 +53,6 @@ class LoadImageAction extends Component {
   render() {
     return (
       <div>
-        <Typography
-            variant="overline"
-            style={{padding: "4px 0"}}>
-          Load Image
-        </Typography>
-        <Divider />
-        <Button
-            label="Upload file"
-            onClick={this.openFileDialog}>
-          Choose File
-        </Button>
         <input
             ref={this.inputElem}
             type="file"
