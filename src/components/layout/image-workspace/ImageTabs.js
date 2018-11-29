@@ -21,14 +21,14 @@ class ImageTabs extends React.Component {
     this.props.controller.updateSelectedImage(value);
   };
 
-  handleCloseEvent = (event) => {
-    this.props.controller.delete(this.props.controller.getSelectedImageIndex());
+  handleCloseEvent = (event, imageTitle) => {
+    this.props.controller.delete(this.props.controller.getImageIndex(imageTitle));
     event.stopPropagation();
   }
 
   reduceTittle = (title) => {
       if(title.length > TITLE_MAX_LENGHT){
-        title = title.slice(TITLE_MAX_LENGHT, title.length).replace(/.{3}$/i, "...")
+        title = title.slice(0, title.length).replace(/.{3}$/i, "...")
       }
 
     return title;
@@ -58,7 +58,7 @@ class ImageTabs extends React.Component {
                         label={
                           <div>
                           {this.reduceTittle(title)}
-                        <IconButton style={{ marginRight: "-20%" }} color="secondary" aria-label="Add an alarm" onClick={this.handleCloseEvent}>
+                        <IconButton style={{ marginRight: "-20%" }} color="secondary" aria-label="Add an alarm" onClick={e => this.handleCloseEvent(e, title)}>
                           <Clear />
                         </IconButton>
                         </div>
