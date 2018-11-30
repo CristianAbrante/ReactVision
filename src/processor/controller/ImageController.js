@@ -30,13 +30,10 @@ class ImageController {
       this.histograms.splice(index, 1);
     }
 
-    if(index == this.getSelectedImageIndex()){
-      if(index + 1 < this.images.length)
-        this.updateSelectedImage(index + 1)
-      else
-        this.updateSelectedImage(index - 1)
-    }else{
-      this.updateSelectedImage(index);
+    if(this.selected == this.images.length || this.selected > index){
+      this.selected--;
+    } else if(index == this.selected && (index < this.selected || index > this.selected)){
+      this.selected--;
     }
 
     this.updateImageCanvas();
