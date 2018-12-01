@@ -1,0 +1,4 @@
+
+class NearestNeighbourInterpolator extends Interpolator {
+  
+}

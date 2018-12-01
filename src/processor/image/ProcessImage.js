@@ -87,6 +87,18 @@ class ProcessImage {
     this.dataHistory.push(newState);
   };
 
+  createNewBlankState = (width, height) => {
+    let data = [];
+    let arrayLength = width * height * 4;
+    for (let i = 0; i < arrayLength; i++) {
+      data.push(0);
+    }
+    while (this.dataHistoryIndex !== this.getNumberOfStates() - 1) {
+      this.dataHistory.pop();
+    }
+    this.dataHistory.push(data);
+  };
+
   setInitialState = () => {
     this.dataHistoryIndex = 0;
   };
