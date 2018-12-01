@@ -79,7 +79,7 @@ handleCrop = () => {
     let imageData = new ImageData(ctx.getImageData(fromX, fromY, toX, toY).data, toX, toY);
 
     this.handleKeyPress();
-    let image = new ProcessImage(originalImageData.getTitle() + " - Copy", imageData.data, imageData.width, imageData.height);
+    let image = new ProcessImage(originalImageData.getTitle() + " - Copy", imageData.width, imageData.height, imageData.data);
     this.props.controller.add(image);
 
 }
