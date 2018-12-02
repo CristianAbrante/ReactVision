@@ -272,7 +272,6 @@ class Histogram {
       let component = components[k];
       this.entropy[component] = -this.entropy[component];
     }
-    console.log(this.entropy)
   };
 }
 
