@@ -251,12 +251,19 @@ class Histogram {
   };
 
   setEntropy = () => {
+    this.entropy = {
+      r: 0,
+      g: 0,
+      b: 0,
+      brightness: 0
+    };
+
     let components = Object.keys(this.entropy);
     for (let i = 0; i < ProcessImage.MAX_PIXEL_VALUE; i++) {
       for (let k = 0; k < components.length; k++) {
         let component = components[k];
         let p = this.getProbability(i)[component];
-        if (p !== 0) {
+        if (p !== 0 && p >= 0) {
           this.entropy[component] += p * Math.log2(p);
         }
       }
@@ -265,6 +272,7 @@ class Histogram {
       let component = components[k];
       this.entropy[component] = -this.entropy[component];
     }
+    console.log(this.entropy)
   };
 }
 
