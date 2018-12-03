@@ -45,6 +45,11 @@ class Scaling extends Component {
       let scaling =
           new ScalingOperation(this.getFactor(), this.getFactor());
       scaling.perform(image, interpolator);
+      image.setNextState();
+
+      controller.updateImageCanvas();
+      controller.resetActionMethod(undefined);
+      controller.updateMethod();
     }
   };
 

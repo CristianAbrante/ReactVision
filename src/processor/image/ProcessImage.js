@@ -73,7 +73,11 @@ class ProcessImage {
   };
 
   createNewBlankState = (width, height) => {
-    let data = Array.apply(null, Array(width * height * 4));
+    let data = [];
+    let arrayLength = width * height * 4;
+    for (let i = 0; i < arrayLength; i++) {
+      data.push(0);
+    }
     this.setNewState(data, width, height);
   };
 
