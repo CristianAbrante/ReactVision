@@ -24,8 +24,6 @@ class ProcessImage {
 
   dataHistory;
   dataHistoryIndex;
-  getLastStateHistory;
-  setLastStateHistory;
 
   /**
    * Constructor of the class
@@ -69,8 +67,6 @@ class ProcessImage {
     this.dataHistory = [];
     this.dataHistory.push(new Uint8ClampedArray(data));
     this.dataHistoryIndex = 0;
-    this.getLastStateHistory = false;
-    this.setLastStateHistory = false;
     this.width = width;
     this.height = height;
   };
