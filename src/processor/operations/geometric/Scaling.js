@@ -11,21 +11,18 @@ class Scaling {
   }
 
   perform = (image, interpolator) => {
-    let newWidth = Math.floor(this.horizontalFactor * image.getWidth());
-    let newHeight = Math.floor(this.verticalFactor * image.getHeight());
+    let newWidth = Math.round(this.horizontalFactor * image.getWidth());
+    let newHeight = Math.round(this.verticalFactor * image.getHeight());
     image.createNewBlankState(newWidth, newHeight);
     image.setNextState();
-    console.log(newWidth);
-    console.log(newHeight);
     for (let i = 0; i < image.getWidth(); i++) {
       for (let j = 0; j < image.getHeight(); j++) {
         let position = {
-          x: i / this.verticalFactor,
-          y: j / this.horizontalFactor,
+          x: i / this.horizontalFactor,
+          y: j / this.verticalFactor,
         };
         image.setPreviousState();
         let interpolatedColor = interpolator.interpolateColor(image, position);
-        //console.log(interpolatedColor + " " + i + " " + j + " " + position.x + " " + position.y);
         image.setNextState();
         image.setBrightness(i, j, interpolatedColor);
         image.setAlphaComponent(i, j, 255);

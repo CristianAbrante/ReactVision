@@ -18,12 +18,6 @@ class NearestNeighbourInterpolator extends Interpolator {
         neighbourIndex = index;
       }
     });
-
-    if (neighbourhood[neighbourIndex] === undefined) {
-      console.log(neighbourhood);
-      console.log(position);
-    }
-
     return neighbourhood[neighbourIndex].color;
   }
 }
