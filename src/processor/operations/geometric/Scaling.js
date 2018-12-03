@@ -2,7 +2,7 @@
 class Scaling {
   verticalFactor;
   horizontalFactor;
-  static FACTOR_MIN = 1.0;
+  static FACTOR_MIN = 0.1;
   static FACTOR_MAX = 4.0;
 
   constructor(horizontalFactor, verticalFactor) {
@@ -56,7 +56,7 @@ class Scaling {
 
   static factorIsValid = (factor) => {
     return factor !== undefined
-        && factor > Scaling.FACTOR_MIN
+        && factor >= Scaling.FACTOR_MIN
         && factor <= Scaling.FACTOR_MAX;
   };
 }

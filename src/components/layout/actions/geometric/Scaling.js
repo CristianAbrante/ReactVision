@@ -20,7 +20,7 @@ import NearestNeighbourInterpolator
 
 const styles = {
   root: {
-    width: 420,
+    width: 400,
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center",
@@ -28,7 +28,7 @@ const styles = {
     margin: "auto"
   },
   slider: {
-    width: '150px',
+    width: '180px',
     margin: 'auto',
   },
   thumb: {
@@ -48,9 +48,7 @@ class Scaling extends Component {
   interpolatorsText = ['nearestNeighbour'];
 
   state = {
-    xInverted: false,
     xFactor: ScalingOperation.FACTOR_MIN,
-    yInverted: false,
     yFactor: ScalingOperation.FACTOR_MIN,
     selectedInterpolator: this.interpolatorsText[0]
   };
@@ -94,10 +92,6 @@ class Scaling extends Component {
     }
   };
 
-  invertedChecked = name => event => {
-    this.setState({[name]: event.target.checked});
-  };
-
   onInterpolatorSelected = event => {
     this.setState({selectedInterpolator: event.target.value})
   };
@@ -128,15 +122,7 @@ class Scaling extends Component {
             </Select>
           </FormControl>
           <div className={classes.root}>
-            <FormControlLabel
-                control={
-                  <Switch
-                      checked={this.state.xInverted}
-                      onChange={this.invertedChecked('xInverted')}
-                      value="checkedA"
-                  />
-                }
-                label="reduction"/>
+            <Typography variant="caption" style={{margin: 10}}>Horizontal factor</Typography>
             <Slider
                 classes={
                   { container: classes.slider,
@@ -159,15 +145,7 @@ class Scaling extends Component {
             />
           </div>
           <div className={classes.root}>
-            <FormControlLabel
-                control={
-                  <Switch
-                      checked={this.state.yInverted}
-                      onChange={this.invertedChecked('yInverted')}
-                      value="checkedA"
-                  />
-                }
-                label="reduction"/>
+            <Typography variant="caption" style={{margin: 10}}>Vertical factor</Typography>
             <Slider
                 classes={
                   { container: classes.slider,
