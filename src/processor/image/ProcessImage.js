@@ -238,7 +238,7 @@ class ProcessImage {
 
     const index = this.getColorIndex(x, y);
     if (index === undefined)
-      throw new Error('indexes are not in range.');
+      throw new Error('(' + x + ', ' + y + ') are not in range.');
 
     return this.getComponent(index + numericComponent);
   };

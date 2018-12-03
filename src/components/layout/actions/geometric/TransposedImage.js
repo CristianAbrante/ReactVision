@@ -19,12 +19,7 @@ import TransposedProcessor from '../../../../processor/operations/geometric/Tran
    };
 
    applyOperation = () => {
-     try {
        let selectedImage = this.props.controller.getSelectedImage();
-
-       if(selectedImage.getWidth() != selectedImage.getHeight()) {
-         throw new Error('the image must have same height and width.');
-       }
 
        this.props.controller.getSelectedImage().createNewState();
        this.props.controller.getSelectedImage().setNextState();
@@ -34,9 +29,7 @@ import TransposedProcessor from '../../../../processor/operations/geometric/Tran
        this.props.controller.updateImageHistogram();
        this.props.controller.updateImageCanvas();
        this.props.controller.updateMethod();
-     } catch (e) {
-         this.handleError(e.message);
-     }
+
   };
 
    render() {

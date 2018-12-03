@@ -2,14 +2,23 @@ import ProcessImage from '../../image/ProcessImage';
 
 class TransposedProcessor {
   static applyGeometricChange = (image) => {
-    let originalImage = new ProcessImage(image.getTitle(), image.getWidth(), image.getHeight(), image.getImageData().data);
+    let newImageData = [];
+    let index = 0;
 
-    for(let i = 0; i < originalImage.getWidth()-1; i++){
-      for(let j = 0; j < originalImage.getHeight()-1; j++){
-        let rgbaComponent = originalImage.getRGBAComponents(i, j);
-        image.setRGBAComponets(j, i, rgbaComponent.r, rgbaComponent.g, rgbaComponent.b, rgbaComponent.a)
+    for(let i = 0; i < image.getHeight(); i++){
+      for(let j = 0; j < image.getWidth(); j++, index += image.getHeight() * 4){
+        let rgbaComponent = image.getRGBAComponents(j, i);
+        newImageData[index] = rgbaComponent.r;
+        newImageData[index+1] = rgbaComponent.g;
+        newImageData[index+2] = rgbaComponent.b;
+        newImageData[index+3] = rgbaComponent.a;
       }
+       index = 4 * (i+1);
     }
+
+    console.log(newImageData, image.getImageData())
+    console.log(Uint8ClampedArray.from(newImageData))
+    image.setImageData(Uint8ClampedArray.from(newImageData), image.getHeight(), image.getWidth());
   };
 }
 

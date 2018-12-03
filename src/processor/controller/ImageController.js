@@ -64,6 +64,13 @@ class ImageController {
     this.updateMethod();
   };
 
+  setImage = (index, image) => {
+    this.images[index] = image;
+    this.updateImageCanvas();
+    this.resetActionMethod(undefined);
+    this.updateMethod();
+  }
+
   updateImageCanvas = () => {
     let imageToDisplay = this.getSelectedImage();
     let ctx = this.canvas.getContext('2d');
