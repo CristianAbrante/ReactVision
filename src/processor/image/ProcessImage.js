@@ -39,10 +39,13 @@ class ProcessImage {
   constructor(title, width, height, data) {
     this.title = title.replace(/\..+/i, "");
     this.format = title.split('.').pop();
+    this.dataHistory = [];
+    this.dataHistorySizes = [];
+    this.dataHistoryIndex = 0;
     if (data === undefined) {
-      this.createData(width, height);
+      this.createNewBlankState();
     } else {
-      this.setImageData(data, width, height);
+      this.setNewState(data, width, height);
     }
   }
 
@@ -54,45 +57,36 @@ class ProcessImage {
     return this.format;
   };
 
-  createData = (width, height) => {
-    let data = [];
-    let arrayLength = width * height * 4;
-    for (let i = 0; i < arrayLength; i++) {
-      data.push(0);
-    }
-    this.setImageData(data, width, height);
-  };
-
-  setImageData = (data, width, height) => {
-    this.dataHistory = [];
-    this.dataHistory.push(new Uint8ClampedArray(data));
-    this.dataHistoryIndex = 0;
-    this.width = width;
-    this.height = height;
-  };
-
   getNumberOfStates = () => {
     return this.dataHistory.length;
   };
 
+  isAnyState = () => {
+    return this.getNumberOfStates() !== 0;
+  };
+
   createNewState = () => {
-    let newState = this.getCurrentStateData().slice();
-    while (this.dataHistoryIndex !== this.getNumberOfStates() - 1) {
-      this.dataHistory.pop();
+    if (this.isAnyState()) {
+      let data = this.getCurrentStateData().slice();
+      this.setNewState(data, this.getWidth(), this.getHeight());
     }
-    this.dataHistory.push(newState);
   };
 
   createNewBlankState = (width, height) => {
-    let data = [];
-    let arrayLength = width * height * 4;
-    for (let i = 0; i < arrayLength; i++) {
-      data.push(0);
-    }
-    while (this.dataHistoryIndex !== this.getNumberOfStates() - 1) {
+    let data = Array.apply(null, Array(width * height * 4));
+    this.setNewState(data, width, height);
+  };
+
+  setNewState = (data, width, height) => {
+    let newState = {
+      width: width,
+      height: height,
+      data: data,
+    };
+    while (this.isAnyState() && this.dataHistoryIndex !== this.getNumberOfStates() - 1) {
       this.dataHistory.pop();
     }
-    this.dataHistory.push(data);
+    this.dataHistory.push(newState);
   };
 
   setInitialState = () => {
@@ -111,26 +105,28 @@ class ProcessImage {
     }
   };
 
-  getCurrentStateData = () => {
+  getImageData = () => {
+    return new ImageData(
+        new Uint8ClampedArray(this.getCurrentStateData()),
+        this.getWidth(),
+        this.getHeight()
+    );
+  };
+
+  getCurrentState = () => {
     return this.dataHistory[this.dataHistoryIndex];
   };
 
-  getLastStateData = () => {
-    if (this.dataHistoryIndex !== 0) {
-      return this.dataHistory[this.dataHistoryIndex - 1];
-    }
-  };
-
-  getImageData = () => {
-    return new ImageData(this.getCurrentStateData(), this.width, this.height);
+  getCurrentStateData = () => {
+    return this.getCurrentState().data;
   };
 
   getWidth = () => {
-    return this.width;
+    return this.getCurrentState().width;
   };
 
   getHeight = () => {
-    return this.height;
+    return this.getCurrentState().height;
   };
 
   getNumberOfPixels = () => {
@@ -191,12 +187,7 @@ class ProcessImage {
    * @returns {*}
    */
   getComponent = position => {
-    //return this.getCurrentStateData()[position];
-    if (this.getLastStateHistory) {
-      return this.getLastStateData()[position];
-    } else {
-      return this.getCurrentStateData()[position];
-    }
+    return this.getCurrentStateData()[position];
   };
 
   /**
@@ -207,12 +198,7 @@ class ProcessImage {
    * @param color that we want to set.
    */
   setComponent = (position, color) => {
-    //this.getCurrentStateData()[position] = color;
-    if (this.setLastStateHistory) {
-      this.getLastStateData()[position] = color;
-    } else {
-      this.getCurrentStateData()[position] = color;
-    }
+    this.getCurrentStateData()[position] = color;
   };
 
   /**
