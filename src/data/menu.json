@@ -65,6 +65,10 @@
         {
           "name": "Transpose image",
           "id": "image_transpose"
+        },
+        {
+          "name": "Scale image",
+          "id": "scale_image"
         }
       ]
     }
