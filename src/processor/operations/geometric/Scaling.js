@@ -2,10 +2,10 @@
 class Scaling {
   verticalFactor;
   horizontalFactor;
-  static FACTOR_MIN = 0.0;
-  static FACTOR_MAX = 3.0;
+  static FACTOR_MIN = 1.0;
+  static FACTOR_MAX = 4.0;
 
-  constructor(verticalFactor, horizontalFactor) {
+  constructor(horizontalFactor, verticalFactor) {
     this.setVerticalFactor(verticalFactor);
     this.setHorizontalFactor(horizontalFactor);
   }
@@ -15,6 +15,8 @@ class Scaling {
     let newHeight = Math.floor(this.verticalFactor * image.getHeight());
     image.createNewBlankState(newWidth, newHeight);
     image.setNextState();
+    console.log(newWidth);
+    console.log(newHeight);
     for (let i = 0; i < image.getWidth(); i++) {
       for (let j = 0; j < image.getHeight(); j++) {
         let position = {
@@ -23,6 +25,7 @@ class Scaling {
         };
         image.setPreviousState();
         let interpolatedColor = interpolator.interpolateColor(image, position);
+        //console.log(interpolatedColor + " " + i + " " + j + " " + position.x + " " + position.y);
         image.setNextState();
         image.setBrightness(i, j, interpolatedColor);
         image.setAlphaComponent(i, j, 255);

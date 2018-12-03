@@ -10,6 +10,11 @@ import Theme from '../../../theme';
 import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import Input from '@material-ui/core/Input';
+import MenuItem from '@material-ui/core/MenuItem';
 import NearestNeighbourInterpolator
   from '../../../../processor/operations/geometric/interpolator/NearestNeighbourInterpolator';
 
@@ -28,22 +33,40 @@ const styles = {
   },
   thumb: {
     background: Theme.palette.secondary.main
-  }
+  },
+  formControl: {
+    margin: Theme.spacing.unit,
+    minWidth: 120,
+  },
 };
 
+const interpolators = {
+  nearestNeighbour: new NearestNeighbourInterpolator(),
+}
+
 class Scaling extends Component {
+  interpolatorsText = ['nearestNeighbour'];
+
   state = {
-    inverted: false,
-    factor: ScalingOperation.FACTOR_MIN
+    xInverted: false,
+    xFactor: ScalingOperation.FACTOR_MIN,
+    yInverted: false,
+    yFactor: ScalingOperation.FACTOR_MIN,
+    selectedInterpolator: this.interpolatorsText[0]
+  };
+
+  getSelectedInterpolator = () => {
+    return interpolators[this.state.selectedInterpolator];
   };
 
   applyOperation = () => {
     let {controller} = this.props;
     if (controller.isAnyImageSelected()) {
       let image = controller.getSelectedImage();
-      let interpolator = new NearestNeighbourInterpolator();
+      let interpolator = this.getSelectedInterpolator();
+      let factor = this.getFactor();
       let scaling =
-          new ScalingOperation(this.getFactor(), this.getFactor());
+          new ScalingOperation(factor.x, factor.y);
       scaling.perform(image, interpolator);
       image.setNextState();
 
@@ -54,22 +77,29 @@ class Scaling extends Component {
   };
 
   getFactor = () => {
-    return this.state.factor;
-  };
-
-  onFactorChanged = (event, value) => {
-    this.setState({factor: value});
-  };
-
-  onFactorTextChanged = event => {
-    let factor = Number.parseFloat(event.target.value);
-    if (ScalingOperation.factorIsValid(factor)) {
-      this.setState({factor: factor});
+    return {
+      x: this.state.xFactor,
+      y: this.state.yFactor,
     }
   };
 
-  invertedChecked = event => {
-    this.setState({inverted: event.target.checked});
+  onFactorChanged = name => (event, value) => {
+    this.setState({[name]: value});
+  };
+
+  onFactorTextChanged = name => event => {
+    let factor = Number.parseFloat(event.target.value);
+    if (ScalingOperation.factorIsValid(factor)) {
+      this.setState({[name]: factor});
+    }
+  };
+
+  invertedChecked = name => event => {
+    this.setState({[name]: event.target.checked});
+  };
+
+  onInterpolatorSelected = event => {
+    this.setState({selectedInterpolator: event.target.value})
   };
 
   render() {
@@ -84,16 +114,29 @@ class Scaling extends Component {
             </Typography>
           </div>
           <Divider/>
+          <FormControl className={classes.formControl}>
+            <Select
+                value={this.state.selectedInterpolator}
+                onChange={this.onInterpolatorSelected}
+                autoWidth
+            >
+              {this.interpolatorsText.map(interpolatorName => {
+                return <MenuItem
+                    key={interpolatorName}
+                    value={interpolatorName}>{interpolatorName}</MenuItem>;
+              })}
+            </Select>
+          </FormControl>
           <div className={classes.root}>
             <FormControlLabel
                 control={
                   <Switch
-                      checked={this.state.inverted}
-                      onChange={this.invertedChecked}
+                      checked={this.state.xInverted}
+                      onChange={this.invertedChecked('xInverted')}
                       value="checkedA"
                   />
                 }
-                label="inverse"/>
+                label="reduction"/>
             <Slider
                 classes={
                   { container: classes.slider,
@@ -102,16 +145,47 @@ class Scaling extends Component {
                 }
                 min = {ScalingOperation.FACTOR_MIN}
                 max = {ScalingOperation.FACTOR_MAX}
-                value={this.state.factor}
+                value={this.state.xFactor}
                 aria-labelledby="label"
-                onChange={this.onFactorChanged}
+                onChange={this.onFactorChanged('xFactor')}
             />
             <TextField
                 style={{margin: "15px"}}
-                value={this.state.factor}
+                value={this.state.xFactor}
                 type="number"
                 margin="normal"
-                onChange={this.onFactorTextChanged}
+                onChange={this.onFactorTextChanged('xFactor')}
+                color="secondary"
+            />
+          </div>
+          <div className={classes.root}>
+            <FormControlLabel
+                control={
+                  <Switch
+                      checked={this.state.yInverted}
+                      onChange={this.invertedChecked('yInverted')}
+                      value="checkedA"
+                  />
+                }
+                label="reduction"/>
+            <Slider
+                classes={
+                  { container: classes.slider,
+                    track: classes.thumb,
+                    thumb: classes.thumb}
+                }
+                min = {ScalingOperation.FACTOR_MIN}
+                max = {ScalingOperation.FACTOR_MAX}
+                value={this.state.yFactor}
+                aria-labelledby="label"
+                onChange={this.onFactorChanged('yFactor')}
+            />
+            <TextField
+                style={{margin: "15px"}}
+                value={this.state.yFactor}
+                type="number"
+                margin="normal"
+                onChange={this.onFactorTextChanged('yFactor')}
                 color="secondary"
             />
           </div>
