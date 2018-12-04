@@ -5,7 +5,6 @@ class NearestNeighbourInterpolator extends Interpolator {
   interpolateColor = (image, position) => {
     let bound = this.getPositionBound(image, position);
     let neighbourhood = this.getNeighbourhood(image, position);
-    //console.log(neighbourhood);
     let keys = Object.keys(neighbourhood);
     let nearestNeighbourKey;
     for (let k = 0; k < keys.length; k++) {
@@ -15,9 +14,6 @@ class NearestNeighbourInterpolator extends Interpolator {
         nearestNeighbourKey = keys[k];
       }
     }
-    //console.log(position);
-    //console.log(bound);
-    //console.log(nearestNeighbourKey);
     return neighbourhood[nearestNeighbourKey].color;
   };
 
