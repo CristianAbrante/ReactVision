@@ -17,6 +17,8 @@ import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
 import NearestNeighbourInterpolator
   from '../../../../processor/operations/geometric/interpolator/NearestNeighbourInterpolator';
+import BilinealInterpolator
+  from '../../../../processor/operations/geometric/interpolator/BilinealInterpolator';
 
 const styles = {
   root: {
@@ -42,10 +44,11 @@ const styles = {
 
 const interpolators = {
   nearestNeighbour: new NearestNeighbourInterpolator(),
-}
+  bilineal: new BilinealInterpolator(),
+};
 
 class Scaling extends Component {
-  interpolatorsText = ['nearestNeighbour'];
+  interpolatorsText = ['nearestNeighbour', 'bilineal'];
 
   state = {
     xFactor: ScalingOperation.FACTOR_MIN,

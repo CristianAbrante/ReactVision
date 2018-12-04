@@ -1,7 +1,7 @@
 
 
 class Interpolator {
-  static OVER_LIMITS_COLOR = -1;
+  static OVER_LIMITS_COLOR = 0;
 
   getNeighbourhood = (image, position) => {
     let neighbourhood = {};
@@ -22,10 +22,9 @@ class Interpolator {
 
   getNeighbour = (image, x, y) => {
     let color;
-    try {
+    if (this.isInBounds(image, x, y)) {
       color = image.getBrightness(x, y);
-    }
-    catch (e) {
+    } else {
       color = Interpolator.OVER_LIMITS_COLOR;
     }
     return {
@@ -33,6 +32,11 @@ class Interpolator {
       y: y,
       color: color,
     };
+  };
+
+  isInBounds(image, x, y) {
+    return x >= 0 && x < image.getWidth()
+        && y >= 0 && y < image.getHeight();
   };
 }
 
