@@ -1,43 +1,38 @@
 
 
 class Interpolator {
-  neighbourhoodRaidus = 1;
+  static OVER_LIMITS_COLOR = -1;
 
   getNeighbourhood = (image, position) => {
-    let upX = Math.ceil(position.x);
-    let bottomX = Math.floor(position.x);
-    let upY = Math.ceil(position.y);
-    let bottomY = Math.floor(position.y);
-    let neighbour1 = this.getNeighbour(image, upX, upY);
-    let neighbour2 = this.getNeighbour(image, upX, bottomY);
-    let neighbour3 = this.getNeighbour(image, bottomX, upY);
-    let neighbour4 = this.getNeighbour(image, bottomX, bottomY);
-
-    let neighbourhood = [];
-    if (neighbour1 !== undefined)
-      neighbourhood.push(neighbour1);
-    if (neighbour2 !== undefined)
-      neighbourhood.push(neighbour2);
-    if (neighbour3 !== undefined)
-      neighbourhood.push(neighbour3);
-    if (neighbour4 !== undefined)
-      neighbourhood.push(neighbour4);
-
+    let neighbourhood = {};
+    let keys = ['A', 'B', 'C', 'D'];
+    let keyIndex = 0;
+    let X = Math.floor(position.x);
+    let Y = Math.floor(position.y);
+    for (let i = X; i <= X + 1; i++) {
+      for (let j = Y; j <= Y + 1; j++) {
+        let neighbour = this.getNeighbour(image, i,  j);
+        let key = keys[keyIndex];
+        neighbourhood[key] = neighbour;
+        keyIndex += 1;
+      }
+    }
     return neighbourhood;
   };
 
   getNeighbour = (image, x, y) => {
+    let color;
     try {
-      let color = image.getBrightness(x, y);
-      return {
-        x: x,
-        y: y,
-        color: color,
-      }
+      color = image.getBrightness(x, y);
     }
     catch (e) {
-      return undefined;
+      color = Interpolator.OVER_LIMITS_COLOR;
     }
+    return {
+      x: x,
+      y: y,
+      color: color,
+    };
   };
 }
 
