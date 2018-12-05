@@ -15,8 +15,8 @@ class Scaling {
     let newHeight = Math.round(this.verticalFactor * image.getHeight());
     image.createNewBlankState(newWidth, newHeight);
     image.setNextState();
-    for (let i = 0; i < image.getWidth(); i++) {
-      for (let j = 0; j < image.getHeight(); j++) {
+    for (let i = 1; i < image.getWidth() - 1; i++) {
+      for (let j = 1; j < image.getHeight() - 1; j++) {
         let position = {
           x: i / this.horizontalFactor,
           y: j / this.verticalFactor,
