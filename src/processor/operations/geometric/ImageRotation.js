@@ -2,7 +2,9 @@ import ProcessImage from '../../image/ProcessImage';
 
 class ImageRotation {
   static applyGeometricChange = (image, degrees) => {
-    let times = degrees / 90;
+    let times = degrees / 360 * 4 - parseInt(degrees / 360, 10) * 4;
+
+    console.log(times)
     let newImage = new ProcessImage(image.getTitle(), image.getWidth(), image.getHeight(), image.getImageData().data);
     let newImageData = [];
 
@@ -21,10 +23,9 @@ class ImageRotation {
       newImageData = [];
     }
 
-    if(degrees / 90 > 0){
-      image.setNewState(Uint8ClampedArray.from(newImage.getImageData().data), newImage.getWidth(), newImage.getHeight());
-      image.setNextState();
-    }
+    image.setNewState(Uint8ClampedArray.from(newImage.getImageData().data), newImage.getWidth(), newImage.getHeight());
+    image.setNextState();
+
   };
 }
 
