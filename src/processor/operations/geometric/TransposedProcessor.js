@@ -16,9 +16,8 @@ class TransposedProcessor {
        index = 4 * (i+1);
     }
 
-    console.log(newImageData, image.getImageData())
-    console.log(Uint8ClampedArray.from(newImageData))
-    image.setImageData(Uint8ClampedArray.from(newImageData), image.getHeight(), image.getWidth());
+    image.setNewState(Uint8ClampedArray.from(newImageData), image.getHeight(), image.getWidth());
+    image.setNextState();
   };
 }
 

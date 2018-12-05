@@ -18,7 +18,7 @@ import ChangesDetection from './point/non-lineal/ChangesDetection';
 import ImageFlipper from './geometric/ImageFlipper';
 import TransposedImage from './geometric/TransposedImage';
 import Scaling from './geometric/Scaling';
-
+import RotateImage from './geometric/RotateImage';
 
 /**
  * Action picker object determines
@@ -40,6 +40,7 @@ let actionPicker = {
   image_flipper: controller => {return <ImageFlipper controller={controller}/>},
   image_transpose: controller => {return <TransposedImage controller={controller}/>},
   scale_image: controller => {return <Scaling controller={controller}/>},
+  rotate_image: controller => {return <RotateImage controller={controller}/>},
 };
 
 export default actionPicker;
