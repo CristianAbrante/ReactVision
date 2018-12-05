@@ -69,6 +69,10 @@
         {
           "name": "Scale image",
           "id": "scale_image"
+        },
+        {
+          "name": "Rotate image",
+          "id": "rotate_image"
         }
       ]
     }

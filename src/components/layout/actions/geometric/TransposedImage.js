@@ -21,9 +21,6 @@ import TransposedProcessor from '../../../../processor/operations/geometric/Tran
    applyOperation = () => {
        let selectedImage = this.props.controller.getSelectedImage();
 
-       this.props.controller.getSelectedImage().createNewState();
-       this.props.controller.getSelectedImage().setNextState();
-
        TransposedProcessor.applyGeometricChange(selectedImage);
 
        this.props.controller.updateImageHistogram();
