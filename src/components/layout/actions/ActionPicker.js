@@ -19,6 +19,7 @@ import ImageFlipper from './geometric/ImageFlipper';
 import TransposedImage from './geometric/TransposedImage';
 import Scaling from './geometric/Scaling';
 import RotateImage from './geometric/RotateImage';
+import Rotation from './geometric/Rotation';
 
 /**
  * Action picker object determines
@@ -41,6 +42,7 @@ let actionPicker = {
   image_transpose: controller => {return <TransposedImage controller={controller}/>},
   scale_image: controller => {return <Scaling controller={controller}/>},
   rotate_image: controller => {return <RotateImage controller={controller}/>},
+  rotation: controller => {return <Rotation controller={controller}/>},
 };
 
 export default actionPicker;
