@@ -12,10 +12,10 @@ class BilinealInterpolator extends Interpolator {
     let B = neighbourhood.B.color;
     let C = neighbourhood.C.color;
     let D = neighbourhood.D.color;
-    let P = (B + C - A - D) * p * q
-          + (C - A) * q
-          + (C - D) * p
-          + C;
+    let P = (A + D - B - C) * p * q
+          + (A - C) * q
+          + (A - B) * p
+          + A;
     return this.clampResult(P);
   };
 
