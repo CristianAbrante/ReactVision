@@ -1,4 +1,5 @@
 import Interpolator from './Interpolator';
+import ProcessImage from '../../../image/ProcessImage';
 
 class BilinealInterpolator extends Interpolator {
   interpolateColor = (image, position) => {
@@ -11,22 +12,23 @@ class BilinealInterpolator extends Interpolator {
     let B = neighbourhood.B.color;
     let C = neighbourhood.C.color;
     let D = neighbourhood.D.color;
-
-    /*
-    console.log(X);
-    console.log(Y);
-    console.log(p);
-    console.log(q);
-    console.log(A);
-    console.log(B);
-    console.log(C);
-    console.log(D);
-    */
-    return (B + C - A - D) * p * q
-         + (C - A) * q
-         + (C - D) * p
-         + C;
+    let P = (B + C - A - D) * p * q
+          + (C - A) * q
+          + (C - D) * p
+          + C;
+    return this.clampResult(P);
   };
+
+  clampResult = value => {
+    let result = Math.floor(value);
+    if (result < ProcessImage.MIN_PIXEL_VALUE) {
+      result = ProcessImage.MIN_PIXEL_VALUE;
+    }
+    if (result >= ProcessImage.MAX_PIXEL_VALUE) {
+      result = ProcessImage.MAX_PIXEL_VALUE - 1;
+    }
+    return result;
+  }
 }
 
 export default BilinealInterpolator;
