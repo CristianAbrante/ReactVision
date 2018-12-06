@@ -79,8 +79,8 @@ class Rotation {
 
   getInversePosition = (angle, position, minMax) => {
     let {x, y} = position;
-    let minX = minMax.min.x;
-    let minY = minMax.min.y;
+    let minX = Math.abs(minMax.min.x);
+    let minY = Math.abs(minMax.min.y);
     let radAngle = angle * Math.PI / 180;
     return {
       x: (x - minX) * Math.cos(radAngle) + (minY - y) * Math.sin(radAngle),
