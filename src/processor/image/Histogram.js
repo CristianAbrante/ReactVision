@@ -174,10 +174,12 @@ class Histogram {
     let components = Object.keys(this.count);
     for (let i = 0; i < this.getImageWidth(); i++) {
       for (let j = 0; j < this.getImageHeight(); j++) {
-        for (let k = 0; k < components.length; k++) {
-          let component = components[k];
-          let value = this.image.getColor(i, j, component);
-          this.count[component][value] += 1;
+        if (this.image.getAlphaComponent(i, j) !== 0) {
+          for (let k = 0; k < components.length; k++) {
+            let component = components[k];
+            let value = this.image.getColor(i, j, component);
+            this.count[component][value] += 1;
+          }
         }
       }
     }
