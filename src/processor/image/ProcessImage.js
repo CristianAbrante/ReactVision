@@ -75,6 +75,7 @@ class ProcessImage {
   createNewBlankState = (width, height) => {
     let data = [];
     let arrayLength = width * height * 4;
+    console.log(arrayLength);
     for (let i = 0; i < arrayLength; i++) {
       data.push(0);
     }
@@ -110,6 +111,7 @@ class ProcessImage {
   };
 
   getImageData = () => {
+    console.log("when: " + this.getCurrentStateData().length);
     return new ImageData(
         new Uint8ClampedArray(this.getCurrentStateData()),
         this.getWidth(),
@@ -147,8 +149,8 @@ class ProcessImage {
    *          are in range and false otherwise.
    */
   indexesAreInRange = (x, y) => {
-    return (x >= 0 && x <= this.getWidth())
-        && (y >= 0 && y <= this.getHeight());
+    return (x >= 0 && x < this.getWidth())
+        && (y >= 0 && y < this.getHeight());
   };
 
   /**
@@ -252,7 +254,7 @@ class ProcessImage {
 
     const index = this.getColorIndex(x, y);
     if (index === undefined)
-      throw new Error('indexes are not in range.');
+      throw new Error('(' + x + ', ' + y + ') are not in range.');
 
     this.setComponent(index + numericComponent, color);
   };
