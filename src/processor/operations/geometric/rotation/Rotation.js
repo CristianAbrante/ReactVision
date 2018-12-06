@@ -1,5 +1,8 @@
 
 class Rotation {
+  static MIN_ANGLE = -360.0;
+  static MAX_ANGLE = 360.0;
+
   createNewImageState = (image, angle) => {
     let size = this.getNewImageWidthAndHeight(image, angle);
     image.createNewBlankState(size.width, size.height);
@@ -22,7 +25,7 @@ class Rotation {
     let keys = Object.keys(corners);
     for (let k = 0; k < keys.length; k++) {
       let key = keys[k];
-      rotatedCorners[key] = this.getDirectPosition(angle, corners[key]);
+      rotatedCorners[key] = this.getRotationPosition(angle, corners[key]);
     }
     return rotatedCorners;
   };
@@ -31,8 +34,8 @@ class Rotation {
     let corners = this.getRotatedImageCorners(image, angle);
     let minMax = this.getMinMaxCorners(corners);
     return {
-      width: Math.abs(minMax.max.x - minMax.min.x),
-      height: Math.abs(minMax.max.y - minMax.min.y),
+      width: Math.round(Math.abs(minMax.max.x - minMax.min.x)),
+      height: Math.round(Math.abs(minMax.max.y - minMax.min.y)),
     };
   };
 
@@ -57,18 +60,55 @@ class Rotation {
     }
   };
 
-  getDirectPosition = (angle, position) => {
+  getRotationPosition = (angle, position) => {
     const {x, y} = position;
     let radAngle = angle * Math.PI / 180;
     return {
-      x: Math.round(x * Math.cos(radAngle) - y * Math.sin(radAngle)),
-      y: Math.round(x * Math.sin(radAngle) + y * Math.cos(radAngle)),
+      x: x * Math.cos(radAngle) + y * Math.sin(radAngle),
+      y: - x * Math.sin(radAngle) + y * Math.cos(radAngle),
     }
   };
 
-  getInversePosition = (angle, position) => {
-    return this.getDirectPosition(- angle, position);
+  getDirectPosition = (angle, position, minMax) => {
+    let {x, y} = this.getRotationPosition(angle, position);
+    return {
+      x: x + Math.abs(minMax.min.x),
+      y: y + Math.abs(minMax.min.y),
+    };
   };
+
+  getInversePosition = (angle, position, minMax) => {
+    let {x, y} = position;
+    let minX = minMax.min.x;
+    let minY = minMax.min.y;
+    let radAngle = angle * Math.PI / 180;
+    return {
+      x: (x - minX) * Math.cos(radAngle) + (minY - y) * Math.sin(radAngle),
+      y: (x - minX) * Math.sin(radAngle) + (y - minY) * Math.cos(radAngle),
+    }
+  };
+
+  static angleIsValid(angle) {
+    return angle >= Rotation.MIN_ANGLE
+        && angle <= Rotation.MAX_ANGLE;
+  }
+
+  clampIndexes = (image, position) => {
+    let keys = Object.keys(position);
+    for (let k = 0; k < keys.length; k++) {
+      let key = keys[k];
+      position[key] = Math.round(position[key]);
+      if (position[key] < 0) {
+        position[key] = 0;
+      }
+    }
+    if (position.x >= image.getWidth()) {
+      position.x = image.getWidth() - 1;
+    }
+    if (position.y >= image.getHeight()) {
+      position.y = image.getHeight() - 1;
+    }
+  }
 }
 
 export default Rotation;
