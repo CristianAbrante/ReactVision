@@ -41,7 +41,7 @@ let actionPicker = {
   image_flipper: controller => {return <ImageFlipper controller={controller}/>},
   image_transpose: controller => {return <TransposedImage controller={controller}/>},
   scale_image: controller => {return <Scaling controller={controller}/>},
-  rotate_image: controller => {return <RotateImage controller={controller}/>},
+  // rotate_image: controller => {return <RotateImage controller={controller}/>},
   rotation: controller => {return <Rotation controller={controller}/>},
 };
 
