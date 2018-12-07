@@ -111,7 +111,6 @@ class ProcessImage {
   };
 
   getImageData = () => {
-    console.log("when: " + this.getCurrentStateData().length);
     return new ImageData(
         new Uint8ClampedArray(this.getCurrentStateData()),
         this.getWidth(),
