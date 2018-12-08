@@ -18,7 +18,10 @@ class WorkspaceBar extends Component {
     let image = this.props.controller.getSelectedImage();
     let {x, y} = this.props.position;
 
-    if (image === undefined || x === -1 || y === -1) {
+    if (image === undefined
+        || !image.indexesAreInRange(x, y)
+        || x === -1
+        || y === -1) {
       return "white";
     } else {
       return "rgb(" + image.getRedComponent(x, y) + ", "
@@ -31,7 +34,10 @@ class WorkspaceBar extends Component {
     let image = this.props.controller.getSelectedImage();
     let {x, y} = this.props.position;
 
-    if (image === undefined || x === -1 || y === -1) {
+    if (image === undefined
+        || !image.indexesAreInRange(x, y)
+        || x === -1
+        || y === -1) {
       return "r:- g:- b:-";
     } else {
       return "r:" + image.getRedComponent(x, y) + " "
