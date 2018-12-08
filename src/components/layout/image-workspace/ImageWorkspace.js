@@ -76,7 +76,7 @@ handleCrop = () => {
     let toY =  originalImageData.getHeight() * (this.state.regions[0].height/100);
 
     let ctx = this.props.controller.getCanvas().getContext('2d');
-    let imageData = new ImageData(ctx.getImageData(fromX, fromY, toX, toY).data, toX, toY);
+    let imageData = ctx.getImageData(fromX, fromY, toX, toY);
 
     this.handleKeyPress();
     let image = new ProcessImage(originalImageData.getTitle() + " - Copy", imageData.width, imageData.height, imageData.data);
