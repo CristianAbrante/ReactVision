@@ -8,12 +8,8 @@ import { withStyles } from '@material-ui/core/styles';
 import ScalingOperation from '../../../../processor/operations/geometric/Scaling';
 import Theme from '../../../theme';
 import Button from '@material-ui/core/Button';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
 import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
-import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
 import NearestNeighbourInterpolator
   from '../../../../processor/operations/geometric/interpolator/NearestNeighbourInterpolator';
@@ -71,6 +67,7 @@ class Scaling extends Component {
       scaling.perform(image, interpolator);
       image.setNextState();
 
+      controller.updateImageHistogram();
       controller.updateImageCanvas();
       controller.resetActionMethod(undefined);
       controller.updateMethod();
