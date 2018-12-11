@@ -71,8 +71,12 @@
           "id": "scale_image"
         },
         {
-          "name": "Rotation",
+          "name": "Custom rotation",
           "id": "rotation"
+        },
+        {
+          "name": "Entire rotation",
+          "id": "rotate_image"
         }
       ]
     }
