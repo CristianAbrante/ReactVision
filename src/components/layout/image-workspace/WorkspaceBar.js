@@ -4,6 +4,7 @@ import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
+import ProcessImage from '../../../processor/image/ProcessImage'
 
 let containerStyles = {
   padding: "10px",
@@ -56,6 +57,14 @@ class WorkspaceBar extends Component {
     }
   };
 
+  duplicateActualImage = () => {
+    if(this.props.controller.numberOfImages() > 0) {
+      let image = this.props.controller.getSelectedImage();
+      let newImage = new ProcessImage(image.getTitle() + " - Duplicated." + image.getFormat(), image.getWidth(), image.getHeight(), image.getImageData().data);
+      this.props.controller.add(newImage);
+    }
+  }
+
   updateImageState = operation => () => {
       let {controller} = this.props;
       let image = controller.getSelectedImage()
@@ -104,6 +113,14 @@ class WorkspaceBar extends Component {
                 variant="outlined"/>
           </div>
           <div>
+          <span
+            style={{borderRight: "1px solid #babdbe"}}>
+          <IconButton
+              color="secondary"
+              onClick={this.duplicateActualImage}>
+            <Icon>add_to_photos</Icon>
+          </IconButton>
+          </span>
             <IconButton
                 color="secondary"
                 onClick={this.updateImageState('undo')}>

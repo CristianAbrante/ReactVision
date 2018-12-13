@@ -117,9 +117,7 @@ handleCrop = () => {
             style={workspaceStyle}>
           <ImageTabs
               controller={this.props.controller}/>
-          <div style={canvasContainerStyle}
-          >
-
+          <div style={canvasContainerStyle}>
           <RegionSelect
 						maxRegions={1}
 						regions={this.state.regions}
