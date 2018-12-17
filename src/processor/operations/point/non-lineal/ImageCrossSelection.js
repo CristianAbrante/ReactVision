@@ -87,6 +87,7 @@ class ImageCrossSelection {
             y: pixel.color,
           }
       );
+      pointCount += 1;
     }
     return formattedData;
   };
