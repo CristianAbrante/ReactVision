@@ -52,6 +52,10 @@
         {
           "name": "Changes detection",
           "id": "changes_detection"
+        },
+        {
+          "name": "Cross Image Selection",
+          "id": "cross_image"
         }
       ]
     },
