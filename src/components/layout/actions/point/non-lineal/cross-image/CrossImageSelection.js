@@ -5,14 +5,17 @@ import Divider from '@material-ui/core/Divider/Divider';
 import CrossImageGraph from './CrossImageGraph';
 import TextField from '@material-ui/core/TextField/TextField';
 import Button from '@material-ui/core/Button/Button';
+import Switch from '@material-ui/core/Switch/Switch';
+import FormControlLabel
+  from '@material-ui/core/FormControlLabel/FormControlLabel';
 
 import CrossImageSelectionOperation
   from '../../../../../../processor/operations/point/non-lineal/ImageCrossSelection';
 
 class CrossImageSelection extends Component {
   state = {
+    crossImageSelection: undefined,
     derivative: false,
-    data: [],
     beginPoint: {
       x: 0,
       y: 0,
@@ -27,17 +30,24 @@ class CrossImageSelection extends Component {
     let {controller} = this.props;
     if (controller.isAnyImageSelected()) {
       let image = controller.getSelectedImage();
-      let crossImageSelection =
-          new CrossImageSelectionOperation(image, this.state.beginPoint, this.state.endPoint);
-      this.setState({data: this.getData(crossImageSelection)});
+      this.setState({
+        crossImageSelection: this.getSectionOperation(image, this.state.beginPoint, this.state.endPoint)
+      });
     }
   };
 
-  getData = (crossImageOperation) => {
-    if (this.state.derivative) {
-      return crossImageOperation.getFormattedDerivativeSelection();
-    } else {
-      return crossImageOperation.getFormattedCrossSelection();
+  getSectionOperation = (image, beginPoint, endPoint) => {
+    return new CrossImageSelectionOperation(image, beginPoint, endPoint);
+  };
+
+  getData = () => {
+    if (this.state.crossImageSelection !== undefined) {
+      if (this.state.derivative) {
+        console.log(this.state.crossImageSelection.getFormattedDerivativeSelection());
+        return this.state.crossImageSelection.getFormattedDerivativeSelection();
+      } else {
+        return this.state.crossImageSelection.getFormattedCrossSelection();
+      }
     }
   };
 
@@ -53,6 +63,10 @@ class CrossImageSelection extends Component {
         this.setState({[point]: newPoint});
       }
     }
+  };
+
+  onSwitchChecked = value => event => {
+    this.setState({[value]: event.target.checked});
   };
 
   pointIsValid = (point, image) => {
@@ -72,7 +86,18 @@ class CrossImageSelection extends Component {
           </div>
           <Divider/>
           <div>
-            <CrossImageGraph data={this.state.data}/>
+            <FormControlLabel
+                control={
+                  <Switch
+                      checked={this.state.derivative}
+                      onChange={this.onSwitchChecked('derivative')}
+                      value="checkedA"
+                  />
+                }
+                label="derivative"/>
+          </div>
+          <div>
+            <CrossImageGraph data={this.getData()}/>
             <div>
               <TextField
                   style={{margin: "15px"}}

@@ -6,7 +6,7 @@ import {
   VerticalGridLines,
   HorizontalGridLines,
 } from 'react-vis';
-
+import Theme from '../../../../../theme';
 
 function CrossImageGraph(props) {
   return(
@@ -17,7 +17,9 @@ function CrossImageGraph(props) {
         <VerticalGridLines />
         <HorizontalGridLines />
         <XAxis hideLine/>
-        <LineSeries data={props.data} />
+        <LineSeries
+            data={props.data}
+            color={Theme.palette.secondary.main}/>
       </FlexibleWidthXYPlot>
   );
 }

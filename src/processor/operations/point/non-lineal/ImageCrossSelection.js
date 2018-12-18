@@ -54,7 +54,7 @@ class ImageCrossSelection {
   };
 
   getDerivativeColor = (crossSelectionPixels, index) => {
-    if (index > 0 && index < crossSelectionPixels.length) {
+    if (index >= 0 && index < crossSelectionPixels.length) {
       let currentPixel = crossSelectionPixels[index];
       if (index === crossSelectionPixels.length - 1)
         return currentPixel;
