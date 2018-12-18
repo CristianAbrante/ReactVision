@@ -83,6 +83,19 @@
           "id": "rotate_image"
         }
       ]
+    },
+    {
+      "title": "Extra",
+      "options": [
+        {
+          "name": "Quantization",
+          "id": "image_quantization"
+        },
+        {
+          "name": "Resample image",
+          "id": "image_resampler"
+        }
+      ]
     }
   ]
 }

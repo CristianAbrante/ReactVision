@@ -22,6 +22,10 @@ import Scaling from './geometric/Scaling';
 import RotateImage from './geometric/RotateImage';
 import Rotation from './geometric/Rotation';
 
+// Extra operations
+import ImageQuantization from './extra/ImageQuantization';
+import ImageResampling from './extra/ImageResampling';
+
 /**
  * Action picker object determines
  * witch action to display in any moment.
@@ -45,6 +49,8 @@ let actionPicker = {
   scale_image: controller => {return <Scaling controller={controller}/>},
   rotate_image: controller => {return <RotateImage controller={controller}/>},
   rotation: controller => {return <Rotation controller={controller}/>},
+  image_quantization: controller => {return <ImageQuantization controller={controller}/>},
+  image_resampler: controller => {return <ImageResampling controller={controller}/>},
 };
 
 export default actionPicker;
