@@ -5,7 +5,6 @@ class ImageResampler {
   static MIN_VALUE = 1;
 
   static resample = (image, dimension) => {
-    let numOfVisitedPixels = 1;
 
     let prevY = 0;
 
