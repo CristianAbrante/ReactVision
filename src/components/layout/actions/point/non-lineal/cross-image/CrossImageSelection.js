@@ -33,6 +33,7 @@ class CrossImageSelection extends Component {
       this.setState({
         crossImageSelection: this.getSectionOperation(image, this.state.beginPoint, this.state.endPoint)
       });
+      this.displaySectionLine();
     }
   };
 
@@ -43,7 +44,6 @@ class CrossImageSelection extends Component {
   getData = () => {
     if (this.state.crossImageSelection !== undefined) {
       if (this.state.derivative) {
-        console.log(this.state.crossImageSelection.getFormattedDerivativeSelection());
         return this.state.crossImageSelection.getFormattedDerivativeSelection();
       } else {
         return this.state.crossImageSelection.getFormattedCrossSelection();
@@ -72,6 +72,27 @@ class CrossImageSelection extends Component {
   pointIsValid = (point, image) => {
     return point.x >= 0 && point.x < image.getWidth()
         && point.y >= 0 && point.y < image.getHeight();
+  };
+
+  displaySectionLine = () => {
+    let fillCircle = (ctx, point) => {
+      ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI, false);
+      ctx.fillStyle = 'red';
+      ctx.fill();
+    };
+
+    let {beginPoint, endPoint} = this.state;
+    let image = this.props.controller.getSelectedImage();
+    let canvas = this.props.controller.getCanvas();
+    let ctx = canvas.getContext('2d');
+    ctx.beginPath();
+    ctx.moveTo(beginPoint.x, beginPoint.y);
+    ctx.lineTo(endPoint.x, endPoint.y);
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = 'red';
+    ctx.stroke();
+    fillCircle(ctx, beginPoint);
+    fillCircle(ctx, endPoint);
   };
 
   render() {
