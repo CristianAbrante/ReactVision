@@ -1,14 +1,25 @@
 import Bresenham from 'bresenham';
 
 class ImageCrossSelection {
+  static MIN_RADIUS = 0;
+  static MAX_RADIUS = 10;
+
   referenceImage;
   crossSelection = [];
   derivativeCrossSelection = [];
+  radius = 1;
 
-  constructor(image, startPixel, endPixel) {
+  constructor(image, radius, startPixel, endPixel) {
     this.setReferenceImage(image);
+    this.setRadius(radius);
     this.setCrossSelection(startPixel, endPixel);
   }
+
+  setRadius = radius => {
+    if (ImageCrossSelection.isAValidRadius(radius)) {
+      this.radius = radius;
+    }
+  };
 
   setReferenceImage = image => {
     if (image !== undefined) {
@@ -50,7 +61,18 @@ class ImageCrossSelection {
   };
 
   getColor = pixel => {
-    return this.referenceImage.getBrightness(pixel.x, pixel.y);
+    let sumColor = 0;
+    let numberOfNeighbours = 0;
+    for (let i = pixel.x - this.radius; i <= pixel.x + this.radius; i++) {
+      for (let j = pixel.y - this.radius; j <= pixel.y + this.radius; j++) {
+        let color = this.getNormalizedColor(i, j);
+        if (color !== undefined) {
+          sumColor += color;
+          numberOfNeighbours += 1;
+        }
+      }
+    }
+    return sumColor / numberOfNeighbours;
   };
 
   getDerivativeColor = (crossSelectionPixels, index) => {
@@ -95,6 +117,19 @@ class ImageCrossSelection {
   pixelIsInRange = (pixel) => {
     return pixel.x >= 0 && pixel.x < this.referenceImage.getWidth()
         && pixel.y >= 0 && pixel.y < this.referenceImage.getHeight();
+  };
+
+  getNormalizedColor = (i, j) => {
+    try {
+      return this.referenceImage.getBrightness(i, j);
+    }
+    catch(e) {
+      return undefined;
+    }
+  };
+
+  static isAValidRadius(radius) {
+    return radius >= this.MIN_RADIUS && radius <= this.MAX_RADIUS;
   };
 }
 

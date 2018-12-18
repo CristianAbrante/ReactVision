@@ -8,14 +8,36 @@ import Button from '@material-ui/core/Button/Button';
 import Switch from '@material-ui/core/Switch/Switch';
 import FormControlLabel
   from '@material-ui/core/FormControlLabel/FormControlLabel';
+import Slider from '@material-ui/lab/Slider/Slider';
+import { withStyles } from '@material-ui/core/styles';
 
+import Theme from '../../../../../theme';
 import CrossImageSelectionOperation
   from '../../../../../../processor/operations/point/non-lineal/ImageCrossSelection';
+
+const styles = {
+  root: {
+    width: 420,
+    display: "flex",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    alignContent: "space-between",
+    margin: "auto"
+  },
+  slider: {
+    width: '150px',
+    margin: 'auto',
+  },
+  thumb: {
+    background: Theme.palette.secondary.main
+  }
+};
 
 class CrossImageSelection extends Component {
   state = {
     crossImageSelection: undefined,
     derivative: false,
+    radius: 0,
     beginPoint: {
       x: 0,
       y: 0,
@@ -31,14 +53,14 @@ class CrossImageSelection extends Component {
     if (controller.isAnyImageSelected()) {
       let image = controller.getSelectedImage();
       this.setState({
-        crossImageSelection: this.getSectionOperation(image, this.state.beginPoint, this.state.endPoint)
+        crossImageSelection: this.getSectionOperation(image, this.state.radius, this.state.beginPoint, this.state.endPoint)
       });
       this.displaySectionLine();
     }
   };
 
-  getSectionOperation = (image, beginPoint, endPoint) => {
-    return new CrossImageSelectionOperation(image, beginPoint, endPoint);
+  getSectionOperation = (image, radius, beginPoint, endPoint) => {
+    return new CrossImageSelectionOperation(image, radius, beginPoint, endPoint);
   };
 
   getData = () => {
@@ -82,20 +104,33 @@ class CrossImageSelection extends Component {
     };
 
     let {beginPoint, endPoint} = this.state;
-    let image = this.props.controller.getSelectedImage();
-    let canvas = this.props.controller.getCanvas();
+    let controller = this.props.controller;
+    controller.updateImageCanvas();
+    let canvas = controller.getCanvas();
     let ctx = canvas.getContext('2d');
     ctx.beginPath();
     ctx.moveTo(beginPoint.x, beginPoint.y);
     ctx.lineTo(endPoint.x, endPoint.y);
-    ctx.lineWidth = 3;
+    ctx.lineWidth = 2;
     ctx.strokeStyle = 'red';
     ctx.stroke();
     fillCircle(ctx, beginPoint);
     fillCircle(ctx, endPoint);
   };
 
+  onRadiusChanged = (event, value) => {
+    this.setState({radius: value});
+  };
+
+  onRadiusTextChange = event => {
+    let value = Number.parseInt(event.target.value);
+    if (CrossImageSelectionOperation.isAValidRadius(value)) {
+      this.setState({gamma: value});
+    }
+  };
+
   render() {
+    const {classes} = this.props;
     return (
         <div>
           <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
@@ -119,6 +154,31 @@ class CrossImageSelection extends Component {
           </div>
           <div>
             <CrossImageGraph data={this.getData()}/>
+            <div className={classes.root}>
+              <Slider
+                  classes = {
+                    {
+                      container: classes.slider,
+                      track: classes.thumb,
+                      thumb: classes.thumb
+                    }
+                  }
+                  min = {CrossImageSelectionOperation.MIN_RADIUS}
+                  max = {CrossImageSelectionOperation.MAX_RADIUS}
+                  step={1}
+                  value={this.state.radius}
+                  aria-labelledby="label"
+                  onChange={this.onRadiusChanged}
+              />
+              <TextField
+                  style={{margin: "15px"}}
+                  value={this.state.radius}
+                  type="number"
+                  margin="normal"
+                  onChange={this.onRadiusTextChange}
+                  color="secondary"
+              />
+            </div>
             <div>
               <TextField
                   style={{margin: "15px"}}
@@ -180,4 +240,4 @@ class CrossImageSelection extends Component {
   }
 }
 
-export default CrossImageSelection;
+export default withStyles(styles)(CrossImageSelection);
