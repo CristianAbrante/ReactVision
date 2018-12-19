@@ -2,12 +2,14 @@ import ProcessImage from '../../image/ProcessImage';
 
 class ImageQuantizer {
   static quantizeImage = (image, bits) => {
-    const quantizationLevel = ProcessImage.MAX_PIXEL_VALUE / (bits+1);
+    let numberOfLevels = Math.pow(2, bits) - 1;
 
     for (let row = 0; row < image.getHeight(); row++) {
       for (let col = 0; col < image.getWidth(); col++) {
-        //   setColor = (x, y, component, color)
-        image.setColor(col, row, 'brightness', parseInt(image.getColor(col, row, 'brightness') / quantizationLevel) * quantizationLevel);
+        let color = image.getBrightness(col, row);
+        let newScaleColor = Math.round((numberOfLevels * color) / (ProcessImage.MAX_PIXEL_VALUE - 1));
+        let originalScaleColor = Math.floor((newScaleColor * (ProcessImage.MAX_PIXEL_VALUE - 1)) / numberOfLevels);
+        image.setBrightness(col, row, originalScaleColor);
        }
      }
   }
