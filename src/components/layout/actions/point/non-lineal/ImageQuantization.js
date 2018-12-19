@@ -12,16 +12,14 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/lab/Slider/Slider';
 import TextField from '@material-ui/core/TextField/TextField';
-import Theme from '../../../theme';
+import Theme from '../../../../theme';
 import Icon from '@material-ui/core/Icon';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
-import LookUpTable from '../../../../processor/operations/point/LookUpTable';
-import BlackAndWhiteOperation from '../../../../processor/operations/point/lineal/BlackAndWhite';
-import ImageQuantizer from '../../../../processor/operations/extra/ImageQuantizer';
-import ProcessImage from '../../../../processor/image/ProcessImage';
-
-//import VerticalProcessor from '../../../../processor/operations/geometric/VerticalFlipProcessor';
-//import HorizontalProcessor from '../../../../processor/operations/geometric/HorizontalFlipProcessor';
+import BlackAndWhiteOperation from '../../../../../processor/operations/point/lineal/BlackAndWhite';
+import ImageQuantizer from '../../../../../processor/operations/point/non-lineal/ImageQuantizer';
+import ImageResampler from '../../../../../processor/operations/point/non-lineal/ImageResampler';
+import ProcessImage from '../../../../../processor/image/ProcessImage';
 
 const styles = {
   root: {
@@ -49,6 +47,8 @@ const styles = {
 class ImageQuantization extends Component {
   state = {
     quantizationLevel: 8,
+    resampleRows: 1,
+    resampleCols: 1,
   };
 
   constructor(props) {
@@ -62,6 +62,7 @@ class ImageQuantization extends Component {
       controller.getSelectedImage().createNewState();
       controller.getSelectedImage().setNextState();
 
+      ImageResampler.resample(controller.getSelectedImage(), this.state.resampleRows, this.state.resampleCols);
       ImageQuantizer.quantizeImage(controller.getSelectedImage(), this.state.quantizationLevel);
 
       controller.updateImageHistogram();
@@ -71,7 +72,6 @@ class ImageQuantization extends Component {
   };
 
   onQuantizationLevelChange = (event, value) => {
-    console.log(value)
     this.setState({quantizationLevel: value});
   };
 
@@ -82,9 +82,18 @@ class ImageQuantization extends Component {
     }
   };
 
+  onResampleSizeChange = event => {
+    let value = Number.parseInt(event.target.value);
+    let selectedImage = this.props.controller.getSelectedImage();
+
+    if (value > 0 && value <= Math.min(selectedImage.getWidth(), selectedImage.getHeight())){
+      this.setState({[event.target.name]: value});
+    }
+  };
+
   render() {
     const { classes } = this.props;
-
+    const { controller } = this.props;
     return(
       <div>
       <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
@@ -96,15 +105,7 @@ class ImageQuantization extends Component {
 
       </div>
         <Divider/>
-        <Button
-            variant="fab"
-            color="secondary"
-            aria-label="Add"
-            onClick={this.applyOperation}>
-          <AddIcon />
-        </Button>
         <div style={{width: '180px', margin: 'auto'}}>
-          <Typography variant="caption" style={{margin: 10}}>Quantizer</Typography>
           <Slider
           classes={
             { container: classes.slider,
@@ -112,7 +113,7 @@ class ImageQuantization extends Component {
               thumb: classes.thumb}
           }
           value={this.state.quantizationLevel}
-          min={ProcessImage.MIN_PIXEL_VALUE}
+          min={ProcessImage.MIN_PIXEL_VALUE + 1}
           max={Math.log2(ProcessImage.MAX_PIXEL_VALUE)}
           step={1}
           onChange={this.onQuantizationLevelChange}
@@ -121,10 +122,41 @@ class ImageQuantization extends Component {
               style={{margin: "15px"}}
               value={this.state.quantizationLevel}
               type="number"
-              margin="normal"
+              InputProps={{
+                endAdornment: <InputAdornment position="start">bits</InputAdornment>,
+              }}
               onChange={this.onQuantizationLevelTextChange}
               color="secondary"
           />
+          <TextField
+              name = "resampleRows"
+              style={{margin: "15px"}}
+              value={this.state.resampleRows}
+              type="number"
+              InputProps={{
+                endAdornment: <InputAdornment position="start">rows</InputAdornment>,
+              }}
+              onChange={this.onResampleSizeChange}
+              color="secondary"
+          />
+          <TextField
+              name = "resampleCols"
+              style={{margin: "15px"}}
+              value={this.state.resampleCols}
+              type="number"
+              InputProps={{
+                endAdornment: <InputAdornment position="start">columns</InputAdornment>,
+              }}
+              onChange={this.onResampleSizeChange}
+              color="secondary"
+          />
+          <Button
+              style={{margin: "10px"}}
+              variant="extendedFab"
+              color="secondary"
+              onClick={this.applyOperation}>
+            Apply quantization
+          </Button>
         </div>
       </div>
     );

@@ -56,6 +56,10 @@
         {
           "name": "Cross Image Selection",
           "id": "cross_image"
+        },
+        {
+          "name": "Quantization",
+          "id": "image_quantization"
         }
       ]
     },
@@ -81,19 +85,6 @@
         {
           "name": "Entire rotation",
           "id": "rotate_image"
-        }
-      ]
-    },
-    {
-      "title": "Extra",
-      "options": [
-        {
-          "name": "Quantization",
-          "id": "image_quantization"
-        },
-        {
-          "name": "Resample image",
-          "id": "image_resampler"
         }
       ]
     }

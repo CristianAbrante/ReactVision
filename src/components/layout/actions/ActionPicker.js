@@ -14,17 +14,13 @@ import GammaCorrection from './point/non-lineal/GammaCorrection';
 import ImageDifference from './point/non-lineal/ImageDifference';
 import ChangesDetection from './point/non-lineal/ChangesDetection';
 import CrossImageSelection from './point/non-lineal/cross-image/CrossImageSelection';
-
+import ImageQuantization from './point/non-lineal/ImageQuantization';
 //Geometric operations
 import ImageFlipper from './geometric/ImageFlipper';
 import TransposedImage from './geometric/TransposedImage';
 import Scaling from './geometric/Scaling';
 import RotateImage from './geometric/RotateImage';
 import Rotation from './geometric/Rotation';
-
-// Extra operations
-import ImageQuantization from './extra/ImageQuantization';
-import ImageResampling from './extra/ImageResampling';
 
 /**
  * Action picker object determines
@@ -50,7 +46,6 @@ let actionPicker = {
   rotate_image: controller => {return <RotateImage controller={controller}/>},
   rotation: controller => {return <Rotation controller={controller}/>},
   image_quantization: controller => {return <ImageQuantization controller={controller}/>},
-  image_resampler: controller => {return <ImageResampling controller={controller}/>},
 };
 
 export default actionPicker;
