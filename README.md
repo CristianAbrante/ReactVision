@@ -10,13 +10,13 @@ The web is deployed and tested on Chrome and Safari. It is not responsive (sorry
 
 You can test the webpage here:
 
-<a src="https://cristianabrante.github.io/ReactVision/">
+<a href="https://cristianabrante.github.io/ReactVision/">
   <h3 align="center">
     React Vision (hosted on Github Pages)
   </h3>
 </a>
 
-## Functions
+## Implemented image operations
 Images are converted to grayscale before applying any operation. You can apply the following procedures:
 
 * Linear point operations
