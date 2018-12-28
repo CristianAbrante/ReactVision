@@ -10,11 +10,11 @@ The web is deployed and tested on Chrome and Safari. It is not responsive (sorry
 
 You can test the webpage here:
 
-<a href="https://cristianabrante.github.io/ReactVision/">
-  <h3 align="center">
+<h3 align="center">
+  <a href="https://cristianabrante.github.io/ReactVision/">
     React Vision (hosted on Github Pages)
-  </h3>
-</a>
+  </a>
+</h3>
 
 ## Implemented image operations
 Images are converted to grayscale before applying any operation. You can apply the following procedures:
