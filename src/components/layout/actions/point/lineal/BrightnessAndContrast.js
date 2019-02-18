@@ -100,15 +100,6 @@ class BrightnessAndContrast extends Component {
     const { classes } = this.props;
     let {brightnessValue, contrastValue} = this.state;
     return(
-        <div>
-          <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-            <Icon style={{padding: "5px"}}>brightness_5</Icon>
-            <Typography
-              variant="overline">
-              Brightness and contrast
-            </Typography>
-          </div>
-          <Divider/>
           <div>
             <div className={classes.root}>
               <Typography
@@ -171,7 +162,6 @@ class BrightnessAndContrast extends Component {
               />
             </div>
           </div>
-        </div>
     );
   }
 }

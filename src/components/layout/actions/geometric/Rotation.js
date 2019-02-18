@@ -114,14 +114,6 @@ class Rotation extends Component {
     let {classes} = this.props;
     return(
         <div>
-          <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-            <Icon style={{padding: "5px"}}>crop_rotate</Icon>
-            <Typography
-                variant="overline">
-              Rotation
-            </Typography>
-          </div>
-          <Divider/>
           <FormControl className={classes.formControl}>
             <Select
                 value={this.state.selectedRotationMethod}

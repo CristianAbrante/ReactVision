@@ -17,9 +17,6 @@ class Action extends Component {
     }
   }
 
-  getHeader = () => {
-  }
-
   render() {
     return(
         <Window title={this.props.currentActionName}>

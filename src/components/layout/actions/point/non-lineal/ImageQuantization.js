@@ -96,15 +96,6 @@ class ImageQuantization extends Component {
     const { controller } = this.props;
     return(
       <div>
-      <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-        <Icon style={{padding: "5px"}}>image_aspect_ratio</Icon>
-        <Typography
-            variant="overline">
-          Quantizer
-        </Typography>
-
-      </div>
-        <Divider/>
         <div style={{width: '180px', margin: 'auto'}}>
           <Slider
           classes={

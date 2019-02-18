@@ -133,14 +133,6 @@ class CrossImageSelection extends Component {
     const {classes} = this.props;
     return (
         <div>
-          <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-            <Icon style={{padding: "5px"}}>timeline</Icon>
-            <Typography
-                variant="overline">
-              Cross Image Selection
-            </Typography>
-          </div>
-          <Divider/>
           <div>
             <FormControlLabel
                 control={

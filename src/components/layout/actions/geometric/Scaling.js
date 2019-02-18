@@ -100,14 +100,6 @@ class Scaling extends Component {
     const {classes} = this.props;
     return(
         <div>
-          <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-            <Icon style={{padding: "5px"}}>image_aspect_ratio</Icon>
-            <Typography
-                variant="overline">
-              Scaling
-            </Typography>
-          </div>
-          <Divider/>
           <FormControl className={classes.formControl}>
             <Select
                 value={this.state.selectedInterpolator}

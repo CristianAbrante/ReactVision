@@ -61,14 +61,6 @@ class HistogramSpecification extends Component {
     const imageTitles = controller.getImageTitles();
     return(
         <div>
-          <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-            <Icon style={{padding: "5px"}}>gradient</Icon>
-            <Typography
-                variant="overline">
-              Histogram Specification
-            </Typography>
-          </div>
-          <Divider/>
           <div style={{display: "flex", flexDirection:"column", alignItems: "center"}}>
             <FormControl style={{minWidth: 200, margin: Theme.spacing.unit}}>
               <InputLabel htmlFor="age-simple">Reference Image</InputLabel>

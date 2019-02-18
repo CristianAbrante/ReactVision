@@ -87,14 +87,6 @@ class LinealPicewiseAdjustment extends Component {
     let points = this.state.linealPicewiseOperation.points;
     return (
         <div>
-          <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-            <Icon style={{padding: "5px"}}>insert_chart_outlined</Icon>
-            <Typography
-                variant="overline">
-              Linear piecewise adjustment
-            </Typography>
-          </div>
-          <Divider/>
           <div style={{display:"flex", justifyContent: "center", width: "100%"}}>
             <XYPlot width={200} height={200}>
               <HorizontalGridLines />

@@ -10,7 +10,7 @@ import MenuList from '@material-ui/core/MenuList';
 class MainMenuItem extends Component {
   state = {
     anchorEl: null,
-    open: false
+    open: false,
   };
 
   handleToggle = () => {

@@ -37,7 +37,7 @@ class App extends Component {
   };
 
   getCurrentActionName = () => {
-    let actionName = undefined;
+    let actionName = "Action menu";
     const currentAction = this.state.currentAction;
 
     let name = MenuData.items.some(item => {

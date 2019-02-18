@@ -105,14 +105,6 @@ class GammaCorrection extends Component {
     const { classes } = this.props;
     return (
         <div>
-          <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-            <Icon style={{padding: "5px"}}>desktop_windows</Icon>
-            <Typography
-                variant="overline">
-              Gamma correction
-            </Typography>
-          </div>
-          <Divider/>
           <div style={{display:"flex", justifyContent: "center", width: "100%"}}>
             <XYPlot width={200} height={200}>
               <HorizontalGridLines />

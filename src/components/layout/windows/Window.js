@@ -20,7 +20,22 @@ class Window extends Component {
   handleCloseEvent = (event) => {
     this.setState({isClosed: true});
   }
+ /*
+ <Paper className="grid-item">
+   <div className="windows-bar">
+     <div className="header" style={{ flex: 1, marginLeft: "24px" }}>
+       {options.title}
+     </div>
 
+     <IconButton style={{padding: "1px"}}color="secondary" onClick={e => this.handleCloseEvent(e)}>
+       <Clear />
+     </IconButton>
+   </div>
+   <div className="windows-content">
+   {options.children}
+   </div>
+ </Paper>
+ */
   render() {
     const options = this.props;
     return(
@@ -29,10 +44,6 @@ class Window extends Component {
           <div className="header" style={{ flex: 1, marginLeft: "24px" }}>
             {options.title}
           </div>
-
-          <IconButton style={{padding: "1px"}}color="secondary" onClick={e => this.handleCloseEvent(e)}>
-            <Clear />
-          </IconButton>
         </div>
         <div className="windows-content">
         {options.children}

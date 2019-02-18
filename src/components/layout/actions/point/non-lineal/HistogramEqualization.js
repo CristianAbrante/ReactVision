@@ -31,14 +31,6 @@ class HistogramEqualization extends Component {
   render() {
     return (
         <div>
-          <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-            <Icon style={{padding: "5px"}}>gradient</Icon>
-            <Typography
-                variant="overline">
-              Histogram Equalization
-            </Typography>
-          </div>
-          <Divider/>
           <Button
               style={{margin: "10px"}}
               variant="extendedFab"
@@ -52,4 +44,3 @@ class HistogramEqualization extends Component {
 }
 
 export default HistogramEqualization;
-
