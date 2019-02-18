@@ -98,6 +98,7 @@ class WorkspaceBar extends Component {
         <Paper
           style={containerStyles}>
           <div>
+
             <Chip
                 avatar={
                   <Avatar
@@ -107,6 +108,7 @@ class WorkspaceBar extends Component {
                 label={this.calculateColorText()}
                 color="secondary"
                 variant="outlined"/>
+          
             <Chip
                 label={this.calculatePosition()}
                 color="secondary"

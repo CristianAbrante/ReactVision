@@ -1,6 +1,11 @@
 import React, {Component} from 'react';
 import Chip from '@material-ui/core/Chip';
 import { withStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 
 const styles = theme => ({
   root: {
@@ -13,74 +18,110 @@ const styles = theme => ({
   },
 });
 
+
 class ImageInfo extends Component {
+  state = {
+    rows: [
+        { variable: "Number of pixel", value: "-"},
+        { variable: "Image width", value: "-"},
+        { variable: "Image height", value: "-"},
+        { variable: "Brightness", value: "-"},
+        { variable: "Contrast", value: "-"},
+        { variable: "Entropy", value: "-"},
+        { variable: "Min value", value: "-"},
+        { variable: "Max value", value: "-"}
+    ],
+  };
+
   getImageProperty = property => {
     let histogram = this.props.histogram;
-    if (histogram === undefined) {
-      return "-";
-    } else {
-      return histogram.getImage()[property]();
-    }
+
+    return histogram.getImage()[property]();
   };
 
   getHistogramProperty = property => {
     let histogram = this.props.histogram;
-    if (histogram === undefined) {
-      return "-";
-    } else {
-      // TODO: Implementing for different components.
-      let value = histogram[property]().brightness;
-      return value % 1 === 0 ? value : value.toFixed(3);
-    }
+
+    let value = histogram[property]().brightness;
+    return value % 1 === 0 ? value : value.toFixed(3);
   };
+
+  shouldComponentUpdate(nextProps) {
+    let histogram = this.props.histogram;
+
+    if(histogram === undefined || nextProps.histogram === undefined){
+      this.state.rows = [{ variable: "Number of pixel", value: "-"},
+      { variable: "Image width", value: "-"},
+      { variable: "Image height", value: "-"},
+      { variable: "Brightness", value: "-"},
+      { variable: "Contrast", value: "-"},
+      { variable: "Entropy", value: "-"},
+      { variable: "Min value", value: "-"},
+      { variable: "Max value", value: "-"}]
+      return true;
+    }
+
+    this.state.rows = [
+    { variable: "Number of pixel", value: this.getImageProperty("getNumberOfPixels")},
+    { variable: "Image width", value: this.getImageProperty("getWidth")},
+    { variable: "Image height", value: this.getImageProperty("getHeight")},
+    { variable: "Brightness", value: this.getHistogramProperty("getMean")},
+    { variable: "Contrast", value: this.getHistogramProperty("getStdVar")},
+    { variable: "Entropy", value: this.getHistogramProperty("getEntropy")},
+    { variable: "Min value", value: this.getHistogramProperty("getMin")},
+    { variable: "Max value", value: this.getHistogramProperty("getMax")}
+  ];
+    return true;
+  }
 
   render () {
     const {classes} = this.props;
+    const {rows} = this.state;
+
     return (
-        <div>
-          <div className={classes.root}>
-            <Chip
-                label={"format: " + this.getImageProperty("getFormat")}
-                color="secondary"
-                className={classes.chip}/>
-            <Chip
-                label={"count: " + this.getImageProperty("getNumberOfPixels")}
-                color="secondary"
-                className={classes.chip}/>
-            <Chip
-                label={"width: " + this.getImageProperty("getWidth")}
-                color="secondary"
-                className={classes.chip}/>
-            <Chip
-                label={"height: " + this.getImageProperty("getHeight")}
-                color="secondary"
-                className={classes.chip}/>
-          </div>
-          <div className={classes.root}>
-            <Chip
-                label={"brightness: " + this.getHistogramProperty("getMean")}
-                color="primary"
-                className={classes.chip}/>
-            <Chip
-                label={"contrast: " + this.getHistogramProperty("getStdVar")}
-                color="primary"
-                className={classes.chip}/>
-            <Chip
-                label={"entropy: " + this.getHistogramProperty("getEntropy")}
-                color="primary"
-                className={classes.chip}/>
-          </div>
-          <div className={classes.root}>
-            <Chip
-                label={"min: " + this.getHistogramProperty("getMin")}
-                color="secondary"
-                className={classes.chip}/>
-            <Chip
-                label={"max: " + this.getHistogramProperty("getMax")}
-                color="secondary"
-                className={classes.chip}/>
-          </div>
+      <div className="column" id="info">
+          <div className="column left">
+          <Table padding="dense">
+          <TableHead>
+            <TableRow>
+              <TableCell>Variable</TableCell>
+              <TableCell align="right">Value</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.slice(0, rows.length/2).map((row, id) => (
+              <TableRow key={id}>
+                <TableCell component="th" scope="row">
+                  {row.variable}
+                </TableCell>
+                <TableCell align="right">{row.value}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
         </div>
+
+        <div className="column right">
+        <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Variable</TableCell>
+            <TableCell align="right">Value</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.slice((rows.length/2), rows.length).map((row, id) => (
+            <TableRow key={id}>
+              <TableCell component="th" scope="row">
+                {row.variable}
+              </TableCell>
+              <TableCell align="right">{row.value}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+        </Table>
+        </div>
+    </div>
     );
   }
 }

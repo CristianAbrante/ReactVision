@@ -106,6 +106,10 @@ class Rotation extends Component {
     return this.state.selectedRotationMethod !== 'interpolated'
   };
 
+  getHeader = () => {
+    return
+  }
+
   render() {
     let {classes} = this.props;
     return(

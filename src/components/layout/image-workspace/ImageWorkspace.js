@@ -11,7 +11,6 @@ import Button from '@material-ui/core/Button';
 const workspaceStyle = {
   background: theme.palette.primary.main,
   height: "100%",
-  width: "71vw",
   display: "flex",
   flexDirection: "column",
   alignContent: "stretch"
@@ -117,7 +116,7 @@ handleCrop = () => {
             style={workspaceStyle}>
           <ImageTabs
               controller={this.props.controller}/>
-          <div style={canvasContainerStyle}>
+          <div className="" style={canvasContainerStyle}>
           <RegionSelect
 						maxRegions={1}
 						regions={this.state.regions}

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography'
 import ActionPicker from './ActionPicker';
+import Window from '../windows/Window';
 
 class Action extends Component {
 
@@ -16,12 +17,14 @@ class Action extends Component {
     }
   }
 
+  getHeader = () => {
+  }
+
   render() {
     return(
-        <Paper
-            style={{height: "100%"}}>
+        <Window title={this.props.currentActionName}>
           {this.renderAction()}
-        </Paper>
+         </Window>
     )
   }
 }

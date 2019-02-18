@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
 import {
   AreaSeries,
-  FlexibleWidthXYPlot,
+  XYPlot,
+  FlexibleXYPlot,
+  makeWidthFlexible,
   XAxis,
+  YAxis,
   VerticalGridLines,
   HorizontalGridLines,
 } from 'react-vis';
@@ -15,6 +18,11 @@ const colors = {
 };
 
 class HistogramGraph extends Component {
+  state = {
+    emphasizedValue: null,
+    histogramVisualizationData: []
+  };
+
 
   getSeries = component => {
     let accumulative = this.props.accumulative;
@@ -49,21 +57,29 @@ class HistogramGraph extends Component {
 
   render() {
     return (
-        <div>
-          <FlexibleWidthXYPlot
-              onMouseLeave={this._onMouseLeave}
-              height={180}
-              margin={{left: 10, right: 10, top: 10, bottom: 40}}
-              stackBy="y">
+      <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        position: "relative",
+        width: "100%",
+        height: "180px"
+      }}
+    >
+          <FlexibleXYPlot margin={{
+          top: 10,
+          left: 70
+        }}>
             <VerticalGridLines />
             <HorizontalGridLines />
-            <XAxis hideLine tickValues={[0, 50, 100, 150, 200, 250]}/>
+            <XAxis />
+            <YAxis />
             {this.getSeries('r')}
             {this.getSeries('g')}
             {this.getSeries('b')}
             {this.getSeries('brightness')}
-          </FlexibleWidthXYPlot>
-        </div>
+          </FlexibleXYPlot>
+          </div>
     );
   }
 }

@@ -40,8 +40,7 @@ class ImageTabs extends React.Component {
 
     return (
         <div className={classes.root}>
-          <AppBar
-              style={{width: "71vw"}}
+          {controller.isAnyImageSelected() && <AppBar
               position="static"
               color="default">
             <Tabs
@@ -66,7 +65,7 @@ class ImageTabs extends React.Component {
                 )
               }
             </Tabs>
-          </AppBar>
+          </AppBar>}
         </div>
     );
   }
